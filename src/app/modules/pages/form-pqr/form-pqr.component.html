@@ -1,0 +1,71 @@
+<div class="container">
+    <form autocomplete="off" [formGroup]="formPQR" (ngSubmit)="guardar()">
+
+        <div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Razon social</label>
+                    <select class="input-wrapper" formControlName="pais" [class.is-invalid]="paisNoValido">
+                        <option [value]="item.id" *ngFor="let item of listaPais">{{ item.countryName }}</option>
+                    </select>
+                    <div class="text-error">
+                        <small *ngIf="paisNoValido" class="text-danger">Seleccione su pais</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Razon social</label>
+                    <select class="input-wrapper" formControlName="tipoCaso" [class.is-invalid]="tipoCasoNoValido">
+                        <option [value]="item.id" *ngFor="let item of listaTipoCaso">{{ item.name }}</option>
+                    </select>
+                    <div class="text-error">
+                        <small *ngIf="tipoCasoNoValido" class="text-danger">Seleccione un tipo de caso</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Razon social</label>
+                    <input type="text" class="form-control" placeholder="Escriba una razon social"
+                        formControlName="razonSocial" [class.is-invalid]="razonSocialNoValida">
+                    <div *ngIf="razonSocialNoValida">
+                        <small class="text-danger">* ingrese una razon social</small>
+                    </div>
+                    <!--<div *ngIf="formWasher.get('nombre')?.errors?.['minlength']">
+                        <small class="text-danger">* minimo 3 caracteres</small>
+                    </div> -->
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Nit</label>
+                    <input type="text" class="form-control" placeholder="Escriba un nit" formControlName="nit"
+                        [class.is-invalid]="nitNoValido">
+                    <div *ngIf="nitNoValido">
+                        <small class="text-danger">* ingrese un nit</small>
+                    </div>
+                    <!-- <div *ngIf="formWasher.get('fechaNacimiento')?.errors?.['minlength']">
+                        <small class="text-danger">* minimo 3 caracteres</small>
+                    </div> -->
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="form-group col-md-12 text-right ">
+                    <button type="submit" mat-flat-button color="accent" [disabled]="formPQR.invalid">Agregar</button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<hr>
+<pre>
+        Estado del formulario: {{ formPQR.valid }}
+        <br>
+        Status: {{ formPQR.status }}
+        <br>
+        {{ formPQR.value | json }}
+    </pre>

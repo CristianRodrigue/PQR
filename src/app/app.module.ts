@@ -1,18 +1,44 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CmsComponent } from './modules/cms/cms.component';
+import { HomeComponent } from './modules/pages/home/home.component';
+import { LoginComponent } from './modules/pages/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FormPqrComponent } from './modules/pages/form-pqr/form-pqr.component';
+import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
+import { SigninComponent } from './modules/pages/signin/signin.component';
+import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
+import { Images } from './constants/images';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    CmsComponent,
+    NavbarComponent,
+    SidebarComponent,
+    FormPqrComponent,
+    DashboardComponent,
+    SigninComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    Images
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
