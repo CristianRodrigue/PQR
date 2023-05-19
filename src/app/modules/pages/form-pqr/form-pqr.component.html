@@ -18,15 +18,15 @@
                 <div class="form-group col-md-6">
                     <label>Tipo de usuario *</label>
                     <select class="input-wrapper" formControlName="tipoUsuario"
-                        [class.is-invalid]="tipoUsuarioNoValido">
-                        <option [value]="item.id" *ngFor="let item of listaTipoUsuario">{{ item.name }}</option>
+                        [class.is-invalid]="tipoUsuarioNoValido" (change)="tipoUsuario($event)">
+                        <option [value]="item.id" *ngFor="let item of listaTipoUsuario; let i = index">{{ item.name }}</option>
                     </select>
                     <div class="text-error">
                         <small *ngIf="tipoUsuarioNoValido" class="text-danger">Seleccione el tipo de usuario</small>
                     </div>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" *ngIf="userTypeSelected === 1">
                     <label>Razon social *</label>
                     <input type="text" class="form-control" placeholder="Escriba una razon social"
                         formControlName="razonSocial" [class.is-invalid]="razonSocialNoValida">
@@ -37,7 +37,7 @@
                         <small class="text-danger">* minimo 3 caracteres</small>
                     </div> -->
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" *ngIf="userTypeSelected === 1">
                     <label>NIT *</label>
                     <input type="text" class="form-control" placeholder="Escriba un nit" formControlName="nit"
                         [class.is-invalid]="nitNoValido">
@@ -48,10 +48,9 @@
                         <small class="text-danger">* minimo 3 caracteres</small>
                     </div> -->
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" *ngIf="userTypeSelected === 0">
                     <label>Cedula</label>
-                    <input type="text" class="form-control" formControlName="cedula" pattern="[0-9]*"
-                        inputmode="numeric" [class.is-invalid]="cedulaNoValido">
+                    <input type="text" class="form-control" formControlName="cedula" (keypress)="validateFormat($event)" [class.is-invalid]="cedulaNoValido">
                     <div class="text-error">
                         <small *ngIf="cedulaNoValido" class="text-danger">Minimo 7 caracteres</small>
                     </div>
