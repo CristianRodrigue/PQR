@@ -31,7 +31,6 @@ namespace ApiProcolombiaPQR.DATA
                 _context.Country.Add(new CountryEntity { CountryName = "Colombia" });
                 _context.Country.Add(new CountryEntity { CountryName = "Mexico" });
 
-
                 await _context.SaveChangesAsync();
             }
         }
