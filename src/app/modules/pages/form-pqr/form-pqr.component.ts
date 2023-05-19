@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CaseTypeService } from 'src/app/services/case-type.service';
 import { CountryService } from 'src/app/services/country.service';
-
+import { UserTypeService } from 'src/app/services/user-type.service';
+//se agrego tipo de caso y cedula con metodo de solo digito numerico, no se eliminan los caracteres de cedula
 @Component({
   selector: 'app-form-pqr',
   templateUrl: './form-pqr.component.html',
@@ -15,13 +16,16 @@ export class FormPqrComponent implements OnInit {
 
   listaPais: any[] = [];
   listaTipoCaso: any[] = [];
+  listaTipoUsuario: any[] = [];
 
-  constructor(private fb: FormBuilder, public router: Router, private country: CountryService, private caseType: CaseTypeService) {
+  constructor(private fb: FormBuilder, public router: Router, private country: CountryService, private caseType: CaseTypeService, private userType: UserTypeService) {
     this.formPQR = this.fb.group({
-      pais: ['', [Validators.required]],
       tipoCaso: ['', [Validators.required]],
+      tipoUsuario:['', [Validators.required]],
+      pais: ['', [Validators.required]],
       razonSocial: ['', [Validators.required, Validators.minLength(3)]],
-      nit: ['', [Validators.required, Validators.minLength(3)]] 
+      nit: ['', [Validators.required, Validators.minLength(7)]], 
+      cedula: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]]
       // password: ['', [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]]
     },
       {
@@ -34,18 +38,23 @@ export class FormPqrComponent implements OnInit {
   ngOnInit(): void {
     this.consultarPaises();
     this.consultarTipoCaso();
+    this.consultarTipoUsuario();
   }
 
   cargarData() {
     this.formPQR.setValue({
-      pais: '',
       tipoCaso: '',
+      tipoUsuario:'',
       razonSocial: '',
-      nit: ''
+      nit: '',
+      pais: '',
+      cedula: '',
       
     });
   }
-
+  get tipoUsuarioNoValido() {
+    return this.formPQR.get('tipoUsuario')!.invalid && this.formPQR.get('tipoUsuario')!.touched;
+  }
   // #region
   get razonSocialNoValida() {
     return this.formPQR.get('razonSocial')!.invalid && this.formPQR.get('razonSocial')!.touched;
@@ -53,6 +62,10 @@ export class FormPqrComponent implements OnInit {
 
   get nitNoValido() {
     return this.formPQR.get('nit')!.invalid && this.formPQR.get('nit')!.touched;
+  }
+
+  get cedulaNoValido() {
+    return this.formPQR.get('cedula')!.invalid;
   }
 
   get paisNoValido() {
@@ -63,6 +76,12 @@ export class FormPqrComponent implements OnInit {
     return this.formPQR.get('tipoCaso')!.invalid && this.formPQR.get('tipoCaso')!.touched;
   }
   // #endregion
+  soloNumeros(event: { key: string; preventDefault: () => void; }) {
+    
+    if (event.key && /[^\d\b]/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
 
   consultarPaises() {
     this.country.getAll().subscribe((response: any) => {
@@ -76,6 +95,13 @@ export class FormPqrComponent implements OnInit {
     this.caseType.getAll().subscribe((response: any) => {
       console.log('tipos caso: ', response.data);
       this.listaTipoCaso = response.data;
+    });
+  }
+
+  consultarTipoUsuario() {
+    this.userType.getAll().subscribe((response: any) => {
+      console.log('tipos usuario: ', response.data);
+      this.listaTipoUsuario = response.data;
     });
   }
 
