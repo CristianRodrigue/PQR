@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PQRModel } from 'src/app/models/pqr.model';
@@ -12,38 +12,51 @@ import { UserTypeService } from 'src/app/services/user-type.service';
   templateUrl: './form-pqr.component.html',
   styleUrls: ['./form-pqr.component.scss']
 })
-export class FormPqrComponent implements OnInit {
+export class FormPqrComponent implements OnInit{
 
   formPQR: FormGroup;
-  
+
   listaPais: any[] = [];
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
 
   userTypeSelected: number = -1;
+  
 
-  constructor(private fb: FormBuilder, public router: Router, private country: CountryService, private caseType: CaseTypeService, private userType: UserTypeService, private pqrService: PqrService) {
+  constructor(
+    private fb: FormBuilder,
+    public router: Router,
+    private country: CountryService, 
+    private caseType: CaseTypeService, 
+    private userType: UserTypeService, 
+    private pqrService: PqrService
+  ) {
     this.formPQR = this.fb.group({
       tipoCaso: ['', [Validators.required]],
       tipoUsuario: ['', [Validators.required]],
       pais: ['', [Validators.required]],
-      razonSocial: ['', [Validators.minLength(3)]],
-      nit: ['', [Validators.minLength(7)]],
-      cedula: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]]
-      // password: ['', [Validators.required, Validators.minLength(8), Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]]
-    },
-      {
-        // validators: [this.EmailUserAppValidator('correo'), this.UserAppValidator('usuarioapp')]
-      });
+      razonSocial: ['', [Validators.maxLength(20)]],
+      nit: ['', [Validators.required, Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
+      cedula: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
+      nombre: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
+      comentario: ['', [Validators.required, Validators.maxLength(1000)]],
+    });
 
     this.cargarData();
   }
+
+ 
 
   ngOnInit(): void {
     this.consultarPaises();
     this.consultarTipoCaso();
     this.consultarTipoUsuario();
+
+    
   }
+
 
   cargarData() {
     this.formPQR.setValue({
@@ -53,12 +66,19 @@ export class FormPqrComponent implements OnInit {
       nit: '',
       pais: '',
       cedula: '',
-
+      nombre: '',
+      email: '',
+      telefono: '',
+      comentario: '',
     });
+  }
+  get tipoCasoNoValido() {
+    return this.formPQR.get('tipoCaso')!.invalid && this.formPQR.get('tipoCaso')!.touched;
   }
   get tipoUsuarioNoValido() {
     return this.formPQR.get('tipoUsuario')!.invalid && this.formPQR.get('tipoUsuario')!.touched;
   }
+  
   // #region
   get razonSocialNoValida() {
     return this.formPQR.get('razonSocial')!.invalid && this.formPQR.get('razonSocial')!.touched;
@@ -75,10 +95,20 @@ export class FormPqrComponent implements OnInit {
   get paisNoValido() {
     return this.formPQR.get('pais')!.invalid && this.formPQR.get('pais')!.touched;
   }
-
-  get tipoCasoNoValido() {
-    return this.formPQR.get('tipoCaso')!.invalid && this.formPQR.get('tipoCaso')!.touched;
+  get nombreNoValido() {
+    return this.formPQR.get('nombre')!.invalid && this.formPQR.get('nombre')!.touched;
   }
+  get emailNoValido() {
+    return this.formPQR.get('email')!.invalid && this.formPQR.get('email')!.touched;
+  }
+  get telefonoNoValido() {
+    return this.formPQR.get('telefono')!.invalid
+  }
+  get comentarioNoValido() {
+    return this.formPQR.get('comentario')!.invalid && this.formPQR.get('comentario')!.touched;
+  }
+
+ 
   // #endregion
   soloNumeros(event: { key: string; preventDefault: () => void; }) {
 
@@ -98,7 +128,7 @@ export class FormPqrComponent implements OnInit {
   consultarTipoCaso() {
     this.caseType.getAll().subscribe((response: any) => {
       console.log('tipos caso: ', response.data);
-      this.listaTipoCaso = response.data;
+      this.listaTipoCaso = response.data; 
     });
   }
 
@@ -123,14 +153,14 @@ export class FormPqrComponent implements OnInit {
       this.formPQR.get('nit')?.clearValidators();
       this.formPQR.get('razonSocial')?.clearValidators();
 
-      this.formPQR.get('cedula')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+$/)]);
+      this.formPQR.get('cedula')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.minLength(7)]);
 
     } else if (event.target["selectedIndex"] === 1) {
       this.userTypeSelected = 1;
 
       this.formPQR.get('cedula')?.clearValidators();
 
-      this.formPQR.get('nit')?.setValidators([Validators.required]);
+      this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.required,Validators.minLength(7)]);
       this.formPQR.get('razonSocial')?.setValidators([Validators.required]);
     }
   }
@@ -171,9 +201,6 @@ export class FormPqrComponent implements OnInit {
 
     }
 
-    
-
-    
     this.pqrService.createPQR(this.formPQR.value.pais)
       .subscribe(result => {
 

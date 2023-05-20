@@ -1,0 +1,119 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+  
+    form {
+      background-color: #f5f5f5;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+  
+    .input-wrapper {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+    }
+  
+    .is-invalid {
+      border-color: red;
+    }
+  
+    .text-error {
+      min-height: 1.5rem;
+  
+      small.text-danger {
+        display: block;
+      }
+    }
+  
+    .form-control {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      &:focus {
+        outline: none;
+        border-color: #0097a7;
+      }
+    }
+  
+    .text-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  
+    button {
+      background-color: #0097a7;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      &:disabled {
+        background-color: rgba(0, 0, 0, 0.25);
+        cursor: not-allowed;
+      }
+    }
+    
+    /* Estilos para el label del checkbox */
+.checkbox-label {
+    display: block;
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  
+    input[type='checkbox'] {
+        transform: scale(1.2);
+        margin-right: .5rem;
+      }
+  }
+  
+  /* Estilos para el texto más pequeño debajo del label */
+  .small-text {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+  
+  /* Estilos para la sección de "Adjunto" */
+  .attachment {
+    margin-bottom: 1rem;
+  }
+  
+  /* Estilos para el espacio entre el texto y el input */
+  .spacing {
+    height: 5px;
+  }
+  
+  /* Estilos para el input de tipo "file" */
+  .form-file {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
+  
+  .textarea-wrapper {
+    position:relative;
+ }
+ .remaning {
+ position:absolute;
+ bottom: 10px;
+ right:10px;
+ }
+  }

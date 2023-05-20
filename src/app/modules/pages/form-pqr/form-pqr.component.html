@@ -1,11 +1,16 @@
 <!--Se agrego campos faltantes, tipo de caso, cedula, -->
+
+<head></head>
 <div class="container">
+    <h1>
+        Comentarios
+    </h1>
     <form autocomplete="off" [formGroup]="formPQR" (ngSubmit)="guardar()">
 
         <div>
 
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group">
                     <label>Tipo de caso *</label>
                     <select class="input-wrapper" formControlName="tipoCaso" [class.is-invalid]="tipoCasoNoValido">
                         <option [value]="item.id" *ngFor="let item of listaTipoCaso">{{ item.name }}</option>
@@ -15,18 +20,19 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group">
                     <label>Tipo de usuario *</label>
-                    <select class="input-wrapper" formControlName="tipoUsuario"
-                        [class.is-invalid]="tipoUsuarioNoValido" (change)="tipoUsuario($event)">
-                        <option [value]="item.id" *ngFor="let item of listaTipoUsuario; let i = index">{{ item.name }}</option>
+                    <select class="input-wrapper" formControlName="tipoUsuario" [class.is-invalid]="tipoUsuarioNoValido"
+                        (change)="tipoUsuario($event)">
+                        <option [value]="item.id" *ngFor="let item of listaTipoUsuario; let i = index">{{ item.name }}
+                        </option>
                     </select>
                     <div class="text-error">
                         <small *ngIf="tipoUsuarioNoValido" class="text-danger">Seleccione el tipo de usuario</small>
                     </div>
                 </div>
 
-                <div class="form-group col-md-6" *ngIf="userTypeSelected === 1">
+                <div class="form-group" *ngIf="userTypeSelected === 1">
                     <label>Razon social *</label>
                     <input type="text" class="form-control" placeholder="Escriba una razon social"
                         formControlName="razonSocial" [class.is-invalid]="razonSocialNoValida">
@@ -37,10 +43,10 @@
                         <small class="text-danger">* minimo 3 caracteres</small>
                     </div> -->
                 </div>
-                <div class="form-group col-md-6" *ngIf="userTypeSelected === 1">
+                <div class="form-group" *ngIf="userTypeSelected === 1">
                     <label>NIT *</label>
-                    <input type="text" class="form-control" placeholder="Escriba un nit" formControlName="nit"
-                        [class.is-invalid]="nitNoValido">
+                    <input type="text" class="form-control" placeholder="Escriba un nit sin dígito de verificación"
+                        (keypress)="validateFormat($event)" formControlName="nit" [class.is-invalid]="nitNoValido">
                     <div *ngIf="nitNoValido">
                         <small class="text-danger">* ingrese un nit</small>
                     </div>
@@ -48,15 +54,16 @@
                         <small class="text-danger">* minimo 3 caracteres</small>
                     </div> -->
                 </div>
-                <div class="form-group col-md-6" *ngIf="userTypeSelected === 0">
+                <div class="form-group" *ngIf="userTypeSelected === 0">
                     <label>Cedula</label>
-                    <input type="text" class="form-control" formControlName="cedula" (keypress)="validateFormat($event)" [class.is-invalid]="cedulaNoValido">
+                    <input type="text" class="form-control" formControlName="cedula" (keypress)="validateFormat($event)"
+                        [class.is-invalid]="cedulaNoValido">
                     <div class="text-error">
                         <small *ngIf="cedulaNoValido" class="text-danger">Minimo 7 caracteres</small>
                     </div>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group">
                     <label>País *</label>
                     <select class="input-wrapper" formControlName="pais" [class.is-invalid]="paisNoValido">
                         <option [value]="item.id" *ngFor="let item of listaPais">{{ item.countryName }}</option>
@@ -66,23 +73,75 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" class="form-control" formControlName="nombre"
+                        [class.is-invalid]="nombreNoValido">
+                    <div class="text-error">
+                        <small *ngIf="nombreNoValido" class="text-danger">Ingrese su nombre</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo electrónico *</label>
+                    <input type="text" class="form-control" formControlName="email" [class.is-invalid]="emailNoValido">
+                    <div class="text-error">
+                        <small *ngIf="emailNoValido" class="text-danger">Ingrese un correo valido</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" formControlName="telefono"
+                        (keypress)="validateFormat($event)" [class.is-invalid]="telefonoNoValido">
+                    <div class="text-error">
+                        <small *ngIf="telefonoNoValido" class="text-danger">Minimo 7 caracteres</small>
+                    </div>
+                </div>
+
+                <div class="attachment">
+                    Adjunto(Máx. 2MB)
+                    <div class="spacing"></div>
+                    <input id="File1" type="file" title="Adjunto(MÁx. 2MB)" name="adjunto" class="form-file" accept="*">
+                </div>
+
+                <div class="form-group">
+                    <label>Comentario *</label>
+                    <textarea type="text" class="form-control" formControlName="comentario" rows="5"
+                        [class.is-invalid]="comentarioNoValido"></textarea>
+                    <div>1000 caracteres restantes</div>
+                    <div class="text-error">
+                        <small *ngIf="comentarioNoValido" class="text-danger">Ingrese su comentario</small>
+                    </div>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="autorizacion" value="si">
+                    Autorizo el uso y tratamiento de mis datos personales<br>
+                    <span class="small-text">
+                        Entiendo que ProColombia es el responsable del tratamiento de los datos registrados en este
+                        formulario y he leído la Política de Datos Personales disponible en
+                        <a href="https://www.procolombia.co" target="_blank">www.procolombia.co</a>
+                    </span>
+                </label>
             </div>
+
 
             <div class="row">
                 <div class="form-group col-md-12 text-right ">
-                    <button type="submit" mat-flat-button color="accent" [disabled]="formPQR.invalid">Agregar</button>
+                    <button type="submit" mat-flat-button color="accent" [disabled]="formPQR.invalid">Enviar</button>
                 </div>
             </div>
 
         </div>
 
     </form>
-</div>
-<hr>
+    <hr>
 <pre>
         Estado del formulario: {{ formPQR.valid }}
         <br>
         Status: {{ formPQR.status }}
         <br>
         {{ formPQR.value | json }}
-    </pre>
+</pre>
+</div>
