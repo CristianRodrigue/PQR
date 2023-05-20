@@ -24,6 +24,8 @@ namespace ApiProcolombiaPQR.DATA
 
         public DbSet<PqrEntity> PQR { get; set; }
 
+        public DbSet<RoleEntity> Role { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
