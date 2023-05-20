@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 import { CmsComponent } from './modules/cms/cms.component';
 import { DashboardComponent } from './modules/pages/dashboard/dashboard.component';
 import { FormPqrComponent } from './modules/pages/form-pqr/form-pqr.component';
+import { HomeComponent } from './modules/pages/home/home.component';
 import { LoginComponent } from './modules/pages/login/login.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { SigninComponent } from './modules/pages/signin/signin.component';
@@ -10,15 +12,14 @@ import { SigninComponent } from './modules/pages/signin/signin.component';
 const routes: Routes = [
   { path: '', component: CmsComponent,
   children: [
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'pqr', component: FormPqrComponent },
-    
-    
+    { path: 'dashboard', component: DashboardComponent, canActivate: [ AuthGuard ]  },  
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   ]},
 
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: SigninComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'pqr', component: FormPqrComponent },
   
   { path: '**', component: PageNotFoundComponent}
   
