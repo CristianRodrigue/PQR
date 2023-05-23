@@ -15,12 +15,16 @@ import { UserTypeService } from 'src/app/services/user-type.service';
 export class FormPqrComponent implements OnInit{
 
   formPQR: FormGroup;
+  MAX_CARACTERES_COMENTARIO = 1000;
+  caracteresRestantes: number = this.MAX_CARACTERES_COMENTARIO;
 
   listaPais: any[] = [];
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
+  
 
   userTypeSelected: number = -1;
+  archivoInvalido: boolean | undefined;
   
 
   constructor(
@@ -35,9 +39,9 @@ export class FormPqrComponent implements OnInit{
       tipoCaso: ['', [Validators.required]],
       tipoUsuario: ['', [Validators.required]],
       pais: ['', [Validators.required]],
-      razonSocial: ['', [Validators.maxLength(20)]],
-      nit: ['', [Validators.required, Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
-      cedula: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
+      razonSocial: ['', ],
+      nit: ['', ],
+      cedula: ['', ],
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
@@ -53,10 +57,28 @@ export class FormPqrComponent implements OnInit{
     this.consultarPaises();
     this.consultarTipoCaso();
     this.consultarTipoUsuario();
-
-    
   }
 
+  actualizarCaracteresRestantes() {
+    const comentario = this.formPQR.get('comentario')?.value;
+    const longitudComentario = comentario ? comentario.length : 0;
+    this.caracteresRestantes = this.MAX_CARACTERES_COMENTARIO - longitudComentario;
+    if (this.caracteresRestantes < 0) { // verifica si se ha excedido el límite
+        this.formPQR.get('comentario')?.setValue(comentario.substring(0, this.MAX_CARACTERES_COMENTARIO)); // recorta el texto
+    }
+}
+
+verificarTamanioArchivo(event: any) {
+  const archivo = event.target.files[0];
+  const tamanioMaximo = 2 * 1024 * 1024; // Tamaño máximo en bytes (2 megabytes)
+
+  if (archivo && archivo.size > tamanioMaximo) {
+      this.archivoInvalido = true;
+      this.formPQR.get('adjunto')?.setValue(null); // despejar el valor del archivo seleccionado
+  } else {
+      this.archivoInvalido = false;
+  }
+}
 
   cargarData() {
     this.formPQR.setValue({
@@ -108,15 +130,6 @@ export class FormPqrComponent implements OnInit{
     return this.formPQR.get('comentario')!.invalid && this.formPQR.get('comentario')!.touched;
   }
 
- 
-  // #endregion
-  soloNumeros(event: { key: string; preventDefault: () => void; }) {
-
-    if (event.key && /[^\d\b]/.test(event.key)) {
-      event.preventDefault();
-    }
-  }
-
   consultarPaises() {
     this.country.getAll().subscribe((response: any) => {
       console.log('paises: ', response.data);
@@ -150,18 +163,21 @@ export class FormPqrComponent implements OnInit{
     if (event.target["selectedIndex"] === 0) {
       this.userTypeSelected = 0;
 
-      this.formPQR.get('nit')?.clearValidators();
-      this.formPQR.get('razonSocial')?.clearValidators();
+      //this.formPQR.get('nit')?.clearValidators();
+      //this.formPQR.get('razonSocial')?.clearValidators();
+      this.formPQR.get('nit')?.setValidators([]);
+      this.formPQR.get('razonSocial')?.setValidators([]);
 
       this.formPQR.get('cedula')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.minLength(7)]);
 
     } else if (event.target["selectedIndex"] === 1) {
       this.userTypeSelected = 1;
 
-      this.formPQR.get('cedula')?.clearValidators();
+      //this.formPQR.get('cedula')?.clearValidators();
+      this.formPQR.get('cedula')?.setValidators([]);
 
-      this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.required,Validators.minLength(7)]);
-      this.formPQR.get('razonSocial')?.setValidators([Validators.required]);
+      this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.minLength(7),Validators.required]);
+      this.formPQR.get('razonSocial')?.setValidators([Validators.required,Validators.maxLength(20)]);
     }
   }
 

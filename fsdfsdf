@@ -1,0 +1,35 @@
+[33mcommit 37f365271289616b81b1a3e74d57140d6f806681[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: felipeagm <felipeagm@gmail.com>
+Date:   Sat May 20 12:38:26 2023 -0500
+
+    implementacion autenticacion
+
+[33mcommit e0298bd18cda55ee7176fb9293e5e3fcc3ad1c12[m
+Author: CristianRodrigue <rodriguez.cami09@gmail.com>
+Date:   Sat May 20 07:25:04 2023 -0700
+
+    se agrego los campos nombre, correo, telefono, añadir adjunto, comentario y autorizo
+
+[33mcommit 2f8392cf6d0331ad5f725a6adad00f17d79aab5f[m
+Author: felipeagm <felipeagm@gmail.com>
+Date:   Fri May 19 01:22:17 2023 -0500
+
+    Validaciones y guardado formulario basico
+
+[33mcommit 1a69bfe1576ecc033d9e3fb9f6eff20a87dd95d0[m
+Author: Administrador Plataforma de Aplicaciones <admappsmicrosoftIT@procolombia.co>
+Date:   Thu May 18 21:19:28 2023 -0700
+
+    Se agrego el servicio UserType
+
+[33mcommit 0c1ef3b0f8f7b1fff120e677d9cc41e12c123e4f[m
+Author: felipeagm <felipeagm@gmail.com>
+Date:   Tue May 16 23:37:23 2023 -0500
+
+    primer commit
+
+[33mcommit 5c87855f124b63fe1236fa10178354c5b847ddee[m
+Author: felipeagm <felipeagm@gmail.com>
+Date:   Sat May 13 09:41:18 2023 -0500
+
+    initial commit
