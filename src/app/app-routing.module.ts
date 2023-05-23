@@ -8,6 +8,7 @@ import { HomeComponent } from './modules/pages/home/home.component';
 import { LoginComponent } from './modules/pages/login/login.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { SigninComponent } from './modules/pages/signin/signin.component';
+import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
 
 const routes: Routes = [
   { path: '', component: CmsComponent,
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'registro', component: SigninComponent },
   { path: 'home', component: HomeComponent },
   { path: 'pqr', component: FormPqrComponent },
+  { path: 'mensajes', component: ManageMessagesComponent },
   
   { path: '**', component: PageNotFoundComponent}
   

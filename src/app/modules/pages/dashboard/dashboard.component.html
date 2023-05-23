@@ -1,1 +1,73 @@
 <a [routerLink]="[ '/pqr']">CREAR UN PQR</a>
+<section id="filtro">
+    <h2>Filtrar PQR</h2>
+    <div class="filtros">
+        <form>
+            <div class="form-group">
+                <label for="numero-caso">Número de caso:</label>
+                <input type="text" id="numero-caso" name="numero-caso" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="tipo-caso">Tipo de caso:</label>
+                <select id="tipo-caso" name="tipo-caso" class="form-control">
+                    <option value="">Seleccione un tipo de caso</option>
+                    <option value="queja">Queja</option>
+                    <option value="reclamo">Reclamo</option>
+                    <option value="solicitud">Solicitud</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo-caso">Estado:</label>
+                <select id="tipo-caso" name="tipo-caso" class="form-control">
+                    <option value="">Seleccione un tipo de caso</option>
+                    <option value="queja">Queja</option>
+                    <option value="reclamo">Reclamo</option>
+                    <option value="solicitud">Solicitud</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="estado">País:</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">Seleccione un estado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="resuelto">Resuelto</option>
+                    <option value="en-proceso">En proceso</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            
+        </form>
+   
+    </div>
+</section>
+
+<section id="resultados">
+    <h2>Resultados de la búsqueda</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Número de caso</th>
+                <th>Nombre del solicitante</th>
+                <th>Tipo de caso</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pqr of pqrList">
+                <td>{{pqr.numeroCaso}}</td>
+                <td>{{pqr.nombreSolicitante}}</td>
+                <td>{{pqr.tipoCaso}}</td>
+                <td>{{pqr.estado}}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="verDetalles(pqr)">Ver detalles</button>
+                    <button class="btn btn-success" (click)="asignarPqr(pqr)">Asignar</button>
+                    <button class="btn btn-info" (click)="generarCasoSalesforce(pqr)">Generar caso Salesforce</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

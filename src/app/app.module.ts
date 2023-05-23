@@ -14,6 +14,7 @@ import { DashboardComponent } from './modules/pages/dashboard/dashboard.componen
 import { SigninComponent } from './modules/pages/signin/signin.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { Images } from './constants/images';
+import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { Images } from './constants/images';
     FormPqrComponent,
     DashboardComponent,
     SigninComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ManageMessagesComponent
   ],
   imports: [
     BrowserModule,
