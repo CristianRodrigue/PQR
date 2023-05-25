@@ -12,7 +12,7 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public Guid CountryId { get; set; }
         
-        public CountryEntity Country { get; }
+        public CountryEntity? Country { get; }
 
         public Guid CaseTypeId { get; set; }
 
@@ -22,21 +22,21 @@ namespace ApiProcolombiaPQR.ENTITY
 
         // public UserTypeEntity UserType { get; }
 
-        public string RazonSocial { get; set; }
+        public string? RazonSocial { get; set; }
 
         public string? Nit { get; set; }
 
         public  string? Cedula { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public byte[]? File { get; set; }
 
-        public string Comentario { get; set; }
+        public string? Comentario { get; set; }
 
         public bool AutorizaTratamientoDatos { get; set; }
 
