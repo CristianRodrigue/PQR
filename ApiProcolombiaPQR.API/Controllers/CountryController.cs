@@ -43,9 +43,5 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
         }
 
-
-
-
-
     }
 }
