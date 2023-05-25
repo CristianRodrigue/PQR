@@ -10,8 +10,8 @@ namespace ApiProcolombiaPQR.ENTITY
     {
         public Guid Id { get; set; }
 
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<PqrEntity>? PQR { get; }
+        public ICollection<PqrEntity> PQR { get; }
     }
 }

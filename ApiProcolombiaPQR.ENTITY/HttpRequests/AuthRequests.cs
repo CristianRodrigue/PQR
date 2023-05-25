@@ -11,9 +11,9 @@ namespace ApiProcolombiaPQR.ENTITY.HttpRequests
     {
         [Required]
         [EmailAddress]
-        public string? email { get; set; }
+        public string email { get; set; }
 
         [Required]
-        public string? password { get; set; }
+        public string password { get; set; }
     }
 }
