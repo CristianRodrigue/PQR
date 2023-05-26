@@ -12,6 +12,10 @@ export class PqrService {
 
   constructor(private http: HttpClient) { }
 
+  getAll() {
+    return this.http.get(this.url + '/Pqr/GetAll');
+  }
+
   createPQR(country: string) {
 
     const data = {
