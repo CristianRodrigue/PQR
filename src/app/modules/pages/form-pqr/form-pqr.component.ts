@@ -80,20 +80,7 @@ verificarTamanioArchivo(event: any) {
   }
 }
 
-  cargarData() {
-    this.formPQR.setValue({
-      tipoCaso: '',
-      tipoUsuario: '',
-      razonSocial: '',
-      nit: '',
-      pais: '',
-      cedula: '',
-      nombre: '',
-      email: '',
-      telefono: '',
-      comentario: '',
-    });
-  }
+ 
   get tipoCasoNoValido() {
     return this.formPQR.get('tipoCaso')!.invalid && this.formPQR.get('tipoCaso')!.touched;
   }
@@ -198,6 +185,21 @@ verificarTamanioArchivo(event: any) {
     }
   }
 
+  cargarData() {
+    this.formPQR.setValue({
+      tipoCaso: '',
+      tipoUsuario: '',
+      razonSocial: '',
+      nit: '',
+      pais: '',
+      cedula: '',
+      nombre: '',
+      email: '',
+      telefono: '',
+      comentario: '',
+    });
+  }
+
   guardar() {
     console.log('Guardar PQR');
 
@@ -217,7 +219,7 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais)
+    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula)
       .subscribe(result => {
 
         console.log('formulario enviado exitosamente.');

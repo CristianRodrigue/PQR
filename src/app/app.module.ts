@@ -15,6 +15,7 @@ import { SigninComponent } from './modules/pages/signin/signin.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { Images } from './constants/images';
 import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
+import { DetailsPqrComponent } from './modules/pages/details-pqr/details-pqr.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-
     DashboardComponent,
     SigninComponent,
     PageNotFoundComponent,
-    ManageMessagesComponent
+    ManageMessagesComponent,
+    DetailsPqrComponent
   ],
   imports: [
     BrowserModule,

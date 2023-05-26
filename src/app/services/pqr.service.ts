@@ -12,15 +12,25 @@ export class PqrService {
 
   constructor(private http: HttpClient) { }
 
-  createPQR(country: string) {
+  getAll() {
+    return this.http.get(this.url + '/Pqr/GetAll');
+  }
+
+  
+  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,) {
 
     const data = {
       CountryId: country,
-      Comentario: 'No',  
-      Email: 'No', 
-      Name: 'No',
-      PhoneNumber: 'No',
-      RazonSocial: 'No'
+      CaseTypeId:caseType,
+      UserTypeId:userType,
+      Nit:nit,
+      Cedula:cedula,
+      Comentario: comentario,  
+      Email: email, 
+      Name: name,
+      PhoneNumber: telefono,
+      RazonSocial: razonSocial,
+      
     };
 
     return this.http.post(`${this.url}/Pqr/CreatePQR`, data);

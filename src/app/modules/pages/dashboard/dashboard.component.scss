@@ -1,38 +1,39 @@
 #filtro {
-    background-color: #f2f2f2;
-    padding: 1rem;
-  
-    h2 {
-      margin-bottom: 1rem;
-    }
-  
-    .filtros {
-      display: flex;
-      flex-wrap: wrap;
-  
-      form {
-        margin-right: 1rem;
-        text-align: center;
-  
-        .form-group {
-          margin-bottom: 1rem;
-        }
-  
-        label {
-          margin-right: 0.5rem;
-        }
-  
-        input,
-        select {
-          margin-right: 0.5rem;
-        }
-  
-        button {
-          margin-top: 0.5rem;
-        }
+  background-color: #f2f2f2;
+  padding: 1rem;
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+ .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; /* Agregamos esta propiedad */
+
+    form {
+      margin-right: 1rem;
+      text-align: center;
+
+     .form-group {
+        margin-bottom: 1rem;
+      }
+
+      label {
+        margin-right: 0.5rem;
+      }
+
+      input,
+      select {
+        margin-right: 0.5rem;
+      }
+
+      button {
+        margin-top: 0.5rem;
       }
     }
   }
+}
   
   #resultados {
     margin-top: 2rem;
