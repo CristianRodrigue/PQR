@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiProcolombiaPQR.ENTITY
 {
-    public class CaseTypeEntity
+    public class StatusEntity
     {
         public Guid Id { get; set; }
 

@@ -6,6 +6,8 @@ namespace ApiProcolombiaPQR.API.Models
     {
         public Guid Id { get; set; }
 
+        public int CaseNumber { get; set; }
+
         public Guid CountryId { get; set; }
 
         public Guid CaseTypeId { get; set; }
@@ -29,5 +31,7 @@ namespace ApiProcolombiaPQR.API.Models
         public string Comentario { get; set; }
 
         public bool AutorizaTratamientoDatos { get; set; }
+
+        public Guid CaseStatus { get; set; }
     }
 }

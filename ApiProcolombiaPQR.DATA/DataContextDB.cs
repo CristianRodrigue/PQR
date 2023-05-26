@@ -26,6 +26,10 @@ namespace ApiProcolombiaPQR.DATA
 
         public DbSet<RoleEntity> Role { get; set; }
 
+        public DbSet<ConsecutiveEntity> Consecutive { get; set; }
+
+        public DbSet<StatusEntity> StatusPQR { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

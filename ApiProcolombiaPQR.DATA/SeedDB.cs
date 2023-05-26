@@ -19,11 +19,13 @@ namespace ApiProcolombiaPQR.DATA
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
+
             await CheckCountriesAsync();
             await CheckCaseTypeAsync();
             await CheckUserTypeAsync();
             await CheckRoleAsync();
             await CheckUsersAsync();
+            await CheckConsecutive();
         }
 
         private async Task CheckCountriesAsync()
@@ -43,156 +45,6 @@ namespace ApiProcolombiaPQR.DATA
             {
                 _context.CaseType.Add(new CaseTypeEntity { Name = "Queja" });
                 _context.CaseType.Add(new CaseTypeEntity { Name = "Reclamo" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argentina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brasil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Canadá" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chile" });
-                _context.Country.Add(new CountryEntity { CountryName = "Perú" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ecuador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estados Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "España" });
-                _context.Country.Add(new CountryEntity { CountryName = "Francia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Italia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Japón" });
-                _context.Country.Add(new CountryEntity { CountryName = "China" });
-                _context.Country.Add(new CountryEntity { CountryName = "India" });
-                _context.Country.Add(new CountryEntity { CountryName = "Afganistán" });
-                _context.Country.Add(new CountryEntity { CountryName = "Albania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Alemania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Andorra" });
-                _context.Country.Add(new CountryEntity { CountryName = "Angola" });
-                _context.Country.Add(new CountryEntity { CountryName = "Antigua y Barbuda" });
-                _context.Country.Add(new CountryEntity { CountryName = "Arabia Saudita" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argelia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argentina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Armenia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Australia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Austria" });
-                _context.Country.Add(new CountryEntity { CountryName = "Azerbaiyán" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bahamas" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bangladés" });
-                _context.Country.Add(new CountryEntity { CountryName = "Barbados" });
-                _context.Country.Add(new CountryEntity { CountryName = "Baréin" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bélgica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Belice" });
-                _context.Country.Add(new CountryEntity { CountryName = "Benín" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bielorrusia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Birmania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bolivia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bosnia y Herzegovina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Botsuana" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brasil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brunéi" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bulgaria" });
-                _context.Country.Add(new CountryEntity { CountryName = "Burkina Faso" });
-                _context.Country.Add(new CountryEntity { CountryName = "Burundi" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bután" });
-                _context.Country.Add(new CountryEntity { CountryName = "Cabo Verde" });
-                _context.Country.Add(new CountryEntity { CountryName = "Camboya" });
-                _context.Country.Add(new CountryEntity { CountryName = "Camerún" });
-                _context.Country.Add(new CountryEntity { CountryName = "Canadá" });
-                _context.Country.Add(new CountryEntity { CountryName = "Catar" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chad" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chile" });
-                _context.Country.Add(new CountryEntity { CountryName = "China" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chipre" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ciudad del Vaticano" });
-                _context.Country.Add(new CountryEntity { CountryName = "Colombia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Comoras" });
-                _context.Country.Add(new CountryEntity { CountryName = "Corea del Norte" });
-                _context.Country.Add(new CountryEntity { CountryName = "Corea del Sur" });
-                _context.Country.Add(new CountryEntity { CountryName = "Costa de Marfil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Costa Rica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Croacia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Cuba" });
-                _context.Country.Add(new CountryEntity { CountryName = "Dinamarca" });
-                _context.Country.Add(new CountryEntity { CountryName = "Dominica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ecuador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Egipto" });
-                _context.Country.Add(new CountryEntity { CountryName = "El Salvador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Emiratos Árabes Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eritrea" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eslovaquia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eslovenia" });
-                _context.Country.Add(new CountryEntity { CountryName = "España" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estados Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estonia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Etiopía" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argentina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brasil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Canadá" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chile" });
-                _context.Country.Add(new CountryEntity { CountryName = "Perú" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ecuador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estados Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "España" });
-                _context.Country.Add(new CountryEntity { CountryName = "Francia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Italia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Japón" });
-                _context.Country.Add(new CountryEntity { CountryName = "China" });
-                _context.Country.Add(new CountryEntity { CountryName = "India" });
-                _context.Country.Add(new CountryEntity { CountryName = "Afganistán" });
-                _context.Country.Add(new CountryEntity { CountryName = "Albania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Alemania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Andorra" });
-                _context.Country.Add(new CountryEntity { CountryName = "Angola" });
-                _context.Country.Add(new CountryEntity { CountryName = "Antigua y Barbuda" });
-                _context.Country.Add(new CountryEntity { CountryName = "Arabia Saudita" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argelia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Argentina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Armenia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Australia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Austria" });
-                _context.Country.Add(new CountryEntity { CountryName = "Azerbaiyán" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bahamas" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bangladés" });
-                _context.Country.Add(new CountryEntity { CountryName = "Barbados" });
-                _context.Country.Add(new CountryEntity { CountryName = "Baréin" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bélgica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Belice" });
-                _context.Country.Add(new CountryEntity { CountryName = "Benín" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bielorrusia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Birmania" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bolivia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bosnia y Herzegovina" });
-                _context.Country.Add(new CountryEntity { CountryName = "Botsuana" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brasil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Brunéi" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bulgaria" });
-                _context.Country.Add(new CountryEntity { CountryName = "Burkina Faso" });
-                _context.Country.Add(new CountryEntity { CountryName = "Burundi" });
-                _context.Country.Add(new CountryEntity { CountryName = "Bután" });
-                _context.Country.Add(new CountryEntity { CountryName = "Cabo Verde" });
-                _context.Country.Add(new CountryEntity { CountryName = "Camboya" });
-                _context.Country.Add(new CountryEntity { CountryName = "Camerún" });
-                _context.Country.Add(new CountryEntity { CountryName = "Canadá" });
-                _context.Country.Add(new CountryEntity { CountryName = "Catar" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chad" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chile" });
-                _context.Country.Add(new CountryEntity { CountryName = "China" });
-                _context.Country.Add(new CountryEntity { CountryName = "Chipre" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ciudad del Vaticano" });
-                _context.Country.Add(new CountryEntity { CountryName = "Colombia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Comoras" });
-                _context.Country.Add(new CountryEntity { CountryName = "Corea del Norte" });
-                _context.Country.Add(new CountryEntity { CountryName = "Corea del Sur" });
-                _context.Country.Add(new CountryEntity { CountryName = "Costa de Marfil" });
-                _context.Country.Add(new CountryEntity { CountryName = "Costa Rica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Croacia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Cuba" });
-                _context.Country.Add(new CountryEntity { CountryName = "Dinamarca" });
-                _context.Country.Add(new CountryEntity { CountryName = "Dominica" });
-                _context.Country.Add(new CountryEntity { CountryName = "Ecuador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Egipto" });
-                _context.Country.Add(new CountryEntity { CountryName = "El Salvador" });
-                _context.Country.Add(new CountryEntity { CountryName = "Emiratos Árabes Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eritrea" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eslovaquia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Eslovenia" });
-                _context.Country.Add(new CountryEntity { CountryName = "España" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estados Unidos" });
-                _context.Country.Add(new CountryEntity { CountryName = "Estonia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Etiopía" });
 
                 await _context.SaveChangesAsync();
             }
@@ -205,6 +57,27 @@ namespace ApiProcolombiaPQR.DATA
                 _context.UserType.Add(new UserTypeEntity { Name = "Persona natural" });
                 _context.UserType.Add(new UserTypeEntity { Name = "Empresa" });
 
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckConsecutive()
+        {
+            if (!_context.Consecutive.Any())
+            {
+                _context.Consecutive.Add(new ConsecutiveEntity { Id = Guid.Parse("636a919e-627a-4fb4-990d-7f942914b555"), Number = 1 });
+            
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckStatus()
+        {
+            if (!_context.StatusPQR.Any())
+            {
+                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"), Name = "Acuso de recibido" });
+                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("3ee6cd97-e6c3-4873-a44c-e9ee91b45661"), Name = "Cierre" });
 
                 await _context.SaveChangesAsync();
             }

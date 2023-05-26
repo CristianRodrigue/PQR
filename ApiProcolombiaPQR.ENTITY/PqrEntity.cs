@@ -10,19 +10,15 @@ namespace ApiProcolombiaPQR.ENTITY
     {
         public Guid Id { get; set; }
 
+        public int CaseNumber { get; set; }
+
         public Guid CountryId { get; set; }
-        
-        public CountryEntity Country { get; }
 
         public Guid CaseTypeId { get; set; }
 
-        // public CaseTypeEntity CaseType { get; }
-
         public Guid UserTypeId { get; set; }
 
-        // public UserTypeEntity UserType { get; }
-
-        public string? RazonSocial { get; set; }
+        public string RazonSocial { get; set; }
 
         public string? Nit { get; set; }
 
@@ -32,13 +28,15 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public string Email { get; set; }
 
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public byte[]? File { get; set; }
 
         public string Comentario { get; set; }
 
         public bool AutorizaTratamientoDatos { get; set; }
+
+        public Guid CaseStatus { get; set; }
 
     }
 }

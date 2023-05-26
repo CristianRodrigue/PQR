@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ApiProcolombiaPQR.ENTITY
 {
-    public class CaseTypeEntity
+    public class ConsecutiveEntity
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public int Number { get; set; }
     }
 }
