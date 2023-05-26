@@ -57,15 +57,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listPQR">
-                <td>{{item.id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.caseTypeId}}</td>
-                <td>{{item.caseStatus}}</td>
+            <tr *ngFor="let pqr of pqrList">
+                <td>{{pqr.numeroCaso}}</td>
+                <td>{{pqr.nombreSolicitante}}</td>
+                <td>{{pqr.tipoCaso}}</td>
+                <td>{{pqr.estado}}</td>
                 <td>
-                    <button class="btn btn-primary" (click)="verDetalles(item.id)">Ver detalles</button>
-                    <button class="btn btn-success" (click)="asignarPqr(item.id)">Asignar</button>
-                    <button class="btn btn-info" (click)="generarCasoSalesforce(item.id)">Generar caso Salesforce</button>
+                    <button class="btn btn-primary" (click)="verDetalles(pqr)">Ver detalles</button>
+                    <button class="btn btn-success" (click)="asignarPqr(pqr)">Asignar</button>
+                    <button class="btn btn-info" (click)="generarCasoSalesforce(pqr)">Generar caso Salesforce</button>
                 </td>
             </tr>
         </tbody>

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PqrService } from 'src/app/services/pqr.service';
 
 interface PQR {
   numeroCaso: string;
@@ -17,40 +15,42 @@ interface PQR {
 })
 export class DashboardComponent implements OnInit {
 
-  listPQR: any[] = [];
-
-  constructor(private router: Router, private route: ActivatedRoute, private pqr: PqrService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.listarPQR();
   }
 
-  listarPQR() {
+  pqrList: PQR[] = [
+    {
+      numeroCaso: '1234567',
+      nombreSolicitante: 'Juan Perez',
+      tipoCaso: 'queja',
+      estado: 'pendiente'
+    },
+    {
+      numeroCaso: '2345678',
+      nombreSolicitante: 'María Rodríguez',
+      tipoCaso: 'reclamo',
+      estado: 'en-proceso'
+    },
+    {
+      numeroCaso: '3456789',
+      nombreSolicitante: 'Carlos Hernández',
+      tipoCaso: 'solicitud',
+      estado: 'resuelto'
+    },
+  ];
 
-    this.pqr.getAll()
-      .subscribe((response: any) => {
-
-        this.listPQR = response.data;
-        //this.mensualidades = response;
-        //this.cargando = false;
-
-        console.log('lista PQRS: ', this.listPQR);
-      });
-  }
-
-  verDetalles(item: any) {
+  verDetalles(pqr: PQR) {
     // Lógica para ver detalles de PQR
-    console.log('verDetalles', item);
   }
 
-  asignarPqr(item: any) {
+  asignarPqr(pqr: PQR) {
     // Lógica para asignar un PQR
-    console.log('asignarPqr', item);
   }
 
-  generarCasoSalesforce(item: any) {
+  generarCasoSalesforce(pqr: PQR) {
     // Lógica para generar un caso en Salesforce con PQR
-    console.log('generarCasoSalesforce', item);
   }
 
 }
