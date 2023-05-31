@@ -9,11 +9,13 @@ import { LoginComponent } from './modules/pages/login/login.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { SigninComponent } from './modules/pages/signin/signin.component';
 import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
+import { DetailsPqrComponent } from './modules/pages/details-pqr/details-pqr.component';
 
 const routes: Routes = [
   { path: '', component: CmsComponent,
   children: [
     { path: 'dashboard', component: DashboardComponent, canActivate: [ AuthGuard ]  },  
+    { path: 'pqrdetails/:id', component: DetailsPqrComponent, canActivate: [ AuthGuard ]  },  
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   ]},
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PQRModel } from '../models/pqr.model';
 
@@ -14,6 +15,10 @@ export class PqrService {
 
   getAll() {
     return this.http.get(this.url + '/Pqr/GetAll');
+  }
+
+  getById(id: string): Observable<PQRModel[]> {
+    return this.http.get<PQRModel[]>(this.url + '/Pqr/GetById/' + id);
   }
 
   
