@@ -1,6 +1,7 @@
 ﻿using ApiProcolombiaPQR.API.Models;
 using ApiProcolombiaPQR.DATA;
 using ApiProcolombiaPQR.ENTITY;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -63,19 +64,28 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
         }
 
-
-        /*
-        
+        // GET: api/Pqr/GetById
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid Id)
+        {
             try
             {
-                var query = await _context.AppUsers.Where(p => p.IdEmpresa == IdEmpresa).Select(x => new {
+                var query = await _dbContext.PQR.Where(q => q.Id == Id).Select(x => new {
                     Id = x.Id,
-                    Nombre = x.Nombre.Trim(),
-                    Apellido = x.Apellido.Trim(),
-                    Identificacion = x.Identificacion.Trim(),
-                    Email = x.Email.Trim(),
-                    Usuario = x.Usuario.Trim(),
-                    x.Activo
+                    CountryId = x.CountryId,
+                    CaseTypeId = x.CaseTypeId,
+                    UserTypeId = x.UserTypeId,
+                    RazonSocial = x.RazonSocial,
+                    Nit = x.Nit,
+                    Cedula = x.Cedula,
+                    Name = x.Name,
+                    Email = x.Email,
+                    PhoneNumber = x.PhoneNumber,
+                    File = x.File,
+                    Comentario = x.Comentario,
+                    AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
+                    CaseNumber = x.CaseNumber,
+                    CaseStatus = x.CaseStatus
                 }).ToListAsync();
 
                 var response = new
@@ -88,83 +98,14 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex)
             {
-                ErrorViewModel dataException = new ErrorViewModel();
-
-                dataException.IdEmpresa = IdEmpresa;
-                dataException.ErrorMessage = ex.Message;
-                dataException.ErrorCode = ex.HResult.ToString();
-                dataException.InnerError = ex.InnerException.Message;
-                dataException.ErrorDate = DateTime.Now;
-
-                ErrorHandling SaveError = new ErrorHandling();
-                SaveError.LoggerErrorAsync(dataException);
-
                 var response = new
                 {
                     success = false,
                     error = ex.Message,
-                    errorCode = ex.HResult,
-                    InnerError = ex.InnerException
                 };
                 return new BadRequestObjectResult(response);
             }
-
-            
-
-        
-    }
-
-    // GET: api/AppUser/GetById
-    [HttpGet("[action]/{IdEmpresa}/{Id}")]
-    public async Task<IActionResult> GetById([FromRoute] int IdEmpresa, Guid Id)
-    {
-        try
-        {
-            var query = await _context.AppUsers.Where(p => p.IdEmpresa == IdEmpresa && p.Id == Id).Select(x => new {
-                Id = x.Id,
-                Nombre = x.Nombre.Trim(),
-                Apellido = x.Apellido.Trim(),
-                Identificacion = x.Identificacion.Trim(),
-                Email = x.Email.Trim(),
-                Usuario = x.Usuario.Trim(),
-                Password = x.Password.Trim(),
-                Activo = x.Activo
-            }).ToListAsync();
-
-            var response = new
-            {
-                success = true,
-                data = query
-            };
-
-            return new OkObjectResult(response);
         }
-        catch (Exception ex)
-        {
-            ErrorViewModel dataException = new ErrorViewModel();
-
-            dataException.IdEmpresa = IdEmpresa;
-            dataException.ErrorMessage = ex.Message;
-            dataException.ErrorCode = ex.HResult.ToString();
-            dataException.InnerError = ex.InnerException.Message;
-            dataException.ErrorDate = DateTime.Now;
-
-            ErrorHandling SaveError = new ErrorHandling();
-            SaveError.LoggerErrorAsync(dataException);
-
-            var response = new
-            {
-                success = false,
-                error = ex.Message,
-                errorCode = ex.HResult,
-                InnerError = ex.InnerException
-            };
-            return new BadRequestObjectResult(response);
-        }
-    }
-
-
-         */
 
         // POST: api/Pqr/CreatePQR
         [HttpPost("[action]")]
@@ -207,6 +148,102 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+
+        }
+
+        // PUT: api/Pqr/Update/5
+        [HttpPut("[action]/{Id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid Id, [FromBody] UpdatePQRViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var query = await _dbContext.PQR.FirstOrDefaultAsync(e => e.Id == Id);
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            query.CountryId = modelo.CountryId;
+            query.CaseTypeId = modelo.CaseTypeId;
+            query.UserTypeId = modelo.UserTypeId;
+            query.RazonSocial = modelo.RazonSocial;
+            query.Nit = modelo.Nit;
+            query.Cedula = modelo.Cedula;
+            query.Name = modelo.Name;
+            query.Email = modelo.Email;
+            query.PhoneNumber = modelo.PhoneNumber;
+            query.File = modelo.File;
+            query.Comentario = modelo.Comentario;
+            query.AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos;
+            query.CaseNumber = modelo.CaseNumber;
+            query.CaseStatus = modelo.CaseStatus;
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+
+                var response = new
+                {
+                    success = true,
+                };
+
+                return new OkObjectResult(response);
+            } 
+            catch(Exception ex) 
+            {
+                var response = new
+                {
+                    success = false,
+                    error = ex.Message,
+                };
+                return new BadRequestObjectResult(response);
+            }
+
+        }
+
+        // DELETE: api/Pqr/Delete/5
+        [HttpDelete("[action]/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var query = await _dbContext.PQR.FirstOrDefaultAsync(e => e.Id == Id);
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.PQR.Remove(query);
+           
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+
+                var response = new
+                {
+                    success = true,
+                };
+
+                return new OkObjectResult(response);
+            }
+            catch (Exception ex) 
+            {
+                var response = new
+                {
+                    success = false,
+                    error = ex.Message,
+                };
+                return new BadRequestObjectResult(response);
+            }
+
 
         }
 
