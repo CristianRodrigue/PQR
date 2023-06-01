@@ -42,7 +42,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                     Comentario = x.Comentario,
                     AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
                     CaseNumber = x.CaseNumber,
-                    CaseStatus = x.CaseStatus
+                    CaseStatus = x.CaseStatus,
+                    Date = x.Date,
                 }).ToListAsync();
 
                 var response = new
@@ -85,7 +86,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                     Comentario = x.Comentario,
                     AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
                     CaseNumber = x.CaseNumber,
-                    CaseStatus = x.CaseStatus
+                    CaseStatus = x.CaseStatus,
+                    Date = x.Date,
                 }).ToListAsync();
 
                 var response = new
@@ -133,7 +135,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                 Comentario = modelo.Comentario,
                 AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos, 
                 CaseNumber = 5,
-                CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26")
+                CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
+                Date = modelo.Date
 
             };
 
@@ -181,6 +184,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             query.AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos;
             query.CaseNumber = modelo.CaseNumber;
             query.CaseStatus = modelo.CaseStatus;
+            query.Date = modelo.Date;
 
             try
             {

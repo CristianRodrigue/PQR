@@ -1,5 +1,6 @@
 using ApiProcolombiaPQR.DATA;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyPolicy = "_myPolicy";
@@ -36,6 +37,8 @@ void SeedDBInit(WebApplication app)
     }
 }
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,6 +51,12 @@ app.UseHttpsRedirection();
 app.UseCors(MyPolicy);
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+    RequestPath = new PathString("/Resources")
+}); ;
 
 app.MapControllers();
 

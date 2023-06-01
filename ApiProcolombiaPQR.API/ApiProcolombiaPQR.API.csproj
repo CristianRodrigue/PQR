@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ApiProcolombiaPQR.DATA\ApiProcolombiaPQR.DATA.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Files\" />
+  </ItemGroup>
+
 </Project>

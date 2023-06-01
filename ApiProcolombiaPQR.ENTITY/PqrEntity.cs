@@ -36,6 +36,8 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public bool AutorizaTratamientoDatos { get; set; }
 
+        public string Date { get; set; }
+
         public Guid CaseStatus { get; set; }
 
     }
