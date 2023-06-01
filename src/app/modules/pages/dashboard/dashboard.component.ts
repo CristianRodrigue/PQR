@@ -17,6 +17,7 @@ interface PQR {
 })
 export class DashboardComponent implements OnInit {
 
+
   listPQR: any[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private pqr: PqrService) { }
@@ -57,5 +58,9 @@ export class DashboardComponent implements OnInit {
     // Lógica para generar un caso en Salesforce con PQR
     console.log('generarCasoSalesforce', item);
   }
+
+  cerrarCaso(item: any) {
+    console.log('cerrarCaso', item);
+    }
 
 }

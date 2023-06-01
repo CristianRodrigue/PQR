@@ -16,4 +16,5 @@ export interface PQRModel {
     autorizaTratamientoDatos: boolean;
     caseNumber: number;
     caseStatus: string;
+    date: string;
   }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PQRModel } from 'src/app/models/pqr.model';
@@ -6,6 +6,7 @@ import { CaseTypeService } from 'src/app/services/case-type.service';
 import { CountryService } from 'src/app/services/country.service';
 import { PqrService } from 'src/app/services/pqr.service';
 import { UserTypeService } from 'src/app/services/user-type.service';
+import { EventEmitter } from 'stream';
 //se agrego tipo de caso y cedula con metodo de solo digito numerico, no se eliminan los caracteres de cedula
 @Component({
   selector: 'app-form-pqr',
@@ -22,10 +23,8 @@ export class FormPqrComponent implements OnInit{
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
   
-
   userTypeSelected: number = -1;
   archivoInvalido: boolean | undefined;
-  
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +45,8 @@ export class FormPqrComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
       comentario: ['', [Validators.required, Validators.maxLength(1000)]],
+      fecha:['',],
+      autorizo:[false]
     });
 
     this.cargarData();
@@ -59,6 +60,7 @@ export class FormPqrComponent implements OnInit{
     this.consultarTipoUsuario();
   }
 
+ 
   actualizarCaracteresRestantes() {
     const comentario = this.formPQR.get('comentario')?.value;
     const longitudComentario = comentario ? comentario.length : 0;
@@ -197,8 +199,12 @@ verificarTamanioArchivo(event: any) {
       email: '',
       telefono: '',
       comentario: '',
+      fecha: new Date().toISOString(),
+      autorizo:false,
+      
     });
   }
+
 
   guardar() {
     console.log('Guardar PQR');
@@ -219,7 +225,7 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula)
+    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,this.formPQR.value.fecha)
       .subscribe(result => {
 
         console.log('formulario enviado exitosamente.');
