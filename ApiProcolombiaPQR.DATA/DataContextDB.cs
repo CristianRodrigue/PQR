@@ -30,6 +30,8 @@ namespace ApiProcolombiaPQR.DATA
 
         public DbSet<StatusEntity> StatusPQR { get; set; }
 
+        public DbSet<FilesEntity> Files { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

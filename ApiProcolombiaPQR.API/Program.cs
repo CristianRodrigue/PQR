@@ -52,11 +52,11 @@ app.UseCors(MyPolicy);
 
 app.UseAuthorization();
 
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
     RequestPath = new PathString("/Resources")
-}); ;
+}); ;*/
 
 app.MapControllers();
 

@@ -26,6 +26,7 @@ namespace ApiProcolombiaPQR.DATA
             await CheckRoleAsync();
             await CheckUsersAsync();
             await CheckConsecutive();
+            await CheckStatus();
         }
 
         private async Task CheckCountriesAsync()

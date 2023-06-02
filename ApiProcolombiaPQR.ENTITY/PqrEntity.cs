@@ -36,9 +36,11 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public bool AutorizaTratamientoDatos { get; set; }
 
-        public string Date { get; set; }
+        public DateTime PQRDate { get; set; }
 
         public Guid CaseStatus { get; set; }
+
+        public Guid? FileId { get; set; }
 
     }
 }
