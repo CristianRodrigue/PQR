@@ -38,21 +38,21 @@ export class DetailsPqrComponent implements OnInit {
     this.pqr.getById(this.id)
       .subscribe((response: any) => {
 
-        this.numeroCaso = response.data[0].caseNumber;
-        this.tipoCaso = response.data[0].caseTypeId;
-        this.tipoUsuario = response.data[0].userTypeId;
+        this.numeroCaso = response.data[0].numeroCaso;
+        this.tipoCaso = response.data[0].caseType;
+        this.tipoUsuario = response.data[0].userType;
         this.razonSocial = response.data[0].razonSocial;
         this.nit = response.data[0].nit;
         this.cedula = response.data[0].cedula;
-        this.pais = response.data[0].countryId;
-        this.nombre = response.data[0].name;
+        this.pais = response.data[0].country;
+        this.nombre = response.data[0].nombre;
         this.email = response.data[0].email;
-        this.telefono = response.data[0].phoneNumber;
+        this.telefono = response.data[0].telefono;
         this.file = response.data[0].file;
         this.autorizaTratamientoDatos = response.data[0].autorizaTratamientoDatos;
         this.comentarios = response.data[0].comentario;
-        this.estado = response.data[0].caseStatus;
-        this.fecha = response.data[0].date;
+        this.estado = response.data[0].estatus;
+        this.fecha = response.data[0].fechaPQR;
 
         console.log('PQR: ', response.data[0]);
       });
