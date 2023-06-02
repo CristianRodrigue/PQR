@@ -3,7 +3,7 @@
         <a href="https://procolombia.co/" class="navbar-brand">
             <img src="../../../../assets/images/logo_proco.png" alt="ProColombia">
         </a>
-        <div class="d-flex">
+        <div class="d-flex btn-login">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" [routerLink]="[ '/login']">
                 login
             </button>
@@ -11,29 +11,27 @@
     </div>
 </nav>
 <div class="main-cta">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-xs-12 col-lg-6 text-procolombia">
-                <h1>Preguntas, quejas, reclamos, felicitaciones y sugerencias</h1>
-                <p class="p-text">Para PROCOLOMBIA es importante conocer sus comentarios e inquietudes así como atender las quejas y
-                    reclamos de sus usuarios, por lo cual lo invitamos a que diligencie la siguiente información. Con el
-                    objetivo de facilitar el registro de su solicitud recuerde que una Queja es la manifestación de una
-                    inconformidad hacia un funcionario y un Reclamo es la manifestación de una inconformidad frente a un
-                    servicio.</p>
-                <p class="p-text">En el caso de que su registro corresponda a una queja o reclamo, ProColombia ha definido un plazo de
-                    15 días hábiles para la generación de una respuesta al caso que manifieste.</p>
-                <p class="button-go">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                        [routerLink]="[ '/pqr']">
-                        Ir a crear solicitud ›
-                    </button>
-                </p>
-            </div>
-            <div class="col-xs-12 col-lg-6 image-procolombia">
-                <img src="../../../../assets/images/banners_nosotros_mobile_0.webp" alt="Cómo realizar una petición, queja, o reclamo en Procolombia"
-                    title="Cómo realizar una petición, queja, o reclamo en Procolombia" />
-            
-            </div>
+    <div class="row grid grid-cols-1 md:grid-cols-2">
+        <div class=" text-procolombia">
+            <h1>Preguntas, quejas, reclamos, felicitaciones y sugerencias</h1>
+            <p class="p-text">Para PROCOLOMBIA es importante conocer sus comentarios e inquietudes así como atender las quejas y
+                reclamos de sus usuarios, por lo cual lo invitamos a que diligencie la siguiente información. Con el
+                objetivo de facilitar el registro de su solicitud recuerde que una Queja es la manifestación de una
+                inconformidad hacia un funcionario y un Reclamo es la manifestación de una inconformidad frente a un
+                servicio.</p>
+            <p class="p-text">En el caso de que su registro corresponda a una queja o reclamo, ProColombia ha definido un plazo de
+                15 días hábiles para la generación de una respuesta al caso que manifieste.</p>
+            <p class="button-go">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    [routerLink]="[ '/pqr']">
+                    Ir a crear solicitud ›
+                </button>
+            </p>
+        </div>
+        <div class="image-procolombia">
+            <img src="../../../../assets/images/banners_nosotros_mobile_0.webp" alt="Cómo realizar una petición, queja, o reclamo en Procolombia"
+                title="Cómo realizar una petición, queja, o reclamo en Procolombia" />
+        
         </div>
     </div>
 </div>

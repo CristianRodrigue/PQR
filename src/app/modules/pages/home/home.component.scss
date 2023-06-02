@@ -49,6 +49,7 @@ h1 {
 .main-cta {
     text-align: left;
     padding-top: 2rem;
+    width: 100%;
 }
 
 * {
@@ -68,11 +69,14 @@ h1 {
 
 .text-procolombia {
     text-align: justify;
+    
+    //padding-right: 30px;
 }
 
 .image-procolombia {
     display: block;
     margin: auto;
+    padding-right: 60px;
 
     img {
         display: inline;
@@ -80,11 +84,67 @@ h1 {
     }
 }
 
+
+
 .button-go {
     display: flex;
     justify-content: center;
     align-items: center;   
 }
+
+.btn-login {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 760px) {
+
+    .navbar-brand {
+        padding-left: 20px;
+    }   
+
+    .btn-login {
+        padding-right: 20px;
+    }
+
+    .text-procolombia {
+        padding-left: 20px;
+        padding-right: 20px;
+    }    
+
+    .image-procolombia {
+        margin-top: 70px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+  }
+
+@media (min-width: 760px) {
+
+    .main-cta {
+        margin-top: 80px;
+    }
+
+    .button-go {
+        padding-top: 20px;
+    }
+
+    .navbar-brand {
+        padding-left: 60px;
+    }   
+
+    .btn-login {
+        padding-right: 60px;
+    }
+
+    .text-procolombia {
+        padding-left: 60px;
+    }   
+
+    .image-procolombia {
+        padding-right: 60px;
+    }
+  }
 
 
 

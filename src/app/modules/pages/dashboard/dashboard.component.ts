@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
 
     this.pqr.getAll()
       .subscribe((response: any) => {
-
+        console.log('lista PQRS response: ', response);
         this.listPQR = response.data;
         //this.mensualidades = response;
         //this.cargando = false;

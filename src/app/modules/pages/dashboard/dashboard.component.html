@@ -85,11 +85,11 @@
             <tr *ngFor="let item of listPQR; let i=index">
                 <td scope="row ">{{ i + 1 }}</td>
                 <td>{{item.id}}</td>
-                <td>{{item.date}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.caseTypeId}}</td>
-                <td>{{item.countryId}}</td>
-                <td>{{item.caseStatus}}</td>
+                <td>{{item.fechaPQR}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.caseType}}</td>
+                <td>{{item.country}}</td>
+                <td>{{item.estatus}}</td>
                 <td>
                     <button class="btn btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">Ver detalles</button>
                     <button class="btn btn-success" (click)="asignarPqr(item.id)">Asignar</button>
