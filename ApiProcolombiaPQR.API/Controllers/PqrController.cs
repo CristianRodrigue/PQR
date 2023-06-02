@@ -97,31 +97,82 @@ namespace ApiProcolombiaPQR.API.Controllers
         [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
+            /* try
+             {
+                 var query = await _dbContext.PQR.Where(q => q.Id == Id).Select(x => new {
+                     Id = x.Id,
+                     CountryId = x.CountryId,
+                     CaseTypeId = x.CaseTypeId,
+                     UserTypeId = x.UserTypeId,
+                     RazonSocial = x.RazonSocial,
+                     Nit = x.Nit,
+                     Cedula = x.Cedula,
+                     Name = x.Name,
+                     Email = x.Email,
+                     PhoneNumber = x.PhoneNumber,
+                     File = x.File,
+                     Comentario = x.Comentario,
+                     AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
+                     CaseNumber = x.CaseNumber,
+                     CaseStatus = x.CaseStatus,
+                     PQRDate = x.PQRDate,
+                 }).ToListAsync();
+
+                 var response = new
+                 {
+                     success = true,
+                     data = query
+                 };
+
+                 return new OkObjectResult(response);
+             }
+             catch (Exception ex)
+             {
+                 var response = new
+                 {
+                     success = false,
+                     error = ex.Message,
+                 };
+                 return new BadRequestObjectResult(response);
+             }*/
+
             try
             {
-                var query = await _dbContext.PQR.Where(q => q.Id == Id).Select(x => new {
-                    Id = x.Id,
-                    CountryId = x.CountryId,
-                    CaseTypeId = x.CaseTypeId,
-                    UserTypeId = x.UserTypeId,
-                    RazonSocial = x.RazonSocial,
-                    Nit = x.Nit,
-                    Cedula = x.Cedula,
-                    Name = x.Name,
-                    Email = x.Email,
-                    PhoneNumber = x.PhoneNumber,
-                    File = x.File,
-                    Comentario = x.Comentario,
-                    AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
-                    CaseNumber = x.CaseNumber,
-                    CaseStatus = x.CaseStatus,
-                    PQRDate = x.PQRDate,
-                }).ToListAsync();
+             
+
+                var query = from PQRS in _dbContext.PQR
+                            join Country in _dbContext.Country on PQRS.CountryId equals Country.Id
+                            join CaseType in _dbContext.CaseType on PQRS.CaseTypeId equals CaseType.Id
+                            join UserType in _dbContext.UserType on PQRS.UserTypeId equals UserType.Id
+                            join Status in _dbContext.StatusPQR on PQRS.CaseStatus equals Status.Id
+                            // join Files in _dbContext.Files on PQRS.FileId equals Files.Id
+                            where PQRS.Id==Id
+                            select new
+                            {
+                                Id = PQRS.Id,
+                                Country = Country.CountryName,
+                                CaseType = CaseType.Name,
+                                UserType = UserType.Name,
+                                RazonSocial = PQRS.RazonSocial,
+                                Nit = PQRS.Nit,
+                                Cedula = PQRS.Cedula,
+                                Nombre = PQRS.Name,
+                                Email = PQRS.Email,
+                                Telefono = PQRS.PhoneNumber,
+                                File = PQRS.File,
+                                Comentario = PQRS.Comentario,
+                                AutorizaTratamientoDatos = PQRS.AutorizaTratamientoDatos,
+                                NumeroCaso = PQRS.CaseNumber,
+                                Estatus = Status.Name,
+                                FechaPQR = PQRS.PQRDate
+                            };
+
+                var queryLinq = await query.ToListAsync();
 
                 var response = new
                 {
                     success = true,
-                    data = query
+                    data = queryLinq
                 };
 
                 return new OkObjectResult(response);
@@ -135,10 +186,15 @@ namespace ApiProcolombiaPQR.API.Controllers
                 };
                 return new BadRequestObjectResult(response);
             }
-        }
 
-        // POST: api/Pqr/CreatePQR
-        [HttpPost("[action]")]
+
+
+            }
+
+
+
+            // POST: api/Pqr/CreatePQR
+            [HttpPost("[action]")]
         public async Task<IActionResult> CreatePQR([FromBody] PqrViewModel modelo)
         {
             if (!ModelState.IsValid)
