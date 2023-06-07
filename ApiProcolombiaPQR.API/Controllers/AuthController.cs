@@ -7,6 +7,8 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using ApiProcolombiaPQR.ENTITY;
+using ApiProcolombiaPQR.API.Models;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
@@ -32,11 +34,16 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 // Validar si el usuario existe
-                var usuario = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == modelo.password);
+                var usuario = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
                 
                 if (usuario == null)
                 {
                     return BadRequest("El usuario no existe");
+                }
+
+                if (!VerifyPasswordHash(modelo.password, usuario.Password_hash, usuario.Password_salt))
+                {
+                    return NotFound();
                 }
 
                 var rolUsuario = await _dbContext.Role.FirstOrDefaultAsync(x => x.Id == usuario.Role);
@@ -85,8 +92,68 @@ namespace ApiProcolombiaPQR.API.Controllers
 
         }
 
+        // POST: api/Auth/Create
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Create([FromBody] CreateUserViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            string email = modelo.Email.ToLower();
 
+            if (await _dbContext.Users.AnyAsync(u => u.Email == email))
+            {
+                return BadRequest("El email ya existe");
+            }
+
+            CreatePasswordHash(modelo.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var pHash = passwordHash;
+            var pSalt = passwordSalt;
+
+            UserEntity user = new UserEntity 
+            {
+                Name = modelo.Name,
+                Email = modelo.Email,
+                Password_hash = passwordHash,
+                Password_salt = passwordSalt,
+                Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c")
+            };
+
+            try
+            {
+                _dbContext.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hash = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hash.Key;
+                passwordHash = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passwordHashAlmacenado, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var passwordHashNuevo = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                return new ReadOnlySpan<byte>(passwordHashAlmacenado).SequenceEqual(new ReadOnlySpan<byte>(passwordHashNuevo));
+            }
+        }
+
+        // ==========================================================================================================
         // GET: api/Pqr
         [HttpGet]
         public IActionResult Get()

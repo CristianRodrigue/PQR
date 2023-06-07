@@ -14,7 +14,9 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public string Email { get; set; }
 
-        public string Password { get; set; }
+        public byte[] Password_hash { get; set; }
+
+        public byte[] Password_salt { get; set; }
 
         public Guid Role { get; set; }
     }

@@ -99,9 +99,23 @@ namespace ApiProcolombiaPQR.DATA
         {
             if (!_context.Users.Any())
             {
-                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password = "1234567890", Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
+                CreatePasswordHash("1234567890", out byte[] passwordHash, out byte[] passwordSalt);
+
+                var pHash = passwordHash;
+                var pSalt = passwordSalt;
+
+                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
 
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hash = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hash.Key;
+                passwordHash = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 
