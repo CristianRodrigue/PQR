@@ -45,7 +45,7 @@ export class FormPqrComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
       comentario: ['', [Validators.required, Validators.maxLength(1000)]],
-      fecha:['',],
+      //fecha:['',],
       autorizo:[false]
     });
 
@@ -199,7 +199,7 @@ verificarTamanioArchivo(event: any) {
       email: '',
       telefono: '',
       comentario: '',
-      fecha: new Date().toISOString(),
+      //fecha: new Date().toISOString(),
       autorizo:false,
       
     });
@@ -225,7 +225,7 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,this.formPQR.value.fecha)
+    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,)
       .subscribe(result => {
 
         console.log('formulario enviado exitosamente.');

@@ -22,7 +22,7 @@ export class PqrService {
   }
 
   
-  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,autorizo:boolean,fecha:string) {
+  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,autorizo:boolean,) {
 
     const data = {
       CountryId: country,
@@ -36,7 +36,7 @@ export class PqrService {
       PhoneNumber: telefono,
       RazonSocial: razonSocial,
       autorizaTratamientoDatos: autorizo,
-      Date: fecha,
+      //Date: fecha,
       
     };
 
