@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Images } from 'src/app/constants/images';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -64,15 +65,36 @@ export class LoginComponent implements OnInit {
 
     }
 
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor'
+    });
+    Swal.showLoading();
+
     this.auth.login(this.formLogin.get('email')?.value ?? '', this.formLogin.get('password')?.value ?? '')
     .subscribe(result => {
       console.log('result login: ', result);
-      // console.log('logueando usuario');
 
-      this.router.navigateByUrl('/dashboard');
+      if (result.status === 'Ok') {
+        Swal.close();
+        this.router.navigateByUrl('/dashboard');
+
+        // console.log(result.token);
+      }
+
+    }, (err: any) => {
+      // console.log(err.error.error.message);
+      console.log(err);
+
+      Swal.fire({
+        allowOutsideClick: true,
+        icon: 'error',
+        title: 'Error al ingresar',
+        text: 'usuario o contraseña no valido'
+      });
 
     });
-
 
   }
 
