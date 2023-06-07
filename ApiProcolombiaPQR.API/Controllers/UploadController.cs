@@ -1,45 +1,43 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApiProcolombiaPQR.API.Models;
+using ApiProcolombiaPQR.DATA;
+using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UploadController : ControllerBase
+    public class UploadController : Controller
     {
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult Upload() 
+        private DataContextDB _dbContext;
+
+        public UploadController(DataContextDB dbContext)
         {
-            try 
-            {
-                var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources", "Files");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            _dbContext = dbContext;
+        }
 
-                if (file.Length > 0)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Upload(FilesEntity file)
+        {
+            if (file.File != null && file.File.Length > 0)
+            {
+                try
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
 
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                    return Ok(new { dbPath });
-                }
-                else {
-                    return BadRequest();
-                }
+                    // Guardar los cambios en la base de datos
+                    await _dbContext.SaveChangesAsync();
 
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return StatusCode(500, $"Internal server error: {ex}");
+                return BadRequest("No se ha seleccionado un archivo para subir.");
             }
-
-    
         }
     }
 }

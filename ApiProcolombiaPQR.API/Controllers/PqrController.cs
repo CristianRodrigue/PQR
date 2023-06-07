@@ -26,26 +26,6 @@ namespace ApiProcolombiaPQR.API.Controllers
         {
             try
             {
-                /*var query = await _dbContext.PQR.Select(x => new
-                {
-                    Id = x.Id,
-                    CountryId = x.CountryId,
-                    CaseTypeId = x.CaseTypeId,
-                    UserTypeId = x.UserTypeId,
-                    RazonSocial = x.RazonSocial,
-                    Nit = x.Nit,
-                    Cedula = x.Cedula,
-                    Name = x.Name,
-                    Email = x.Email,
-                    PhoneNumber = x.PhoneNumber,
-                    File = x.File,
-                    Comentario = x.Comentario,
-                    AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
-                    CaseNumber = x.CaseNumber,
-                    CaseStatus = x.CaseStatus,
-                    PQRDate = x.PQRDate,
-                }).ToListAsync(); */
-
                 var query = from PQRS in _dbContext.PQR
                             join Country in _dbContext.Country on PQRS.CountryId equals Country.Id
                             join CaseType in _dbContext.CaseType on PQRS.CaseTypeId equals CaseType.Id
@@ -97,49 +77,9 @@ namespace ApiProcolombiaPQR.API.Controllers
         [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
-            /* try
-             {
-                 var query = await _dbContext.PQR.Where(q => q.Id == Id).Select(x => new {
-                     Id = x.Id,
-                     CountryId = x.CountryId,
-                     CaseTypeId = x.CaseTypeId,
-                     UserTypeId = x.UserTypeId,
-                     RazonSocial = x.RazonSocial,
-                     Nit = x.Nit,
-                     Cedula = x.Cedula,
-                     Name = x.Name,
-                     Email = x.Email,
-                     PhoneNumber = x.PhoneNumber,
-                     File = x.File,
-                     Comentario = x.Comentario,
-                     AutorizaTratamientoDatos = x.AutorizaTratamientoDatos,
-                     CaseNumber = x.CaseNumber,
-                     CaseStatus = x.CaseStatus,
-                     PQRDate = x.PQRDate,
-                 }).ToListAsync();
-
-                 var response = new
-                 {
-                     success = true,
-                     data = query
-                 };
-
-                 return new OkObjectResult(response);
-             }
-             catch (Exception ex)
-             {
-                 var response = new
-                 {
-                     success = false,
-                     error = ex.Message,
-                 };
-                 return new BadRequestObjectResult(response);
-             }*/
-
             try
             {
              
-
                 var query = from PQRS in _dbContext.PQR
                             join Country in _dbContext.Country on PQRS.CountryId equals Country.Id
                             join CaseType in _dbContext.CaseType on PQRS.CaseTypeId equals CaseType.Id
@@ -189,12 +129,9 @@ namespace ApiProcolombiaPQR.API.Controllers
 
 
 
-            }
-
-
-
-            // POST: api/Pqr/CreatePQR
-            [HttpPost("[action]")]
+        }
+        // POST: api/Pqr/CreatePQR
+        [HttpPost("[action]")]
         public async Task<IActionResult> CreatePQR([FromBody] PqrViewModel modelo)
         {
             if (!ModelState.IsValid)
@@ -292,7 +229,6 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
         }
-
         // DELETE: api/Pqr/Delete/5
         [HttpDelete("[action]/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid Id)
@@ -331,9 +267,6 @@ namespace ApiProcolombiaPQR.API.Controllers
                 };
                 return new BadRequestObjectResult(response);
             }
-
-
         }
-
     }
 }
