@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +10,6 @@ namespace ApiProcolombiaPQR.ENTITY
     {
         public Guid Id { get; set; }
 
-        public IFormFile File { get; set; }
+        public byte[] File { get; set; }
     }
 }

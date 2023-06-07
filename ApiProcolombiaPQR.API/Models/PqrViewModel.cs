@@ -26,7 +26,7 @@ namespace ApiProcolombiaPQR.API.Models
 
         public string PhoneNumber { get; set; }
 
-        public byte[]? File { get; set; }
+        public IFormFile? File { get; set; }
 
         public string Comentario { get; set; }
 

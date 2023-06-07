@@ -126,9 +126,6 @@ namespace ApiProcolombiaPQR.API.Controllers
                 };
                 return new BadRequestObjectResult(response);
             }
-
-
-
         }
         // POST: api/Pqr/CreatePQR
         [HttpPost("[action]")]
@@ -139,29 +136,33 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            // TODO: GENERAR CONSECUTIVO PARA ASIGNAROLO
-
-            PqrEntity pqr = new PqrEntity
+            using (MemoryStream ms = new MemoryStream())
             {
-                CountryId = modelo.CountryId,
-                CaseTypeId = modelo.CaseTypeId,
-                UserTypeId = modelo.UserTypeId,
-                RazonSocial = modelo.RazonSocial,
-                Nit = modelo.Nit,
-                Cedula = modelo.Cedula,
-                Name = modelo.Name,
-                Email = modelo.Email,
-                PhoneNumber = modelo.PhoneNumber,
-                File = modelo.File,
-                Comentario = modelo.Comentario,
-                AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos, 
-                CaseNumber = 5,
-                CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
-                PQRDate = DateTime.Now
+                modelo.File.CopyTo(ms);
 
-            };
+                PqrEntity pqr = new PqrEntity
+                {
+                    CountryId = modelo.CountryId,
+                    CaseTypeId = modelo.CaseTypeId,
+                    UserTypeId = modelo.UserTypeId,
+                    RazonSocial = modelo.RazonSocial,
+                    Nit = modelo.Nit,
+                    Cedula = modelo.Cedula,
+                    Name = modelo.Name,
+                    Email = modelo.Email,
+                    PhoneNumber = modelo.PhoneNumber,
+                    //File = modelo.File,
+                    File = ms.ToArray(),
+                    Comentario = modelo.Comentario,
+                    AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
+                    CaseNumber = 5,
+                    CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
+                    PQRDate = DateTime.Now
 
-            _dbContext.PQR.Add(pqr);
+                };
+                _dbContext.PQR.Add(pqr);
+            }
+            
 
             try
             {

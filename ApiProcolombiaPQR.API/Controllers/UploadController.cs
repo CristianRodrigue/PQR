@@ -2,6 +2,7 @@
 using ApiProcolombiaPQR.DATA;
 using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
@@ -15,28 +16,23 @@ namespace ApiProcolombiaPQR.API.Controllers
         {
             _dbContext = dbContext;
         }
-
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Upload(FilesEntity file)
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile file)
         {
-            if (file.File != null && file.File.Length > 0)
+            /*using (MemoryStream ms = new MemoryStream()) {
+                file.CopyTo(ms);
+                _dbContext.Files.Add(ms.ToArray());
+            }*/
+            
+
+            try
             {
-                try
-                {
-
-                    // Guardar los cambios en la base de datos
-                    await _dbContext.SaveChangesAsync();
-
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+                await _dbContext.SaveChangesAsync();
+                return StatusCode(StatusCodes.Status201Created);
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest("No se ha seleccionado un archivo para subir.");
+                return BadRequest(ex.Message);
             }
         }
     }
