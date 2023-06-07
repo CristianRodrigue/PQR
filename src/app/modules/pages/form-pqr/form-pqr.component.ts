@@ -15,6 +15,7 @@ import { EventEmitter } from 'stream';
 })
 export class FormPqrComponent implements OnInit{
 
+  archivoCapturado: any;
   formPQR: FormGroup;
   MAX_CARACTERES_COMENTARIO = 1000;
   caracteresRestantes: number = this.MAX_CARACTERES_COMENTARIO;
@@ -22,6 +23,8 @@ export class FormPqrComponent implements OnInit{
   listaPais: any[] = [];
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
+  
+  public archivos: any = []
   
   userTypeSelected: number = -1;
   archivoInvalido: boolean | undefined;
@@ -45,7 +48,7 @@ export class FormPqrComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
       comentario: ['', [Validators.required, Validators.maxLength(1000)]],
-      //fecha:['',],
+      file: [''],
       autorizo:[false]
     });
 
@@ -187,6 +190,12 @@ verificarTamanioArchivo(event: any) {
     }
   }
 
+  onFileSelected(event: any) {
+    this.archivoCapturado = event?.target?.files[0];
+  }
+  
+   
+
   cargarData() {
     this.formPQR.setValue({
       tipoCaso: '',
@@ -199,7 +208,7 @@ verificarTamanioArchivo(event: any) {
       email: '',
       telefono: '',
       comentario: '',
-      //fecha: new Date().toISOString(),
+      file:'',
       autorizo:false,
       
     });
@@ -225,10 +234,11 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,)
+    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,this.formPQR.value.archivoCapturado)
       .subscribe(result => {
 
         console.log('formulario enviado exitosamente.');
+        console.log(this.pqrService);
 
       });
 

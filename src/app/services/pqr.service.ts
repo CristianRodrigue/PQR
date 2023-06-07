@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PQRModel } from '../models/pqr.model';
+import { Byte } from "@angular/compiler/src/util";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class PqrService {
   }
 
   
-  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,autorizo:boolean,) {
+  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,autorizo:boolean,file:File) {
 
     const data = {
       CountryId: country,
@@ -37,6 +38,7 @@ export class PqrService {
       RazonSocial: razonSocial,
       autorizaTratamientoDatos: autorizo,
       //Date: fecha,
+      File:file,
       
     };
 
