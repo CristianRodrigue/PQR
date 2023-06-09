@@ -5,10 +5,12 @@ using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
+   
     [Route("api/[controller]")]
     [ApiController]
     public class PqrController : ControllerBase
@@ -127,6 +129,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return new BadRequestObjectResult(response);
             }
         }
+
+        
         // POST: api/Pqr/CreatePQR
         [HttpPost("[action]")]
         public async Task<IActionResult> CreatePQR([FromBody] PqrViewModel modelo)
@@ -136,11 +140,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                modelo.File.CopyTo(ms);
-
-                PqrEntity pqr = new PqrEntity
+            
+            PqrEntity pqr = new PqrEntity
                 {
                     CountryId = modelo.CountryId,
                     CaseTypeId = modelo.CaseTypeId,
@@ -151,8 +152,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                     Name = modelo.Name,
                     Email = modelo.Email,
                     PhoneNumber = modelo.PhoneNumber,
-                    //File = modelo.File,
-                    File = ms.ToArray(),
+                    File = modelo.File,
                     Comentario = modelo.Comentario,
                     AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
                     CaseNumber = 5,
@@ -161,8 +161,6 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                 };
                 _dbContext.PQR.Add(pqr);
-            }
-            
 
             try
             {
@@ -175,6 +173,8 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
         }
+
+      
 
         // PUT: api/Pqr/Update/5
         [HttpPut("[action]/{Id}")]
