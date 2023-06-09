@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-f
 import { Images } from './constants/images';
 import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
 import { DetailsPqrComponent } from './modules/pages/details-pqr/details-pqr.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { DetailsPqrComponent } from './modules/pages/details-pqr/details-pqr.com
     ReactiveFormsModule,
   ],
   providers: [
-    Images
+    Images,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

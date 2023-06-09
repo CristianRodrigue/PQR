@@ -1,53 +1,68 @@
 <div>
-    <div class="row">
-        <div class="col-3">
-            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de
-                caso:</label>
-            <input type="text" id="first_name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Ingrese número de caso" required>
-        </div>
-        <div class="col-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de caso:</label>
-            <select
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Seleccione un tipo de caso</option>
-                <option value="queja">Queja</option>
-                <option value="reclamo">Reclamo</option>
-                <option value="solicitud">Solicitud</option>
-            </select>
-        </div>
-        <div class="col-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado:</label>
-            <select
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Seleccione un estado</option>
-                <option value="pendiente">Abierto</option>
-                <option value="resuelto">Cerrado</option>
+    <form class="flex items-center" [formGroup]="formulario"  (submit)="filtrarResultados($event)">
+
+        <div class="row">
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de
+                    caso:</label>
+                <input type="text" name="numeroCaso"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingrese número de caso" formControlName="numeroCaso">
+            </div>
+
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de caso:</label>
+                <select formControlName="tipoCaso" name="tipoCaso"
                 
-            </select>
-        </div>
-        <div class="col-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País:</label>
-            <select
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Seleccione un país</option>
-                <option value="argentina">Argentina</option>
-                <option value="chile">Chile</option>
-                <option value="colombia">Colombia</option>
-                <option value="peru">Perú</option>
-            </select>
-        </div>
-        <div class="col-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha:</label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="date" id="start" name="trip-start"
-       value="2023-07-22"
-       min="2022-01-01" max="2023-12-31">
-        </div>
-    </div>
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Seleccione un tipo de caso</option>
+                    <option value="queja">Queja</option>
+                    <option value="reclamo">Reclamo</option>
+                    <option value="felicitacion">Felicitacion</option>
+                    <option value="pregunta">Pregunta</option>
+                    <option value="sugerencia">Sugerencia</option>
+                </select>
+            </div>
 
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de usuario:</label>
+                <select formControlName="tipoUsuario" name="tipoUsuario"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Seleccione un tipo de caso</option>
+                    <option value="persona natural">Persona natural</option>
+                    <option value="empresa">Empresa</option>
+                </select>
+            </div>
 
-    <form class="flex items-center">
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado:</label>
+                <select formControlName="estado" name="estado"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Seleccione un estado</option>
+                    <option value="acuso de recibido">Acuso de recibido</option>
+                    <option value="cerrado">Cerrado</option>
+
+                </select>
+            </div>
+
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País:</label>
+                <select formControlName="pais" name="pais"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Seleccione un país</option>
+                    <option value="colombia">Colombia</option>
+                    <option value="mexico">Mexico</option>
+                </select>
+            </div>
+
+            <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha:</label>
+                <input formControlName="fecha" name="fecha"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="date" id="date"  >
+            </div>
+        </div>
+
         <button type="submit"
             class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -56,15 +71,18 @@
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>Buscar
         </button>
-
-        <button type="submit"
-            class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-               Descargar
-        </button>
     </form>
+
+    <button type="submit"
+        class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+        Descargar
+    </button>
+
 </div>
 <div>
     <h2>Resultados de la búsqueda</h2>
@@ -74,7 +92,7 @@
                 <th>#</th>
                 <th>Número de caso</th>
                 <th>Fecha</th>
-                <th>Nombre del solicitante</th>
+                <th>Tipo de usuario</th>
                 <th>Tipo de caso</th>
                 <th>País</th>
                 <th>Estado</th>
@@ -82,11 +100,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listPQR; let i=index">
+            <tr *ngFor="let item of filteredResults; let i=index">
                 <td scope="row ">{{ i + 1 }}</td>
                 <td>{{item.numeroCaso}}</td>
                 <td>{{item.fechaPQR}}</td>
-                <td>{{item.nombre}}</td>
+                <td>{{item.userType}}</td>
                 <td>{{item.caseType}}</td>
                 <td>{{item.country}}</td>
                 <td>{{item.estatus}}</td>
@@ -95,7 +113,8 @@
                     <button class="btn btn-success" (click)="asignarPqr(item.id)">Asignar</button>
                     <button class="btn btn-info" (click)="generarCasoSalesforce(item.id)">Generar caso
                         Salesforce</button>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="cerrarCaso(item.id)">Cerrar caso</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                        (click)="cerrarCaso(item.id)">Cerrar caso</button>
                 </td>
             </tr>
         </tbody>

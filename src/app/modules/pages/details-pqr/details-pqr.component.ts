@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PqrService } from 'src/app/services/pqr.service';
 import { PQRModel } from '../../../models/pqr.model';
 import { Byte } from '@angular/compiler/src/util';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-details-pqr',
@@ -29,7 +30,7 @@ export class DetailsPqrComponent implements OnInit {
   public estado!: string;
   public fecha!:string;
 
-  constructor(public router: Router, private _Activatedroute: ActivatedRoute, private pqr: PqrService) {
+  constructor(public router: Router, private _Activatedroute: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe) {
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
   }
 
@@ -53,6 +54,9 @@ export class DetailsPqrComponent implements OnInit {
         this.comentarios = response.data[0].comentario;
         this.estado = response.data[0].estatus;
         this.fecha = response.data[0].fechaPQR;
+
+        const formattedDate = this.datePipe.transform(response.data[0].fechaPQR, 'dd-MM-yyyy HH:mm:ss');
+      this.fecha = formattedDate !== null ? formattedDate : '';
 
         console.log('PQR: ', response.data[0]);
       });
