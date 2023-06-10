@@ -44,7 +44,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                                 Nombre = PQRS.Name,
                                 Email = PQRS.Email,
                                 Telefono = PQRS.PhoneNumber,
-                                File = PQRS.File,
+                                File = PQRS.FileId,
                                 Comentario = PQRS.Comentario,
                                 AutorizaTratamientoDatos = PQRS.AutorizaTratamientoDatos,
                                 NumeroCaso = PQRS.CaseNumber,
@@ -99,7 +99,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                                 Nombre = PQRS.Name,
                                 Email = PQRS.Email,
                                 Telefono = PQRS.PhoneNumber,
-                                File = PQRS.File,
+                                File = PQRS.FileId,
                                 Comentario = PQRS.Comentario,
                                 AutorizaTratamientoDatos = PQRS.AutorizaTratamientoDatos,
                                 NumeroCaso = PQRS.CaseNumber,
@@ -138,7 +138,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
             using (MemoryStream ms = new MemoryStream())
             {
-                modelo.File.CopyTo(ms);
+                //modelo.File!.CopyTo(ms);
 
                 PqrEntity pqr = new PqrEntity
                 {
@@ -152,7 +152,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                     Email = modelo.Email,
                     PhoneNumber = modelo.PhoneNumber,
                     //File = modelo.File,
-                    File = ms.ToArray(),
+                    //File = ms.ToArray(),
                     Comentario = modelo.Comentario,
                     AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
                     CaseNumber = 5,
@@ -201,7 +201,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             query.Name = modelo.Name;
             query.Email = modelo.Email;
             query.PhoneNumber = modelo.PhoneNumber;
-            query.File = modelo.File;
+            //query.File = modelo.File;
             query.Comentario = modelo.Comentario;
             query.AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos;
             query.CaseNumber = modelo.CaseNumber;

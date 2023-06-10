@@ -30,8 +30,6 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public string PhoneNumber { get; set; }
 
-        public byte[]? File { get; set; }
-
         public string Comentario { get; set; }
 
         public bool AutorizaTratamientoDatos { get; set; }

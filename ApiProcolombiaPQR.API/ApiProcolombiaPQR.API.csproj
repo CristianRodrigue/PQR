@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiProcolombiaPQR.COMMON\ApiProcolombiaPQR.COMMON.csproj" />
     <ProjectReference Include="..\ApiProcolombiaPQR.DATA\ApiProcolombiaPQR.DATA.csproj" />
   </ItemGroup>
 

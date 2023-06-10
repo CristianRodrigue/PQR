@@ -1,4 +1,8 @@
-﻿using ApiProcolombiaPQR.ENTITY;
+﻿using Microsoft.OpenApi.Any;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using ApiProcolombiaPQR.ENTITY;
+using ApiProcolombiaPQR.COMMON.Utilities;
 
 namespace ApiProcolombiaPQR.API.Models
 {
@@ -26,7 +30,8 @@ namespace ApiProcolombiaPQR.API.Models
 
         public string PhoneNumber { get; set; }
 
-        public IFormFile? File { get; set; }
+        [JsonConverter(typeof(JsonToByteArrayConverter))]
+        public byte[]? File { get; set; }
 
         public string Comentario { get; set; }
 
