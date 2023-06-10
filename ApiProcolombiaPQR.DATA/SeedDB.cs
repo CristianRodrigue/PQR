@@ -46,6 +46,9 @@ namespace ApiProcolombiaPQR.DATA
             {
                 _context.CaseType.Add(new CaseTypeEntity { Name = "Queja" });
                 _context.CaseType.Add(new CaseTypeEntity { Name = "Reclamo" });
+                _context.CaseType.Add(new CaseTypeEntity { Name = "Felicitacion" });
+                _context.CaseType.Add(new CaseTypeEntity { Name = "Pregunta" });
+                _context.CaseType.Add(new CaseTypeEntity { Name = "Sugerencia" });
 
                 await _context.SaveChangesAsync();
             }
@@ -57,7 +60,6 @@ namespace ApiProcolombiaPQR.DATA
             {
                 _context.UserType.Add(new UserTypeEntity { Name = "Persona natural" });
                 _context.UserType.Add(new UserTypeEntity { Name = "Empresa" });
-
 
                 await _context.SaveChangesAsync();
             }
