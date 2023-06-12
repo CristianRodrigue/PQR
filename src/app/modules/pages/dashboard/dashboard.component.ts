@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PqrService } from 'src/app/services/pqr.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as XLSX from 'xlsx';
 
 
 interface PQR {
@@ -24,11 +25,13 @@ export class DashboardComponent implements OnInit {
 
   public numeroCasoBusqueda: string | undefined;
   public tipoCasoBusqueda: string | undefined;
+  private id: any | null;
 
   listPQR: any[] = [];
   filteredResults: any[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe,private formBuilder: FormBuilder) { 
+  constructor(private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe,private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute ) { 
+    this.id = this._Activatedroute.snapshot.paramMap.get('id');
 
     this.formulario = this.formBuilder.group({
       numeroCaso: [''],
@@ -60,17 +63,36 @@ export class DashboardComponent implements OnInit {
             fechaPQR: formattedDate
           };
         });
-        
-        //this.mensualidades = response;
-        //this.cargando = false;
 
         console.log('lista PQRS: ', this.listPQR);
       });
   }
+
+ cerrarCaso(item: any){
+  console.log("cerrar caso")
+ }
+
+  exportToExcel(event?: Event): void {
+    this.filtrarResultados(event);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.filteredResults);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'informe_pqr');
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url: string = window.URL.createObjectURL(data);
+    const link: HTMLAnchorElement = document.createElement('a');
+    link.href = url;
+    link.download = fileName + '.xlsx';
+    link.click();
+  }
   
 
-  filtrarResultados(event: Event) {
-    event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+  filtrarResultados(event?: Event) {
+    if(event){
+    event.preventDefault();} // Evitar el comportamiento predeterminado del formulario
 
     // Obtener los valores de los filtros de búsqueda
     const searchValues = this.formulario.value;
@@ -120,26 +142,16 @@ export class DashboardComponent implements OnInit {
           console.log('match into: ',searchValues.pais,' + ', item.country)
         }
     
-        if (searchValues.fecha && item.fechaPQR !== searchValues.fecha) {
+        if (this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy') && item.fechaPQR !== this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy')) {
           match = false;
 
           console.log('match into: ',searchValues.fecha,' + ', item.fechaPQR)
-
         }
+        
         console.log('match: ',match)
         return match;
     });
 }
-
-  generarInforme() {
-    // Aquí puedes llamar a una función que genere el informe de PQR y lo descargue en formato PDF
-    // Por ejemplo, puedes utilizar una librería como pdf-lib para generar el PDF
-    // y la función saveAs de FileSaver.js para descargar el archivo PDF
-  }
-  verDetalles(item: any) {
-    // Lógica para ver detalles de PQR
-    console.log('verDetalles', item);
-  }
 
   asignarPqr(item: any) {
     // Lógica para asignar un PQR
@@ -151,8 +163,6 @@ export class DashboardComponent implements OnInit {
     console.log('generarCasoSalesforce', item);
   }
 
-  cerrarCaso(item: any) {
-    console.log('cerrarCaso', item);
-    }
+  
 
 }
