@@ -32,6 +32,8 @@ namespace ApiProcolombiaPQR.DATA
 
         public DbSet<FilesEntity> Files { get; set; }
 
+        public DbSet<MailTemplateEntity> MailTemplate { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

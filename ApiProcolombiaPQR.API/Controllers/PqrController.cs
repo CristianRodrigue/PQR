@@ -130,7 +130,6 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
         }
 
-        
         // POST: api/Pqr/CreatePQR
         [HttpPost("[action]")]
         public async Task<IActionResult> CreatePQR([FromBody] PqrViewModel modelo)
@@ -166,19 +165,19 @@ namespace ApiProcolombiaPQR.API.Controllers
                 };
                 _dbContext.PQR.Add(pqr);
 
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-                return StatusCode(StatusCodes.Status201Created);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                try
+                {
+                    await _dbContext.SaveChangesAsync();
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
             }
 
         }
-
-      
 
         // PUT: api/Pqr/Update/5
         [HttpPut("[action]/{Id}")]
@@ -234,6 +233,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
         }
+
         // DELETE: api/Pqr/Delete/5
         [HttpDelete("[action]/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid Id)
@@ -273,5 +273,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return new BadRequestObjectResult(response);
             }
         }
+
+
     }
 }
