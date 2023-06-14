@@ -14,9 +14,14 @@ import { DashboardComponent } from './modules/pages/dashboard/dashboard.componen
 import { SigninComponent } from './modules/pages/signin/signin.component';
 import { PageNotFoundComponent } from './modules/pages/page-not-found/page-not-found.component';
 import { Images } from './constants/images';
-import { ManageMessagesComponent } from './modules/pages/manage-messages/manage-messages.component';
 import { DetailsPqrComponent } from './modules/pages/details-pqr/details-pqr.component';
 import { DatePipe } from '@angular/common';
+import { MessageComponent } from './modules/pages/message/message.component';
+import { FormEditMessageComponent } from './modules/pages/message/form-edit-message/form-edit-message.component';
+import { FormCreateMessageComponent } from './modules/pages/message/form-create-message/form-create-message.component';
+import { UserAdminComponent } from './modules/pages/user-admin/user-admin.component';
+import { FormCreateUserAdminComponent } from './modules/pages/user-admin/form-create-user-admin/form-create-user-admin.component';
+import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit-user-admin/form-edit-user-admin.component';
 
 
 @NgModule({
@@ -31,8 +36,13 @@ import { DatePipe } from '@angular/common';
     DashboardComponent,
     SigninComponent,
     PageNotFoundComponent,
-    ManageMessagesComponent,
-    DetailsPqrComponent
+    DetailsPqrComponent,
+    MessageComponent,
+    FormEditMessageComponent,
+    FormCreateMessageComponent,
+    UserAdminComponent,
+    FormCreateUserAdminComponent,
+    FormEditUserAdminComponent
   ],
   imports: [
     BrowserModule,

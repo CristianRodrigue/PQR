@@ -74,12 +74,12 @@ h1 {
 }
 
 .image-procolombia {
-    display: block;
-    margin: auto;
+    display: block !important;
+    margin: auto !important;
     padding-right: 60px;
 
     img {
-        display: inline;
+        display: inline !important;
         border-radius: 15px;
     }
 }

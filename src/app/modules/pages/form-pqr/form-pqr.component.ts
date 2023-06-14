@@ -15,8 +15,8 @@ import { EventEmitter } from 'stream';
 })
 export class FormPqrComponent implements OnInit{
 
-  archivoCapturado: any;
   formPQR: FormGroup;
+  fileToUpload: File | null = null;
   MAX_CARACTERES_COMENTARIO = 1000;
   caracteresRestantes: number = this.MAX_CARACTERES_COMENTARIO;
 
@@ -191,8 +191,23 @@ verificarTamanioArchivo(event: any) {
   }
 
   onFileSelected(event: any) {
-    this.archivoCapturado = event?.target?.files[0];
+
+    
+    console.log('evento 1',event );
+
+    if(event.target.files !== null) {
+      this.fileToUpload = event.target.files;
+      console.log('files: ', this.fileToUpload);
+    }
+
   }
+
+
+/*
+  handleFileInput(files: any) {
+    console.log('evento 2', files);
+    ///this.fileToUpload = files.item(0);
+}*/
   
    
 
@@ -234,7 +249,7 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo,this.formPQR.value.archivoCapturado)
+    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo, this.fileToUpload!)
       .subscribe(result => {
 
         console.log('formulario enviado exitosamente.');
