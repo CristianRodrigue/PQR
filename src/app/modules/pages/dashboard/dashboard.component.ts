@@ -5,15 +5,6 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 
-
-interface PQR {
-  numeroCaso: string;
-  nombreSolicitante: string;
-  tipoCaso: string;
-  estado: string;
-}
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -40,6 +31,7 @@ export class DashboardComponent implements OnInit {
     estado: [''],
     pais: [''],
     fecha: [''],
+    autorizaTratamientoDatos: [''],
 
     });
   }
@@ -103,6 +95,7 @@ export class DashboardComponent implements OnInit {
       tipoUsuario: searchValues.tipoUsuario?.toLowerCase(),
       estado: searchValues.estado?.toLowerCase(),
       pais: searchValues.pais?.toLowerCase(),
+      autorizaTratamientoDatos: searchValues.autorizaTratamientoDatos.toLowerCase(),
       fecha: searchValues.fecha
     };
 
@@ -140,6 +133,12 @@ export class DashboardComponent implements OnInit {
           match = false;
 
           console.log('match into: ',searchValues.pais,' + ', item.country)
+        }
+
+        if (searchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== searchValues.autorizaTratamientoDatos) {
+          match = false;
+
+          console.log('match into: ',searchValues.autorizaTratamientoDatos,' + ', item.autorizaTratamientoDatos)
         }
     
         if (this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy') && item.fechaPQR !== this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy')) {

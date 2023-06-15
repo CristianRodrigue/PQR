@@ -56,6 +56,16 @@
             </div>
 
             <div class="col-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Autoriza tratamiento de datos:</label>
+                <select formControlName="autorizaTratamientoDatos" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Seleccione *</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <div class="col-3">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha:</label>
                 <input formControlName="fecha" name="fecha"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -95,6 +105,7 @@
                 <th>Tipo de usuario</th>
                 <th>Tipo de caso</th>
                 <th>País</th>
+                <th>Tratamiento de datos</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -107,6 +118,7 @@
                 <td>{{item.userType}}</td>
                 <td>{{item.caseType}}</td>
                 <td>{{item.country}}</td>
+                <td>{{item.autorizaTratamientoDatos}}</td>
                 <td>{{item.estatus}}</td>
                 <td>
                     <button class="btn btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">Ver detalles</button>
