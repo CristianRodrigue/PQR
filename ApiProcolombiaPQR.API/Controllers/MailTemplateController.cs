@@ -111,6 +111,49 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
         }
 
+        [HttpPut("[action]/{Id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid Id, [FromBody] UpdateMailTemplateViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var query = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == Id);
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            query.Name = modelo.Name;
+            query.Description = modelo.Description;
+            query.Html = modelo.Html;
+            query.Enabled = modelo.Enabled;
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+
+                var response = new
+                {
+                    success = true,
+                };
+
+                return new OkObjectResult(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    success = false,
+                    error = ex.Message,
+                };
+                return new BadRequestObjectResult(response);
+            }
+
+        }
+
 
         // DELETE: api/MailTemplate/Delete/Id
         [HttpDelete("[action]/{Id}")]
