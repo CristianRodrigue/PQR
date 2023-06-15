@@ -22,7 +22,7 @@ import { FormCreateMessageComponent } from './modules/pages/message/form-create-
 import { UserAdminComponent } from './modules/pages/user-admin/user-admin.component';
 import { FormCreateUserAdminComponent } from './modules/pages/user-admin/form-create-user-admin/form-create-user-admin.component';
 import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit-user-admin/form-edit-user-admin.component';
-
+import { AngularEditorModule  } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -50,6 +50,7 @@ import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularEditorModule 
   ],
   providers: [
     Images,
