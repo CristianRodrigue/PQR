@@ -1,3 +1,37 @@
-<p>message works!</p>
-<br>
-<button type="button" [routerLink]="[ '/mensajes/create']" mat-flat-button color="accent">Crear</button>
+
+<div class="message">
+    <div class="text-right">
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" [routerLink]="[ '/mensajes/create']">Crear</button>
+    </div>
+    <div class="">
+        <table class="rounded-t-lg m-5 mx-auto bg-gray-800 text-gray-200">
+            <tr class="text-left border-b border-gray-300">
+              <th>#</th>
+              <th class="px-4 py-3">Nombre</th>
+              <th class="px-4 py-3">Descripcion</th>
+              <th class="px-4 py-3">Opciones</th>
+
+            </tr>
+            <tr class="bg-gray-700 border-b border-gray-600" *ngFor="let item of list; let i=index">
+              <td scope="row ">{{ i + 1 }}</td>
+              <td class="px-4 py-3">{{ item.name }}</td>
+              <td class="px-4 py-3">{{ item.description }}</td>
+              <td class="px-4 py-3 flex space-x-4">
+                <button class="btn btn-info btn-sm mr-sm-2" (click)="enabledMailTemplate(item.id, i)">
+                  <i class="fi fi-rr-check"></i>
+                </button>
+                <button class="btn btn-warning btn-sm mr-sm-2" [routerLink]="[ '/mensajes/edit', item.id ]">
+                  <i class="fi fi-rr-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-sm mr-sm-2" (click)="deleteMailTemplate(item.id, i)">
+                  <i class="fi fi-rr-trash"></i>
+                </button>
+              </td>
+            </tr>      
+          </table>
+    </div>
+</div>
+
+
+
+

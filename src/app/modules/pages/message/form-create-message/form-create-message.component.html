@@ -1,81 +1,19 @@
-<p>form-create-message works!</p>
-AQUI CRISTIAN CREA EL EDITOR
-
 <div class="container mx-auto py-8">
-    
-    <table class="w-full border border-gray-400">
-        <thead>
-            <tr class="bg-gray-200">
-                
-                <th class="px-4 py-2">Nombre</th>
-                <th class="px-4 py-2">Descripción</th>
-                <th class="px-4 py-2">Acciones</th>
-                
-            </tr>
-        </thead>
-       <!-- <tbody>
-            <tr *ngFor="let item of list; let i=index">
-               
-                <td >{{ item.name }}</td>
-                <td >{{item.description}}</td>
-            </tr>
-        </tbody>  -->
-        <tbody>
-            <tr >
-               
-                <td >Acuso de Recibido</td>
-                <td >Hola buen dia se recibio este caso...</td>
-                <td>
-                    <button class="btn btn-primary" >Editar</button>
-                   
-                </td>
 
-            </tr>
-
-            <tr >
-               
-                <td >Asignar a responsable</td>
-                <td >Hola buen dia se le asigno este caso</td>
-                <td>
-                    <button class="btn btn-primary" >Editar</button>
-                   
-                </td>
-
-            </tr>
-
-            <tr >
-               
-                <td >Usuario administrador</td>
-                <td >Hola buen dia se le asigno como administrador de la pagina</td>
-                <td>
-                    <button class="btn btn-primary" >Editar</button>
-                    
-                </td>
-
-            </tr>
-        </tbody>  
-        
-    </table>
-    
     <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="guardar()">
-       
-        <label for="nombre" class="block font-bold mb-2">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" formControlName="nombre" value="Hola"
-            class="border border-gray-400 p-2 w-full"><br>
-        
-            <label for="descripcion" class="block font-bold mb-2">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" class="border border-gray-400 p-2 w-full"
-            formControlName="descripcion"></textarea>
 
-            <label for="descripcion" >Edicion:</label>
-        <angular-editor id="descripcion" name="descripcion" 
-            formControlName="html"></angular-editor>
-            
-            
-            <br>
-        <button type="submit"
-            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Guardar</button>
+        <label class="block font-bold mb-2">Nombre:</label>
+        <input type="text" class="border border-gray-400 p-2 w-full" formControlName="nombre" value="Hola">
+
+        <label class="block font-bold mb-2">Descripción:</label>
+        <textarea class="border border-gray-400 p-2 w-full" formControlName="descripcion"></textarea>
+
+        <label>Edicion:</label>
+        <angular-editor  formControlName="html"></angular-editor>
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Guardar</button>
     </form>
+    <hr>
     <pre>
             Estado del formulario: {{ formulario.valid }}
             <br>
