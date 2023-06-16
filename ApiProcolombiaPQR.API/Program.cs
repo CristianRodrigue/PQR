@@ -52,7 +52,7 @@ app.UseCors(MyPolicy);
 
 app.UseAuthorization();
 
-app.UseStaticFiles();
+// app.UseStaticFiles();
 
 app.MapControllers();
 
