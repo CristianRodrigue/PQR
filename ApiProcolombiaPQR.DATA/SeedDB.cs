@@ -80,6 +80,7 @@ namespace ApiProcolombiaPQR.DATA
             if (!_context.StatusPQR.Any())
             {
                 _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"), Name = "Acuso de recibido" });
+                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("5832b8ac-a7d3-448d-8dde-eb8fea6f4ace"), Name = "Revisado" });
                 _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("3ee6cd97-e6c3-4873-a44c-e9ee91b45661"), Name = "Cierre" });
 
                 await _context.SaveChangesAsync();
