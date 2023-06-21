@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,18 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  getAll() {
+    return this.http.get(this.url + '/Auth/GetAll');
+  }
+
+  getById(id: string): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(this.url + '/Auth/GetById/' + id);
+  }
+
+  delete(Id: string) {
+    return this.http.delete(this.url + '/Auth/Delete/' + Id);
   }
 
 
