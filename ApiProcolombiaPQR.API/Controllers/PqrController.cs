@@ -1,4 +1,6 @@
 ﻿using ApiProcolombiaPQR.API.Models;
+using ApiProcolombiaPQR.COMMON.Models;
+using ApiProcolombiaPQR.COMMON.Utilities;
 using ApiProcolombiaPQR.DATA;
 using ApiProcolombiaPQR.ENTITY;
 using Azure;
@@ -139,10 +141,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                //modelo.File!.CopyTo(ms);
-
+            
                 PqrEntity pqr = new PqrEntity
                 {
                     CountryId = modelo.CountryId,
@@ -168,14 +167,36 @@ namespace ApiProcolombiaPQR.API.Controllers
                 try
                 {
                     await _dbContext.SaveChangesAsync();
+
+                    // Enviamos mensaje de correo al usuario para notificar que recibimos su pqr
+                    Guid IdPlantilla = Guid.Parse("F0198106-4805-474B-2F98-08DB6D4C3B60");
+                    var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
+
+                    if (plantilla != null)
+                    {
+                        string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+
+                        EmailViewModel correo = new EmailViewModel
+                        { 
+                            Destination = modelo.Email,
+                            Suject = "Recibimos tu PQR",
+                            Message = htmlPlantilla,
+                            IsHtml = true
+                        };
+
+                        SendEmail SendCorreo = new SendEmail();
+                        SendCorreo.SendAsync(correo);
+                    }
+
+                    // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
+
+
                     return StatusCode(StatusCodes.Status201Created);
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(ex.Message);
                 }
-
-            }
 
         }
 

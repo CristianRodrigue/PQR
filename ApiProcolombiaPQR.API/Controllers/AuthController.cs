@@ -153,120 +153,113 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
         }
 
-        // ==========================================================================================================
-        // GET: api/Pqr
-        [HttpGet]
-        public IActionResult Get()
+        // GET: api/Auth/GetAll
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAll()
         {
-            return Ok();
-        }
-
-        /*
-         // GET: api/Categories
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var categories = from c in _dbContext.Categories
-                             select new
-                             {
-                                 Id = c.Id,
-                                 Name = c.Name,
-                                 ImageUrl = c.ImageUrl
-                             };
-
-
-            return Ok(categories);
-        }
-
-        // GET: api/Categories/5
-        //[Authorize(Roles = "Admin")]
-        [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
-        {
-            var category = (from c in _dbContext.Categories
-                            where c.Id == id
-                            select new
-                            {
-                                Id = c.Id,
-                                Name = c.Name,
-                                ImageUrl = c.ImageUrl
-                            }).FirstOrDefault();
-
-
-            return Ok(category);
-
-        }
-
-        // POST: api/Categories
-        //[Authorize(Roles = "Admin")]
-        [HttpPost]
-        public IActionResult Post([FromBody] CategoryEntity category)
-        {
-            var stream = new MemoryStream(category.ImageArray);
-            var guid = Guid.NewGuid().ToString();
-            var file = $"{guid}.jpg";
-            var folder = "wwwroot";
-            var response = FilesHelper.UploadImage(stream, folder, file);
-            if (!response)
+            try
             {
-                return BadRequest();
+                var query = await _dbContext.Users
+                    .Select(x => new
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Email = x.Email,
+                        Role = x.Role
+                    }).ToListAsync();
+
+                var response = new
+                {
+                    success = true,
+                    data = query
+                };
+
+                return new OkObjectResult(response);
             }
-            else
+            catch (Exception ex)
             {
-                category.ImageUrl = file;
-                _dbContext.Categories.Add(category);
-                _dbContext.SaveChanges();
-                return StatusCode(StatusCodes.Status201Created);
+                return BadRequest(ex.Message);
             }
         }
 
-        // PUT: api/Categories/5
-        //[Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] CategoryEntity category)
-        {
-            var entity = _dbContext.Categories.Find(id);
-            if (entity == null)
-            {
-                return NotFound("No category found against this id...");
-            }
 
-            var stream = new MemoryStream(category.ImageArray);
-            var guid = Guid.NewGuid().ToString();
-            var file = $"{guid}.jpg";
-            var folder = "wwwroot";
-            var response = FilesHelper.UploadImage(stream, folder, file);
-            if (!response)
+        // GET: api/Auth/GetById
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid Id)
+        {
+            try
             {
-                return BadRequest();
+                var query = await _dbContext.Users.Where(x => x.Id == Id)
+                    .Select(x => new
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Email = x.Email,
+                        Role = x.Role
+                    }).ToListAsync();
+
+                var response = new
+                {
+                    success = true,
+                    data = query
+                };
+
+                return new OkObjectResult(response);
             }
-            else
+            catch (Exception ex)
             {
-                entity.Name = category.Name;
-                entity.ImageUrl = file;
-                _dbContext.SaveChanges();
-                return Ok("Category Updated Successfully...");
+                return BadRequest(ex.Message);
             }
         }
 
-        // DELETE: api/ApiWithActions/5
-        //[Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+
+
+
+
+
+
+
+
+
+
+
+        // DELETE: api/Auth/Delete/Id
+        [HttpDelete("[action]/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id)
         {
-            var category = _dbContext.Categories.Find(id);
-            if (category == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound("No category found against this id...");
+                return BadRequest(ModelState);
             }
-            else
+
+            var users = await _dbContext.Users.CountAsync();
+
+            if (users > 1)
             {
-                _dbContext.Categories.Remove(category);
-                _dbContext.SaveChanges();
-                return Ok("Category deleted...");
+                var user = await _dbContext.Users.FirstOrDefaultAsync(d => d.Id == Id);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                try
+                {
+                    _dbContext.Users.Remove(user);
+                    await _dbContext.SaveChangesAsync();
+
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
+
+            return Ok( new { 
+                        status = "NoPermitido" 
+                        });
         }
-         */
 
 
     }
