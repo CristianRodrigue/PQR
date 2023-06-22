@@ -169,12 +169,15 @@ namespace ApiProcolombiaPQR.API.Controllers
                     await _dbContext.SaveChangesAsync();
 
                     // Enviamos mensaje de correo al usuario para notificar que recibimos su pqr
-                    Guid IdPlantilla = Guid.Parse("F0198106-4805-474B-2F98-08DB6D4C3B60");
+                    Guid IdPlantilla = Guid.Parse("412A2146-F950-471A-8DF1-196C411559DA");
                     var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
+                
 
                     if (plantilla != null)
                     {
                         string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+                        htmlPlantilla = htmlPlantilla.Replace("{nombre}", "Cristian Rodriguez");
+
 
                         EmailViewModel correo = new EmailViewModel
                         { 
