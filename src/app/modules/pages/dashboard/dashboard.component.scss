@@ -1,3 +1,37 @@
+.dashboard {
+  padding: 20px;
+
+  .menu {
+    margin-bottom: 30px;
+  }
+
+  .filters {
+    padding: 20px;
+  }
+
+  .search-x {
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+  }
+
+  .search {
+    padding-top: 20px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+  }
+
+.table-data {
+  margin-top: 10px;
+
+.table {
+  margin-top: 20px;
+}
+
+}
+
+
+}
+
 #filtro {
   background-color: #f2f2f2;
   padding: 1rem;
@@ -91,3 +125,8 @@
     left: 4px;
     
   }*/
+
+  .btn-margin {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
