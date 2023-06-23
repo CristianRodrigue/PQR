@@ -14,9 +14,9 @@
     
                     <div class="col-2">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de caso:</label>
-                        <select formControlName="tipoCaso" name="tipoCaso"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Seleccione un tipo de caso</option>
+                        <select formControlName="tipoCaso" name="tipoCaso" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                            <option disabled selected>Seleccione un tipo de caso</option>
                             <option value="queja">Queja</option>
                             <option value="reclamo">Reclamo</option>
                             <option value="felicitacion">Felicitacion</option>
@@ -29,7 +29,7 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de usuario:</label>
                         <select formControlName="tipoUsuario" name="tipoUsuario"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Seleccione un tipo de usuario</option>
+                            <option disabled selected>Seleccione un tipo de usuario</option>
                             <option value="persona natural">Persona natural</option>
                             <option value="empresa">Empresa</option>
                         </select>
@@ -39,7 +39,7 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado:</label>
                         <select formControlName="estado" name="estado"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Seleccione un estado</option>
+                            <option disabled selected>Seleccione un estado</option>
                             <option value="acuso de recibido">Acuso de recibido</option>
                             <option value="cerrado">Cerrado</option>
     
@@ -50,7 +50,7 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">País:</label>
                         <select formControlName="pais" name="pais"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Seleccione un país</option>
+                            <option disabled selected>Seleccione un país</option>
                             <option value="colombia">Colombia</option>
                             <option value="mexico">Mexico</option>
                         </select>
@@ -60,7 +60,7 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Autoriza:</label>
                         <select formControlName="autorizaTratamientoDatos"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Seleccione *</option>
+                            <option disabled selected>Seleccione *</option>
                             <option value="true">True</option>
                             <option value="false">False</option>
                         </select>
@@ -82,7 +82,14 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>Buscar
                     </button>
+
+                    <button class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="limpiarBusqueda()"><svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>Limpiar busqueda</button>
                 </div>
+                
             </div>
             
 
@@ -102,31 +109,32 @@
     </div>
     <div class="table-data">
         <h2><strong>Resultados de la búsqueda</strong></h2>
-        <table class="table">
+        <table class="rounded-lg  mx-auto bg-gray-800 text-gray-200">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Número de caso</th>
-                    <th>Fecha</th>
-                    <th>Tipo de usuario</th>
-                    <th>Tipo de caso</th>
-                    <th>País</th>
-                    <th>Tratamiento de datos</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Número de caso</th>
+                    <th class="px-4 py-3">Fecha</th>
+                    <th class="px-4 py-3">Tipo de usuario</th>
+                    <th class="px-4 py-3">Tipo de caso</th>
+                    <th class="px-4 py-3">País</th>
+                    <th class="px-4 py-3">Tratamiento de datos</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of filteredResults; let i=index">
+                <tr class="bg-gray-700 border-b border-gray-600" *ngFor="let item of filteredResults | paginate: { itemsPerPage: 10, currentPage: page }; let i=index">
+
                     <td scope="row ">{{ i + 1 }}</td>
-                    <td>{{item.numeroCaso}}</td>
-                    <td>{{item.fechaPQR}}</td>
-                    <td>{{item.userType}}</td>
-                    <td>{{item.caseType}}</td>
-                    <td>{{item.country}}</td>
-                    <td>{{item.autorizaTratamientoDatos}}</td>
-                    <td>{{item.estatus}}</td>
-                    <td>
+                    <td class="px-4 py-3">{{item.numeroCaso}}</td>
+                    <td class="px-4 py-3">{{item.fechaPQR}}</td>
+                    <td class="px-4 py-3">{{item.userType}}</td>
+                    <td class="px-4 py-3">{{item.caseType}}</td>
+                    <td class="px-4 py-3">{{item.country}}</td>
+                    <td class="px-4 py-3">{{item.autorizaTratamientoDatos}}</td>
+                    <td class="px-4 py-3">{{item.estatus}}</td>
+                    <td class="px-4 py-3">
                         <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
                             <i class="fi fi-rr-eye"></i>
                         </button>
@@ -143,5 +151,7 @@
                 </tr>
             </tbody>
         </table>
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+
     </div>
 </div>

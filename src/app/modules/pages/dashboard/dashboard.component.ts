@@ -4,6 +4,7 @@ import { PqrService } from 'src/app/services/pqr.service';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,7 @@ export class DashboardComponent implements OnInit {
 
   formulario: FormGroup;
 
+  public page: number | undefined;
   public numeroCasoBusqueda: string | undefined;
   public tipoCasoBusqueda: string | undefined;
   private id: any | null;
@@ -59,6 +61,17 @@ export class DashboardComponent implements OnInit {
         console.log('lista PQRS: ', this.listPQR);
       });
   }
+  limpiarBusqueda(): void {
+    this.formulario.get('tipoCaso')?.setValue(null); 
+    this.formulario.get('numeroCaso')?.setValue(null);
+    this.formulario.get('tipoUsuario')?.setValue(null);
+    this.formulario.get('estado')?.setValue(null);
+    this.formulario.get('pais')?.setValue(null); 
+    this.formulario.get('fecha')?.setValue(null);
+    this.formulario.get('autorizaTratamientoDatos')?.setValue(null);     
+
+  }
+
 
  cerrarCaso(item: any){
   console.log("cerrar caso")
@@ -83,74 +96,60 @@ export class DashboardComponent implements OnInit {
   
 
   filtrarResultados(event?: Event) {
-    if(event){
-    event.preventDefault();} // Evitar el comportamiento predeterminado del formulario
-
+    if (event) {
+      event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+    }
+  
     // Obtener los valores de los filtros de búsqueda
     const searchValues = this.formulario.value;
-
+  
     const lowerCaseSearchValues = {
       numeroCaso: searchValues.numeroCaso?.toLowerCase(),
       tipoCaso: searchValues.tipoCaso?.toLowerCase(),
       tipoUsuario: searchValues.tipoUsuario?.toLowerCase(),
       estado: searchValues.estado?.toLowerCase(),
       pais: searchValues.pais?.toLowerCase(),
-      autorizaTratamientoDatos: searchValues.autorizaTratamientoDatos.toLowerCase(),
+      autorizaTratamientoDatos: searchValues.autorizaTratamientoDatos?.toLowerCase(),
       fecha: searchValues.fecha
     };
-
+  
     // Realizar el filtrado de resultados
     this.filteredResults = this.listPQR.filter(item => {
-        // Aplica las condiciones de filtro
-        let match = true;
-
-        if (searchValues.numeroCaso.toString()
-        && item.numeroCaso.toString() !== searchValues.numeroCaso.toString()) {
-          match = false;
-
-          console.log('match into: ',searchValues.numeroCaso,' + ', item.numeroCaso)
-        }
-    
-        if (searchValues.tipoCaso && item.caseType.toLowerCase() !== searchValues.tipoCaso) {
-          match = false;
-
-          console.log('match into: ',searchValues.tipoCaso,' + ', item.caseType)
-        }
-
-        if (searchValues.tipoUsuario && item.userType.toLowerCase() !== searchValues.tipoUsuario) {
-          match = false;
-
-          console.log('match into: ',searchValues.tipoUsuario,' + ', item.userType)
-        }
-    
-        if (searchValues.estado && item.estatus.toLowerCase() !== searchValues.estado) {
-          match = false;
-
-          console.log('match into: ',searchValues.estado,' + ', item.estatus)
-        }
-
-        if (searchValues.pais && item.country.toLowerCase() !== searchValues.pais) {
-          match = false;
-
-          console.log('match into: ',searchValues.pais,' + ', item.country)
-        }
-
-        if (searchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== searchValues.autorizaTratamientoDatos) {
-          match = false;
-
-          console.log('match into: ',searchValues.autorizaTratamientoDatos,' + ', item.autorizaTratamientoDatos)
-        }
-    
-        if (this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy') && item.fechaPQR !== this.datePipe.transform(searchValues.fecha, 'dd/MM/yyyy')) {
-          match = false;
-
-          console.log('match into: ',searchValues.fecha,' + ', item.fechaPQR)
-        }
-        
-        console.log('match: ',match)
-        return match;
+      // Aplica las condiciones de filtro
+      let match = true;
+  
+      if (lowerCaseSearchValues.numeroCaso && item.numeroCaso.toString().toLowerCase() !== lowerCaseSearchValues.numeroCaso) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.tipoCaso && item.caseType.toLowerCase() !== lowerCaseSearchValues.tipoCaso) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.tipoUsuario && item.userType.toLowerCase() !== lowerCaseSearchValues.tipoUsuario) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.estado && item.estatus.toLowerCase() !== lowerCaseSearchValues.estado) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.pais && item.country.toLowerCase() !== lowerCaseSearchValues.pais) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== lowerCaseSearchValues.autorizaTratamientoDatos) {
+        match = false;
+      }
+  
+      if (lowerCaseSearchValues.fecha && this.datePipe.transform(lowerCaseSearchValues.fecha, 'dd/MM/yyyy') !== item.fechaPQR) {
+        match = false;
+      }
+  
+      return match;
     });
-}
+  }
+  
 
   asignarPqr(item: any) {
     // Lógica para asignar un PQR

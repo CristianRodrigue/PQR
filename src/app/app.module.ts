@@ -23,6 +23,7 @@ import { UserAdminComponent } from './modules/pages/user-admin/user-admin.compon
 import { FormCreateUserAdminComponent } from './modules/pages/user-admin/form-create-user-admin/form-create-user-admin.component';
 import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit-user-admin/form-edit-user-admin.component';
 import { AngularEditorModule  } from '@kolkov/angular-editor';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AngularEditorModule  } from '@kolkov/angular-editor';
     FormCreateMessageComponent,
     UserAdminComponent,
     FormCreateUserAdminComponent,
-    FormEditUserAdminComponent
+    FormEditUserAdminComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { AngularEditorModule  } from '@kolkov/angular-editor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularEditorModule 
+    AngularEditorModule,
+    NgxPaginationModule, 
   ],
   providers: [
     Images,
