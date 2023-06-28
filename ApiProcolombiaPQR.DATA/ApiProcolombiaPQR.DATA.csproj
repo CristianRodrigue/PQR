@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Countries" Version="2.0.0.1" />
+    <PackageReference Include="ISO3166" Version="1.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Nager.Country" Version="4.0.0" />
   </ItemGroup>

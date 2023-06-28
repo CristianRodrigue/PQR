@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiProcolombiaPQR.DATA
 {
+
     public class DataContextDB : DbContext
     {
         public DataContextDB(DbContextOptions<DataContextDB> options) : base(options) { }
-
 
         public DbSet<UserEntity> Users { get; set; }
 

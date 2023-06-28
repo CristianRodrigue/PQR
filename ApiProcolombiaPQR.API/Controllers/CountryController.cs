@@ -1,7 +1,13 @@
 ﻿using ApiProcolombiaPQR.DATA;
+using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using ApiProcolombiaPQR.API.Models;
+using ApiProcolombiaPQR.COMMON.Models;
+using ApiProcolombiaPQR.COMMON.Utilities;
+using Maddalena;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
@@ -22,11 +28,13 @@ namespace ApiProcolombiaPQR.API.Controllers
         {
             try
             {
-                var query = await _dbContext.Country.Select(x => new
+
+                 var query = await _dbContext.Country.Select(x => new
                 {
                     Id = x.Id,
                     CountryName = x.CountryName.Trim(),
                 }).ToListAsync();
+                
 
                 var response = new
                 {

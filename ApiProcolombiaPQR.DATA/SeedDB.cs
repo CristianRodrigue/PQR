@@ -1,9 +1,6 @@
 ﻿using ApiProcolombiaPQR.ENTITY;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using ISO3166;
 
 namespace ApiProcolombiaPQR.DATA
 {
@@ -33,8 +30,10 @@ namespace ApiProcolombiaPQR.DATA
         {
             if (!_context.Country.Any())
             {
-                _context.Country.Add(new CountryEntity { CountryName = "Colombia" });
-                _context.Country.Add(new CountryEntity { CountryName = "Mexico" });
+                foreach (var country in Country.List)
+                {
+                    _context.Country.Add(new CountryEntity { CountryName = country.Name });
+                }
 
                 await _context.SaveChangesAsync();
             }

@@ -24,6 +24,8 @@ namespace ApiProcolombiaPQR.API.Controllers
             _dbContext = dbContext;
         }
 
+       
+
         // GET: api/Pqr/GetAll
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
@@ -169,27 +171,29 @@ namespace ApiProcolombiaPQR.API.Controllers
                     await _dbContext.SaveChangesAsync();
 
                     // Enviamos mensaje de correo al usuario para notificar que recibimos su pqr
-                    Guid IdPlantilla = Guid.Parse("412A2146-F950-471A-8DF1-196C411559DA");
+                    Guid IdPlantilla = Guid.Parse("11555004-3d87-4a4a-a08a-08db732dfe3a");
                     var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
-                
 
-                    if (plantilla != null)
+
+                if (plantilla != null)
+                {
+                    string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", pqr.Name);
+
+
+                    EmailViewModel correo = new EmailViewModel
                     {
-                        string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
-                        htmlPlantilla = htmlPlantilla.Replace("{nombre}", "Cristian Rodriguez");
+                        Destination = modelo.Email,
+                        Suject = "Recibimos tu PQR",
+                        Message = htmlPlantilla,
+                        IsHtml = true
+                    };
 
-
-                        EmailViewModel correo = new EmailViewModel
-                        { 
-                            Destination = modelo.Email,
-                            Suject = "Recibimos tu PQR",
-                            Message = htmlPlantilla,
-                            IsHtml = true
-                        };
-
-                        SendEmail SendCorreo = new SendEmail();
-                        SendCorreo.SendAsync(correo);
-                    }
+                    SendEmail SendCorreo = new SendEmail();
+                    SendCorreo.SendAsync(correo);
+                   
+                }
+                
 
                     // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
 

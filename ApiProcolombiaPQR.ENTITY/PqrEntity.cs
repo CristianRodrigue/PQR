@@ -39,6 +39,6 @@ namespace ApiProcolombiaPQR.ENTITY
         public Guid CaseStatus { get; set; }
 
         public Guid? FileId { get; set; }
-
+        
     }
 }
