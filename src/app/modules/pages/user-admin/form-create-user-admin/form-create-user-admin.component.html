@@ -1,1 +1,62 @@
-<p>form-create-user-admin works!</p>
+<div class="container">
+    <form autocomplete="off" [formGroup]="formAuth" (ngSubmit)="guardar()">
+        <div>
+            <div class="row">
+
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" class="form-control" formControlName="nombre"
+                        [class.is-invalid]="nombreNoValido">
+                    <div class="text-error">
+                        <small *ngIf="nombreNoValido" class="text-danger">* Ingrese su nombre</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo electrónico *</label>
+                    <input type="text" class="form-control" formControlName="email" [class.is-invalid]="emailNoValido">
+                    <div class="text-error">
+                        <small *ngIf="emailNoValido" class="text-danger">* Ingrese un correo valido</small>
+                    </div>
+                    <div *ngIf="!emailMach">
+                        <small class="text-danger">* el correo ya existe</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" formControlName="password"
+                        [class.is-invalid]="passwordNoValido">
+                    <div class="text-error">
+                        <small *ngIf="passwordNoValido" class="text-danger">* Minimo 6 caracteres</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Role *</label>
+                    <select class="input-wrapper" formControlName="role" [class.is-invalid]="roleNoValido">
+                        <option [value]="item.id" *ngFor="let item of listaRole">{{ item.name }}</option>
+                    </select>
+                    <div class="text-error">
+                        <small *ngIf="roleNoValido" class="text-danger">Seleccione un rol</small>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 text-right ">
+                    <button type="submit" mat-flat-button color="accent" [disabled]="formAuth.invalid">Enviar</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <hr>
+    <pre>
+        Estado del formulario: {{ formAuth.valid }}
+        <br>
+        Status: {{ formAuth.status }}
+        <br>
+        {{ formAuth.value | json }}
+    </pre>
+</div>

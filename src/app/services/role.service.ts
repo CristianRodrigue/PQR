@@ -5,13 +5,13 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserTypeService {
+export class RoleService {
 
   private url = environment.URL_API;
 
   constructor(private http: HttpClient) { }
 
   getAll() {
-    return this.http.get(this.url + '/UserType/GetAll');
+    return this.http.get(this.url + '/Role/GetAll');
   }
 }

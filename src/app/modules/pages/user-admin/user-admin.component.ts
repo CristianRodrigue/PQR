@@ -12,18 +12,18 @@ export class UserAdminComponent implements OnInit {
 
   list: any[] = [];
 
-  constructor(public router: Router, private userService: AuthService) { }
+  constructor(public router: Router, private userService: AuthService) {
+    this.getUsers();
+   }
 
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
   }
 
   getUsers() {
     this.userService.getAll()
       .subscribe((response: any) => {
         this.list = response.data;
-
-        console.log('lista mensaje: ', this.list);
       });
   }
 
@@ -52,10 +52,9 @@ export class UserAdminComponent implements OnInit {
       } */
 
       if (result.value) {
-        //this.tarifas.splice(i, 1);
         this.userService.delete(id).subscribe(res => {
 
-          console.log('delete result', res)
+          // console.log('delete result', res)
 
           let resultado: any;
           resultado = res;

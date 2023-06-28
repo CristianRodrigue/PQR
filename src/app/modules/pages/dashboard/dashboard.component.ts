@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { NgxPaginationModule } from 'ngx-pagination';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -151,9 +152,27 @@ export class DashboardComponent implements OnInit {
   }
   
 
-  asignarPqr(item: any) {
+  asignar(item: any) {
     // Lógica para asignar un PQR
     console.log('asignarPqr', item);
+
+    Swal.fire({
+      title: '<div class="text-left" style="margin-top: 40px;"><strong>Asignar PQR</strong></div>',
+      html:
+        'You can use <b>bold text</b>, ' +
+        '<a href="//sweetalert2.github.io">links</a> ' +
+        'and other HTML tags' +
+        '<button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Enviar</strong></button>',
+      showCloseButton: true,
+      
+      
+    })
+
+
+  }
+
+  enviarAsigncion() {
+    console.log('funciono');
   }
 
   generarCasoSalesforce(item: any) {

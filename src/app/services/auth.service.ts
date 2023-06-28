@@ -29,7 +29,7 @@ export class AuthService {
       authData
     ).pipe(
       map((result: any) => {
-        
+
         if (result.status === 'Ok') {
           console.log('Login Ok');
           sessionStorage.setItem('token', JSON.stringify(result.token));
@@ -61,8 +61,33 @@ export class AuthService {
     return this.http.get<UserModel[]>(this.url + '/Auth/GetById/' + id);
   }
 
+
+  create(nombre: string, email: string, password: string, role: string) {
+    
+    const data = {
+      Name: nombre,
+      Email: email,
+      Password: password,
+      Role: role,
+    };
+
+    return this.http.post(`${this.url}/Auth/Create`, data);
+  }
+
+
+
   delete(Id: string) {
     return this.http.delete(this.url + '/Auth/Delete/' + Id);
+  }
+
+  // Validadores
+
+  getEmailValidator(Email: string) {
+     
+    //let data = this.http.get(this.url + '/Auth/EmailValidator/' + Email);
+    //console.log('data email', data);
+
+    return this.http.get(this.url + '/Auth/EmailValidator/' + Email);
   }
 
 

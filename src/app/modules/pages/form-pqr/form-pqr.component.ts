@@ -7,13 +7,14 @@ import { CountryService } from 'src/app/services/country.service';
 import { PqrService } from 'src/app/services/pqr.service';
 import { UserTypeService } from 'src/app/services/user-type.service';
 import { EventEmitter } from 'stream';
+import Swal from 'sweetalert2';
 //se agrego tipo de caso y cedula con metodo de solo digito numerico, no se eliminan los caracteres de cedula
 @Component({
   selector: 'app-form-pqr',
   templateUrl: './form-pqr.component.html',
   styleUrls: ['./form-pqr.component.scss']
 })
-export class FormPqrComponent implements OnInit{
+export class FormPqrComponent implements OnInit {
 
   formPQR: FormGroup;
   fileToUpload: File | null = null;
@@ -23,39 +24,39 @@ export class FormPqrComponent implements OnInit{
   listaPais: any[] = [];
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
-  
+
   public archivos: any = []
-  
+
   userTypeSelected: number = -1;
   archivoInvalido: boolean | undefined;
 
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    private country: CountryService, 
-    private caseType: CaseTypeService, 
-    private userType: UserTypeService, 
+    private country: CountryService,
+    private caseType: CaseTypeService,
+    private userType: UserTypeService,
     private pqrService: PqrService
   ) {
     this.formPQR = this.fb.group({
       tipoCaso: ['', [Validators.required]],
       tipoUsuario: ['', [Validators.required]],
       pais: ['', [Validators.required]],
-      razonSocial: ['', ],
-      nit: ['', ],
-      cedula: ['', ],
+      razonSocial: ['',],
+      nit: ['',],
+      cedula: ['',],
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.minLength(7), Validators.pattern(/^[0-9]+$/)]],
       comentario: ['', [Validators.required, Validators.maxLength(1000)]],
       file: [''],
-      autorizo:[false]
+      autorizo: [false]
     });
 
     this.cargarData();
   }
 
- 
+
 
   ngOnInit(): void {
     this.consultarPaises();
@@ -63,36 +64,36 @@ export class FormPqrComponent implements OnInit{
     this.consultarTipoUsuario();
   }
 
- 
+
   actualizarCaracteresRestantes() {
     const comentario = this.formPQR.get('comentario')?.value;
     const longitudComentario = comentario ? comentario.length : 0;
     this.caracteresRestantes = this.MAX_CARACTERES_COMENTARIO - longitudComentario;
     if (this.caracteresRestantes < 0) { // verifica si se ha excedido el límite
-        this.formPQR.get('comentario')?.setValue(comentario.substring(0, this.MAX_CARACTERES_COMENTARIO)); // recorta el texto
+      this.formPQR.get('comentario')?.setValue(comentario.substring(0, this.MAX_CARACTERES_COMENTARIO)); // recorta el texto
     }
-}
+  }
 
-verificarTamanioArchivo(event: any) {
-  const archivo = event.target.files[0];
-  const tamanioMaximo = 2 * 1024 * 1024; // Tamaño máximo en bytes (2 megabytes)
+  verificarTamanioArchivo(event: any) {
+    const archivo = event.target.files[0];
+    const tamanioMaximo = 2 * 1024 * 1024; // Tamaño máximo en bytes (2 megabytes)
 
-  if (archivo && archivo.size > tamanioMaximo) {
+    if (archivo && archivo.size > tamanioMaximo) {
       this.archivoInvalido = true;
       this.formPQR.get('adjunto')?.setValue(null); // despejar el valor del archivo seleccionado
-  } else {
+    } else {
       this.archivoInvalido = false;
+    }
   }
-}
 
- 
+
   get tipoCasoNoValido() {
     return this.formPQR.get('tipoCaso')!.invalid && this.formPQR.get('tipoCaso')!.touched;
   }
   get tipoUsuarioNoValido() {
     return this.formPQR.get('tipoUsuario')!.invalid && this.formPQR.get('tipoUsuario')!.touched;
   }
-  
+
   // #region
   get razonSocialNoValida() {
     return this.formPQR.get('razonSocial')!.invalid && this.formPQR.get('razonSocial')!.touched;
@@ -133,7 +134,7 @@ verificarTamanioArchivo(event: any) {
   consultarTipoCaso() {
     this.caseType.getAll().subscribe((response: any) => {
       console.log('tipos caso: ', response.data);
-      this.listaTipoCaso = response.data; 
+      this.listaTipoCaso = response.data;
     });
   }
 
@@ -160,7 +161,7 @@ verificarTamanioArchivo(event: any) {
       this.formPQR.get('nit')?.setValidators([]);
       this.formPQR.get('razonSocial')?.setValidators([]);
 
-      this.formPQR.get('cedula')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.minLength(7)]);
+      this.formPQR.get('cedula')?.setValidators([Validators.pattern(/^[0-9]+$/), Validators.minLength(7)]);
 
     } else if (event.target["selectedIndex"] === 1) {
       this.userTypeSelected = 1;
@@ -168,8 +169,8 @@ verificarTamanioArchivo(event: any) {
       //this.formPQR.get('cedula')?.clearValidators();
       this.formPQR.get('cedula')?.setValidators([]);
 
-      this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/),Validators.minLength(7),Validators.required]);
-      this.formPQR.get('razonSocial')?.setValidators([Validators.required,Validators.maxLength(20)]);
+      this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/), Validators.minLength(7), Validators.required]);
+      this.formPQR.get('razonSocial')?.setValidators([Validators.required, Validators.maxLength(20)]);
     }
   }
 
@@ -192,10 +193,10 @@ verificarTamanioArchivo(event: any) {
 
   onFileSelected(event: any) {
 
-    
-    console.log('evento 1',event );
 
-    if(event.target.files !== null) {
+    console.log('evento 1', event);
+
+    if (event.target.files !== null) {
       this.fileToUpload = event.target.files;
       console.log('files: ', this.fileToUpload);
     }
@@ -203,13 +204,13 @@ verificarTamanioArchivo(event: any) {
   }
 
 
-/*
-  handleFileInput(files: any) {
-    console.log('evento 2', files);
-    ///this.fileToUpload = files.item(0);
-}*/
-  
-   
+  /*
+    handleFileInput(files: any) {
+      console.log('evento 2', files);
+      ///this.fileToUpload = files.item(0);
+  }*/
+
+
 
   cargarData() {
     this.formPQR.setValue({
@@ -223,9 +224,9 @@ verificarTamanioArchivo(event: any) {
       email: '',
       telefono: '',
       comentario: '',
-      file:'',
-      autorizo:false,
-      
+      file: '',
+      autorizo: false,
+
     });
   }
 
@@ -249,11 +250,26 @@ verificarTamanioArchivo(event: any) {
 
     }
 
-    this.pqrService.createPQR(this.formPQR.value.pais,this.formPQR.value.comentario,this.formPQR.value.email,this.formPQR.value.nombre,this.formPQR.value.telefono,this.formPQR.value.razonSocial,this.formPQR.value.tipoCaso,this.formPQR.value.tipoUsuario,this.formPQR.value.nit,this.formPQR.value.cedula,this.formPQR.value.autorizo, this.fileToUpload!)
+    Swal.fire({
+      title: 'Espere un momento',
+      text: 'Actualizando informacion',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+
+    this.pqrService.createPQR(this.formPQR.value.pais, this.formPQR.value.comentario, this.formPQR.value.email, this.formPQR.value.nombre, this.formPQR.value.telefono, this.formPQR.value.razonSocial, this.formPQR.value.tipoCaso, this.formPQR.value.tipoUsuario, this.formPQR.value.nit, this.formPQR.value.cedula, this.formPQR.value.autorizo, this.fileToUpload!)
       .subscribe(result => {
 
-        console.log('formulario enviado exitosamente.');
-        console.log(this.pqrService);
+        Swal.fire({
+          title: 'Registro Exitoso',
+          text: 'su PQR se ha registrado exitosamente',
+          icon: 'success'
+        });
+
+        // Limpiamos formulario
+        this.formPQR.reset();
+        this.router.navigateByUrl('/home');
 
       });
 
