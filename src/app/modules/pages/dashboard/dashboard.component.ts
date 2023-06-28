@@ -5,7 +5,13 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 import Swal from 'sweetalert2';
+
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { CountryService } from 'src/app/services/country.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -23,8 +29,9 @@ export class DashboardComponent implements OnInit {
 
   listPQR: any[] = [];
   filteredResults: any[] = [];
+  listaPais: any[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe,private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute ) { 
+  constructor(private dialog: MatDialog,private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe,private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute, private country: CountryService,  ) { 
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
 
     this.formulario = this.formBuilder.group({
@@ -41,6 +48,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarPQR();
+    this.consultarPaises();
+  }
+  openDialog() {
+    const mensaje = this.dialog.open(ModalComponent);
+  }
+
+  consultarPaises() {
+    this.country.getAll().subscribe((response: any) => {
+      console.log('paises: ', response.data);
+      this.listaPais = response.data;
+      console.log('lista pais', this.listaPais);
+    });
   }
 
   listarPQR() {
@@ -70,9 +89,7 @@ export class DashboardComponent implements OnInit {
     this.formulario.get('pais')?.setValue(null); 
     this.formulario.get('fecha')?.setValue(null);
     this.formulario.get('autorizaTratamientoDatos')?.setValue(null);     
-
   }
-
 
  cerrarCaso(item: any){
   console.log("cerrar caso")
@@ -137,6 +154,8 @@ export class DashboardComponent implements OnInit {
   
       if (lowerCaseSearchValues.pais && item.country.toLowerCase() !== lowerCaseSearchValues.pais) {
         match = false;
+
+        console.log(lowerCaseSearchValues.pais + "   " + item.country.toLowerCase())
       }
   
       if (lowerCaseSearchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== lowerCaseSearchValues.autorizaTratamientoDatos) {

@@ -194,13 +194,6 @@ export class FormPqrComponent implements OnInit {
   onFileSelected(event: any) {
 
 
-    console.log('evento 1', event);
-
-    if (event.target.files !== null) {
-      this.fileToUpload = event.target.files;
-      console.log('files: ', this.fileToUpload);
-    }
-
   }
 
 

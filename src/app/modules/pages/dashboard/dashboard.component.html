@@ -54,8 +54,7 @@
                         <select formControlName="pais" name="pais"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>Seleccione un país</option>
-                            <option value="colombia">Colombia</option>
-                            <option value="mexico">Mexico</option>
+                            <option [value]="item.id" *ngFor="let item of listaPais">{{ item.countryName }}</option>
                         </select>
                     </div>
 
@@ -144,7 +143,10 @@
                         <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
                             <i class="fi fi-rr-eye"></i>
                         </button>
-                        <button class="btn btn-sm btn-margin btn-success" (click)="asignar(item.id)">
+                        <button class="btn btn-sm btn-margin btn-success" (click)="asignar(item.id)"></button>
+
+                        <button class="btn btn-sm btn-margin btn-success" (click)="openDialog()">
+
                             <i class="fi fi-rr-users"></i>
                         </button>
                         <button class="btn btn-sm btn-info" (click)="generarCasoSalesforce(item.id)">
@@ -182,6 +184,6 @@
         </div>
         <div class="text-right">
             <button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Asignar</strong></button>
-        </div>      
+        </div>
     </div>
 </form>

@@ -1,0 +1,17 @@
+<h1>SE ASIGNA CASO</h1>
+<form >
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" formControlName="nombre">
+    </div>
+    
+    <div>
+      <label for="correo">Correo:</label>
+      <input type="email" id="correo" name="correo" formControlName="email" >
+    </div>
+    
+    <button >Guardar</button>
+  </form>
+<div class="modal-body">
+    <div [innerHTML]="modalContent"></div>
+  </div>
