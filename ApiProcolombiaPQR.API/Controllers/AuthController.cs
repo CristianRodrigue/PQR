@@ -119,7 +119,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 Email = modelo.Email,
                 Password_hash = passwordHash,
                 Password_salt = passwordSalt,
-                Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c")
+                Role = Guid.Parse(modelo.Role) // Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c")
             };
 
             try
@@ -205,6 +205,51 @@ namespace ApiProcolombiaPQR.API.Controllers
                 };
 
                 return new OkObjectResult(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        // Validators
+
+        // GET: api/Auth/EmailValidator
+        [HttpGet("[action]/{email}")]
+        public async Task<IActionResult> EmailValidator([FromRoute] string email)
+        {
+            try
+            {
+                var query = await _dbContext.Users.Where(x => x.Email == email)
+                    .Select(x => new
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Email = x.Email,
+                        Role = x.Role
+                    }).ToListAsync();
+
+                if (query.Count == 0)
+                {
+                    var response = new
+                    {
+                        success = false,
+                        data = query
+                    };
+
+                    return new OkObjectResult(response);
+                }
+                else
+                {
+                    var response = new
+                    {
+                        success = true,
+                        data = query
+                    };
+
+                    return new OkObjectResult(response);
+                }
             }
             catch (Exception ex)
             {
