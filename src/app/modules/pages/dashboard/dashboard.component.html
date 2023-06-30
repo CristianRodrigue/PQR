@@ -138,7 +138,11 @@
                     <td class="px-4 py-3">{{item.caseType}}</td>
                     <td class="px-4 py-3">{{item.country}}</td>
                     <td class="px-4 py-3">{{item.autorizaTratamientoDatos}}</td>
-                    <td class="px-4 py-3">{{item.estatus}}</td>
+                    <td class="px-4 py-3" [ngClass]="{
+                        'estado-verde': item.estatus === 'Acuso de recibido',
+                        'estado-amarillo': item.estatus === 'Revisado',
+                        'estado-rojo': item.estatus === 'Cerrado'
+                      }">{{item.estatus}}</td>
                     <td class="px-4 py-3">
                         <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
                             <i class="fi fi-rr-eye"></i>

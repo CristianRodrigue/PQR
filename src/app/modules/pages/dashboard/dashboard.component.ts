@@ -5,9 +5,7 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import Swal from 'sweetalert2';
-
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { CountryService } from 'src/app/services/country.service';
@@ -168,6 +166,11 @@ export class DashboardComponent implements OnInit {
   
       return match;
     });
+
+   
+
+    this.filteredResults = this.filteredResults.reverse();
+    
   }
   
 

@@ -56,14 +56,11 @@ export class FormPqrComponent implements OnInit {
     this.cargarData();
   }
 
-
-
   ngOnInit(): void {
     this.consultarPaises();
     this.consultarTipoCaso();
     this.consultarTipoUsuario();
   }
-
 
   actualizarCaracteresRestantes() {
     const comentario = this.formPQR.get('comentario')?.value;
@@ -94,7 +91,6 @@ export class FormPqrComponent implements OnInit {
     return this.formPQR.get('tipoUsuario')!.invalid && this.formPQR.get('tipoUsuario')!.touched;
   }
 
-  // #region
   get razonSocialNoValida() {
     return this.formPQR.get('razonSocial')!.invalid && this.formPQR.get('razonSocial')!.touched;
   }
@@ -153,25 +149,29 @@ export class FormPqrComponent implements OnInit {
     this.formPQR.get('razonSocial')?.setValidators([Validators.required]);*/
     //this.userTypeSelected = event.target["selectedIndex"];
 
+    this.formPQR.get('razonSocial')?.clearValidators();
+    this.formPQR.get('razonSocial')?.updateValueAndValidity();
+
+    this.formPQR.get('nit')?.clearValidators();
+    this.formPQR.get('nit')?.updateValueAndValidity();
+
+    this.formPQR.get('cedula')?.clearValidators();
+    this.formPQR.get('cedula')?.updateValueAndValidity();
+
     if (event.target["selectedIndex"] === 0) {
       this.userTypeSelected = 0;
-
-      //this.formPQR.get('nit')?.clearValidators();
-      //this.formPQR.get('razonSocial')?.clearValidators();
-      this.formPQR.get('nit')?.setValidators([]);
-      this.formPQR.get('razonSocial')?.setValidators([]);
-
+      // Configurar las validaciones para persona natural
       this.formPQR.get('cedula')?.setValidators([Validators.pattern(/^[0-9]+$/), Validators.minLength(7)]);
-
+      this.formPQR.get('cedula')?.updateValueAndValidity();
     } else if (event.target["selectedIndex"] === 1) {
       this.userTypeSelected = 1;
-
-      //this.formPQR.get('cedula')?.clearValidators();
-      this.formPQR.get('cedula')?.setValidators([]);
-
+      // Configurar las validaciones para empresa
       this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/), Validators.minLength(7), Validators.required]);
       this.formPQR.get('razonSocial')?.setValidators([Validators.required, Validators.maxLength(20)]);
+      this.formPQR.get('nit')?.updateValueAndValidity();
+      this.formPQR.get('razonSocial')?.updateValueAndValidity();
     }
+
   }
 
   validateFormat(event: any) {
@@ -192,18 +192,13 @@ export class FormPqrComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-
-
-  }
-
-
-  /*
+/*
     handleFileInput(files: any) {
       console.log('evento 2', files);
       ///this.fileToUpload = files.item(0);
   }*/
 
-
+  }
 
   cargarData() {
     this.formPQR.setValue({
