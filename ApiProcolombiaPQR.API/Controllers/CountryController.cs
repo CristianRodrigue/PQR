@@ -50,10 +50,5 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-
-
-
     }
 }
