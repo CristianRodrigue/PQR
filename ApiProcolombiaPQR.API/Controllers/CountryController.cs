@@ -29,17 +29,17 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
 
-                 var query = await _dbContext.Country.Select(x => new
+                 var query = await _dbContext.Country.Select(x => new CountryEntity
                 {
                     Id = x.Id,
                     CountryName = x.CountryName.Trim(),
                 }).ToListAsync();
                 
 
-                var response = new
+                var response = new CountryeResponse
                 {
-                    success = true,
-                    data = query
+                    Success = true,
+                    Data = query
                 };
 
                 return new OkObjectResult(response);
@@ -49,6 +49,11 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        public class CountryeResponse
+        {
+            public bool Success { get; set; }
+            public List<CountryEntity> Data { get; set; }
         }
     }
 }

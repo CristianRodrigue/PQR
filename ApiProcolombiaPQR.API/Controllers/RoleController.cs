@@ -1,4 +1,5 @@
 ﻿using ApiProcolombiaPQR.DATA;
+using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,16 +23,16 @@ namespace ApiProcolombiaPQR.API.Controllers
         {
             try
             {
-                var query = await _dbContext.Role.Select(x => new
+                var query = await _dbContext.Role.Select(x => new RoleEntity
                 {
                     Id = x.Id,
                     Name = x.Name.Trim(),
                 }).ToListAsync();
 
-                var response = new
+                var response = new RoleResponse
                 {
-                    success = true,
-                    data = query
+                    Success = true,
+                    Data = query
                 };
 
                 return new OkObjectResult(response);
@@ -41,6 +42,12 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        public class RoleResponse
+        {
+            public bool Success { get; set; }
+            public List<RoleEntity> Data { get; set; }
         }
 
 

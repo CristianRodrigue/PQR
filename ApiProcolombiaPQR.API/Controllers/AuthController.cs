@@ -17,12 +17,19 @@ namespace ApiProcolombiaPQR.API.Controllers
     public class AuthController : ControllerBase
     {
         private DataContextDB _dbContext;
+        private DataContextDB dbContext;
         private readonly IConfiguration _config;
 
-        public AuthController(DataContextDB dbContext, IConfiguration config)
+        /*public AuthController(DataContextDB dbContext, IConfiguration config)
         {
             _dbContext = dbContext;
             _config = config;
+        }*/
+
+        public AuthController(DataContextDB dbContext)
+        {
+            _dbContext = dbContext;
+            
         }
 
         // POST: api/Auth/LoginPQR
@@ -160,7 +167,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 var query = await _dbContext.Users
-                    .Select(x => new
+                    .Select(x => new UserEntity
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -168,7 +175,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Role = x.Role
                     }).ToListAsync();
 
-                var response = new
+                var response = new AuthResponse
                 {
                     success = true,
                     data = query
@@ -190,7 +197,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 var query = await _dbContext.Users.Where(x => x.Id == Id)
-                    .Select(x => new
+                    .Select(x => new UserEntity
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -198,7 +205,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Role = x.Role
                     }).ToListAsync();
 
-                var response = new
+                var response = new AuthResponse
                 {
                     success = true,
                     data = query
@@ -208,6 +215,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex)
             {
+                // Aquí puedes registrar el error o devolver un mensaje genérico
                 return BadRequest(ex.Message);
             }
         }
@@ -222,7 +230,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 var query = await _dbContext.Users.Where(x => x.Email == email)
-                    .Select(x => new
+                    .Select(x => new UserEntity
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -232,7 +240,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                 if (query.Count == 0)
                 {
-                    var response = new
+                    var response = new AuthResponse
                     {
                         success = false,
                         data = query
@@ -242,7 +250,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 }
                 else
                 {
-                    var response = new
+                    var response = new AuthResponse
                     {
                         success = true,
                         data = query
@@ -256,17 +264,6 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
         // DELETE: api/Auth/Delete/Id
         [HttpDelete("[action]/{Id}")]
@@ -306,6 +303,11 @@ namespace ApiProcolombiaPQR.API.Controllers
                         });
         }
 
+        public class AuthResponse
+        {
+            public bool success { get; set; }
+            public List<UserEntity> data { get; set; }
+        }
 
     }
 }

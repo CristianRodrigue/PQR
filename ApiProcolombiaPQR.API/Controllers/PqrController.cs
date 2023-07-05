@@ -96,6 +96,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                                 Id = PQRS.Id,
                                 Country = Country.CountryName,
                                 CaseType = CaseType.Name,
+
+
                                 UserType = UserType.Name,
                                 RazonSocial = PQRS.RazonSocial,
                                 Nit = PQRS.Nit,
@@ -113,7 +115,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                 var queryLinq = await query.ToListAsync();
 
-                var response = new
+                var response = new 
                 {
                     success = true,
                     data = queryLinq
@@ -123,7 +125,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex)
             {
-                var response = new
+                var response = new 
                 {
                     success = false,
                     error = ex.Message,
@@ -293,13 +295,19 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex) 
             {
-                var response = new
+                var response = new 
                 {
                     success = false,
                     error = ex.Message,
                 };
                 return new BadRequestObjectResult(response);
             }
+        }
+
+        public class PqrResponse
+        {
+            public bool success { get; set; }
+            public List<PqrEntity> data { get; set; }
         }
 
 

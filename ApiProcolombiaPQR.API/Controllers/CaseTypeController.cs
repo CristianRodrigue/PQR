@@ -1,4 +1,5 @@
 ﻿using ApiProcolombiaPQR.DATA;
+using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace ApiProcolombiaPQR.API.Controllers
         }
 
         // GET: api/Country/GetAll
-        [HttpGet("[action]")]
+        /*[HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -41,7 +42,37 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        }*/
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var query = await _dbContext.CaseType.Select(x => new CaseTypeEntity
+                {
+                    Id = x.Id,
+                    Name = x.Name.Trim(),
+                }).ToListAsync();
+
+                var response = new CaseTypeResponse
+                {
+                    Success = true,
+                    Data = query
+                };
+
+                return new OkObjectResult(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        public class CaseTypeResponse
+        {
+            public bool Success { get; set; }
+            public List<CaseTypeEntity> Data { get; set; }
+        }
+           
     }
 }

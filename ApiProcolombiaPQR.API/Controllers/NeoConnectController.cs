@@ -8,53 +8,71 @@ using System.Web;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class NeoConnectController : ControllerBase
+   
+    public class AutenticacionNeo
     {
-        private DataContextDB _dbContext;
+        public string Id { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public string Issued_At { get; set; }
+        //Por compatibilidad con respuesta de NEO
+        // ReSharper disable once InconsistentNaming
+        public string Token_Type { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public string Instance_Url { get; set; }
+        public string Signature { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public string Access_Token { get; set; }
+    }
+    public class NeoConnectController
+    {
 
-        public NeoConnectController(DataContextDB dbContext)
+        public string NeoApi { get; set; }
+        public string NeoContrasenia { get; private set; }
+        public string NeoToken { get; private set; }
+        public string NeoUsuario { get; private set; }
+        public string NeoClientId { get; private set; }
+        public string NeoClientSecret { get; private set; }
+        public string NeoApiToken { get; private set; }
+        public string NeoApiData { get; private set; }
+        private AutenticacionNeo AutenticacionNeo { get; set; }
+
+        public NeoConnectController(string neoApi, string neoContrasenia,string neoToken,string neoUsuario, string neoClientId, string neoClientSecret, string neoApiToken, string neoApiData)
         {
-            _dbContext = dbContext;
+            NeoApi = neoApi;
+            NeoContrasenia = neoContrasenia;
+            NeoToken = neoToken;
+            NeoUsuario = neoUsuario;
+            NeoClientId = neoClientId;
+            NeoClientSecret = neoClientSecret;
+            NeoApiToken = neoApiToken;
+            NeoApiData = neoApiData;
+            EstablecerConexionNeo();
         }
 
-        /*[HttpGet("[action]")]
-        public async Task<IActionResult> GetAll()
+        public T EjecutarConsulta<T>(string query)
         {
-            try
+            if (AutenticacionNeo == null)
             {
-
-                var query = await _dbContext.NEO.Select(x => new
-                {
-                    NeoApi = x.NeoApi,
-                    NeoContrasenia = x.NeoContrasenia,
-                    NeoToken = x.NeoToken,
-                    NeoUsuario = x.NeoUsuario,
-                    NeoClientId = x.NeoClientId,
-                    NeoClientSecret = x.NeoClientSecret,
-                    NeoApiToken = x.NeoApiToken,
-                    NeoApiData = x.NeoApiData,
-
-                }).ToListAsync();
-
-
-                var response = new
-                {
-                    success = true,
-                    data = query
-                };
-
-                return new OkObjectResult(response);
-
+                throw new Exception("No se ha logrado establecer conexión a NEO");
             }
-            catch (Exception ex)
+            T respuesta = default(T);
+
+            using (var clienteConsulta = new HttpClient())
             {
-                return BadRequest(ex.Message);
+                clienteConsulta.BaseAddress = new Uri(AutenticacionNeo.Instance_Url);
+                clienteConsulta.DefaultRequestHeaders.Accept.Clear();
+                clienteConsulta.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                clienteConsulta.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", AutenticacionNeo.Access_Token);
+                HttpResponseMessage responseConsulta = clienteConsulta.GetAsync(NeoApiData + "query/?q=" + HttpUtility.UrlEncode(query)).Result;
+                if (responseConsulta.IsSuccessStatusCode)
+                {
+                    respuesta = responseConsulta.Content.ReadAsAsync<T>().Result;
+                }
             }
+            return respuesta;
         }
 
-        /*private void EstablecerConexionNeo()
+        private void EstablecerConexionNeo()
         {
             using (var client = new HttpClient())
             {
@@ -87,6 +105,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                     AutenticacionNeo = response.Content.ReadAsAsync<AutenticacionNeo>().Result;
                 }
             }
-        }*/
+        }
+
+       
     }
 }
