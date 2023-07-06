@@ -25,7 +25,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 var query = await _dbContext.MailTemplate
-                    .Select(x => new 
+                    .Select(x => new MailTemplateEntity
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -33,7 +33,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Enabled = x.Enabled
                     }).ToListAsync();
 
-                var response = new
+                var response = new MailResponse
                 {
                     success = true,
                     data = query
@@ -55,7 +55,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             try
             {
                 var query = await _dbContext.MailTemplate.Where(x => x.Id == Id)
-                    .Select(x => new
+                    .Select(x => new MailTemplateEntity
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -64,7 +64,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Enabled = x.Enabled
                     }).ToListAsync();
 
-                var response = new
+                var response = new MailResponse
                 {
                     success = true,
                     data = query
@@ -182,6 +182,11 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        public class MailResponse
+        {
+            public bool success { get; set; }
+            public List<MailTemplateEntity> data { get; set; }
         }
 
 

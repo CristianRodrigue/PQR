@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProcolombiaPQR.ENTITY", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProcolombiaPQR.COMMON", "ApiProcolombiaPQR.COMMON\ApiProcolombiaPQR.COMMON.csproj", "{10DC05E7-4056-4017-9AF0-5E201C925942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PQRTest", "PQRTest\PQRTest.csproj", "{A0F11CFD-E65F-4113-8FDD-ED88833C4668}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcolombiaPQRTest", "ProcolombiaPQRTest\ProcolombiaPQRTest.csproj", "{CEA47EEB-A872-4AE3-A973-CDDED6E0DDE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{10DC05E7-4056-4017-9AF0-5E201C925942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10DC05E7-4056-4017-9AF0-5E201C925942}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10DC05E7-4056-4017-9AF0-5E201C925942}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0F11CFD-E65F-4113-8FDD-ED88833C4668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0F11CFD-E65F-4113-8FDD-ED88833C4668}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0F11CFD-E65F-4113-8FDD-ED88833C4668}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0F11CFD-E65F-4113-8FDD-ED88833C4668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA47EEB-A872-4AE3-A973-CDDED6E0DDE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA47EEB-A872-4AE3-A973-CDDED6E0DDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA47EEB-A872-4AE3-A973-CDDED6E0DDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA47EEB-A872-4AE3-A973-CDDED6E0DDE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

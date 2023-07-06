@@ -24,8 +24,6 @@ namespace ApiProcolombiaPQR.API.Controllers
             _dbContext = dbContext;
         }
 
-       
-
         // GET: api/Pqr/GetAll
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
@@ -75,7 +73,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                     success = false,
                     error = ex.Message,
                 };
-                return new BadRequestObjectResult(response);
+                return new OkObjectResult(response);
             }
         }
 
@@ -98,6 +96,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                                 Id = PQRS.Id,
                                 Country = Country.CountryName,
                                 CaseType = CaseType.Name,
+
+
                                 UserType = UserType.Name,
                                 RazonSocial = PQRS.RazonSocial,
                                 Nit = PQRS.Nit,
@@ -115,7 +115,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                 var queryLinq = await query.ToListAsync();
 
-                var response = new
+                var response = new 
                 {
                     success = true,
                     data = queryLinq
@@ -125,7 +125,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex)
             {
-                var response = new
+                var response = new 
                 {
                     success = false,
                     error = ex.Message,
@@ -142,9 +142,10 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            Random random = new Random();
 
-            
-                PqrEntity pqr = new PqrEntity
+
+            PqrEntity pqr = new PqrEntity
                 {
                     CountryId = modelo.CountryId,
                     CaseTypeId = modelo.CaseTypeId,
@@ -159,7 +160,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                     //File = ms.ToArray(),
                     Comentario = modelo.Comentario,
                     AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
-                    CaseNumber = 5,
+                    CaseNumber = random.Next(10000, 99999),
                     CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
                     PQRDate = DateTime.Now
 
@@ -196,6 +197,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 
 
                     // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
+
 
 
                     return StatusCode(StatusCodes.Status201Created);
@@ -293,13 +295,19 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
             catch (Exception ex) 
             {
-                var response = new
+                var response = new 
                 {
                     success = false,
                     error = ex.Message,
                 };
                 return new BadRequestObjectResult(response);
             }
+        }
+
+        public class PqrResponse
+        {
+            public bool success { get; set; }
+            public List<PqrEntity> data { get; set; }
         }
 
 
