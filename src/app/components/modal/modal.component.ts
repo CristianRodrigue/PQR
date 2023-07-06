@@ -9,7 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ModalComponent implements OnInit {
   modal: FormGroup;
-  public modalContent: string = '<b><i><u><font size="7" color="#eeff00">SE ASIGNA CASO</font></u></i></b>';
+  public modalContent: string = 'Estimado señor(a) {0}<br/><br/>PROCOLOMBIA le da la bienvenida al Simulador de Costos Logísticos.<br /><br />Su empresa {1} se ha validado satisfactoriamente con el NIT {2}<br /><br />Recuerde que cada vez que acceda al sistema debe ingresar con su usuario y contraseña que seleccionó en el registro.';
 
   constructor(
     private mensaje: MatDialogRef<ModalComponent>,
