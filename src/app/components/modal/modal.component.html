@@ -1,17 +1,24 @@
 <h1>SE ASIGNA CASO</h1>
-<form >
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" formControlName="nombre">
-    </div>
-    
-    <div>
-      <label for="correo">Correo:</label>
-      <input type="email" id="correo" name="correo" formControlName="email" >
-    </div>
-    
-    <button >Guardar</button>
-  </form>
-<div class="modal-body">
-    <div [innerHTML]="modalContent"></div>
+<form action="">
+  <div class="asignar">
+      <div class="row">
+          <div class="col-12 my-8">
+              <select class="form-select" aria-label="Default select example">
+                  <option selected>Seleccione un usuario</option>
+                  <option value="1">Pepito Perez</option>
+                  <option value="2">Juanito Arjona</option>
+                  <option value="3">Lupita Suarez</option>
+              </select>
+          </div>
+          <div class="col-12 my-8">
+              <input type="text" class="form-control" placeholder="pepito@procolombia.co" disabled>
+          </div>
+      </div>
+      <div class="text-right">
+          <button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Asignar</strong></button>
+      </div>
   </div>
+</form>
+<!--<div class="modal-body">
+    <div [innerHTML]="modalContent"></div>
+  </div> -->

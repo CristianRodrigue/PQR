@@ -26,6 +26,12 @@ import { AngularEditorModule  } from '@kolkov/angular-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AssignComponent } from './modules/pages/assign/assign.component';
+import { EmployeeComponent } from './modules/pages/employee/employee.component';
+import { FormCreateEmployeeComponent } from './modules/pages/employee/form-create-employee/form-create-employee.component';
+import { FormEditEmployeeComponent } from './modules/pages/employee/form-edit-employee/form-edit-employee.component';
+import { FormCreateAssignComponent } from './modules/pages/assign/form-create-assign/form-create-assign.component';
+import { FormEditAssignComponent } from './modules/pages/assign/form-edit-assign/form-edit-assign.component';
 
 
 
@@ -48,6 +54,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserAdminComponent,
     FormCreateUserAdminComponent,
     FormEditUserAdminComponent,
+    AssignComponent,
+    EmployeeComponent,
+    FormCreateEmployeeComponent,
+    FormEditEmployeeComponent,
+    FormCreateAssignComponent,
+    FormEditAssignComponent,
     
     
   ],

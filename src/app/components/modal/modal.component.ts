@@ -26,4 +26,9 @@ export class ModalComponent implements OnInit {
   closeDialog() {
     this.mensaje.close();
   }
+
+  enviarAsigncion() {
+    console.log('funciono');
+  }
+
 }

@@ -1,0 +1,32 @@
+<div class="row user">
+    <div class="">
+        <table class="rounded-lg  mx-auto bg-gray-800 text-gray-200">
+            <tr class="text-left border-b border-gray-300">
+                <th>#</th>
+                <th class="px-4 py-3">Asignacion</th>
+                <th class="px-4 py-3">Template</th>
+                <th class="px-4 py-3">Empleado</th>
+                <th class="px-4 py-3 text-right">
+                    <button type="button"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                        [routerLink]="[ '/usuarios/create']">Crear</button>
+                </th>
+
+            </tr>
+            <tr class="bg-gray-700 border-b border-gray-600" *ngFor="let item of list; let i=index">
+                <td scope="row ">{{ i + 1 }}</td>
+                <td class="px-4 py-3">{{ item.name }}</td>
+                <td class="px-4 py-3">{{ item.email }}</td>
+                <td class="px-4 py-3">{{ item.role }}</td>
+                <td class="px-4 py-3 flex space-x-4">
+                    <!--<button class="btn btn-warning btn-sm mr-sm-2" [routerLink]="[ '/mensajes/edit', item.id ]">
+                <i class="fi fi-rr-edit"></i>
+              </button> -->
+                    <!--<button class="btn btn-danger btn-sm mr-sm-2" (click)="deleteUser(item.id, i)">
+              <i class="fi fi-rr-trash"></i>
+            </button> -->
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

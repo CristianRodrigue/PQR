@@ -15,6 +15,8 @@ import { FormEditMessageComponent } from './modules/pages/message/form-edit-mess
 import { UserAdminComponent } from './modules/pages/user-admin/user-admin.component';
 import { FormCreateUserAdminComponent } from './modules/pages/user-admin/form-create-user-admin/form-create-user-admin.component';
 import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit-user-admin/form-edit-user-admin.component';
+import { AssignComponent } from './modules/pages/assign/assign.component';
+import { EmployeeComponent } from './modules/pages/employee/employee.component';
 
 const routes: Routes = [
   { path: '', component: CmsComponent,
@@ -27,6 +29,11 @@ const routes: Routes = [
     { path: 'usuarios', component: UserAdminComponent, canActivate: [ AuthGuard ] },
     { path: 'usuarios/create', component: FormCreateUserAdminComponent, canActivate: [ AuthGuard ] },
     { path: 'usuarios/edit/:id', component: FormEditUserAdminComponent, canActivate: [ AuthGuard ] },
+    { path: 'asignacion', component: AssignComponent, canActivate: [ AuthGuard ] },
+    //{ path: 'usuarios/create', component: FormCreateUserAdminComponent, canActivate: [ AuthGuard ] },
+    { path: 'empleados', component: EmployeeComponent, canActivate: [ AuthGuard ] },
+    //  { path: 'usuarios/create', component: FormCreateUserAdminComponent, canActivate: [ AuthGuard ] },
+    
 
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   ]},
