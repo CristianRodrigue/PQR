@@ -1,4 +1,4 @@
-﻿using ApiProcolombiaPQR.API.Controllers;
+﻿/*using ApiProcolombiaPQR.API.Controllers;
 using ApiProcolombiaPQR.API.Models;
 using ApiProcolombiaPQR.DATA;
 using ApiProcolombiaPQR.ENTITY;
@@ -113,5 +113,6 @@ namespace ApiProcolombiaPQR.API.Services
 
             return valor;
         }*/
-    }
+ /*   }
 }
+*/

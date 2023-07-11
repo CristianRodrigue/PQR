@@ -41,6 +41,8 @@ namespace ApiProcolombiaPQR.DATA
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            /*
             modelBuilder.Entity<PqrEntity>()
                 .HasOne(p => p.Country)
                 .WithMany()
@@ -104,7 +106,7 @@ namespace ApiProcolombiaPQR.DATA
                 .HasOne(p => p.Assign)
                 .WithMany()
                 .HasForeignKey(p => p.Id);
-
+            */
 
 
 

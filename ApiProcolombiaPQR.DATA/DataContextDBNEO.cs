@@ -1,21 +1,21 @@
-﻿using System;
+﻿using ApiProcolombiaPQR.ENTITY;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using ApiProcolombiaPQR.ENTITY;
-using Microsoft.EntityFrameworkCore;
 
 namespace ApiProcolombiaPQR.DATA
 {
-
-    public class DataContextDBNEO : DbContext
+    public class DataContextDBNeo : DbContext
     {
-        public DataContextDBNEO(DbContextOptions<DataContextDBNEO> options) : base(options) { }
+        public DataContextDBNeo(DbContextOptions<DataContextDBNeo> options) : base(options) { }
 
-        public DbSet<Configuracion> Configuracion { get; set; }
+        public DbSet<ConfiguracionNeoEntity> Configuracion { get; set; }
 
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+
     }
 }

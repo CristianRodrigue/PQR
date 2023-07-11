@@ -14,12 +14,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContextDB>(x => x.UseSqlServer("name=Conexion"));
+builder.Services.AddDbContext<DataContextDBNeo>(x => x.UseSqlServer("name=ConexionNEO"));
 builder.Services.AddTransient<SeedDB>();
 //////NEO/////
-builder.Services.AddScoped<NeoConnectController>();
+/*builder.Services.AddScoped<NeoConnectController>();
 builder.Services.AddSingleton<string>("neoApiValue");
 builder.Services.AddSingleton<string>("neoContraseniaValue");
-builder.Services.AddDbContext<DataContextDBNEO>(x => x.UseSqlServer("name=ConexionNEO"));
+builder.Services.AddDbContext<DataContextDBNEO>(x => x.UseSqlServer("name=ConexionNEO"));*/
 ////////////////////
 builder.Services.AddCors(options =>
 {
