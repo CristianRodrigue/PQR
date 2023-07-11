@@ -30,8 +30,12 @@ namespace ApiProcolombiaPQR.API.Models
 
         public string PhoneNumber { get; set; }
 
-        [JsonConverter(typeof(JsonToByteArrayConverter))]
-        public byte[]? File { get; set; }
+        //[JsonConverter(typeof(JsonToByteArrayConverter))]
+        //public byte[]? File { get; set; }
+
+
+        //[ModelBinder(BinderType = typeof(JsonModelBinder))]
+        public FileViewModel? File { get; set; }
 
         public string Comentario { get; set; }
 

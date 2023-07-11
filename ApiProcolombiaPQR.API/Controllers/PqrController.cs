@@ -137,13 +137,29 @@ namespace ApiProcolombiaPQR.API.Controllers
         // POST: api/Pqr/CreatePQR
         [HttpPost("[action]")]
         public async Task<IActionResult> CreatePQR([FromBody] PqrViewModel modelo)
-        {
+            {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             Random random = new Random();
 
+            Guid fileId = Guid.NewGuid(); ; 
+
+            if(modelo.File.data != null)
+            {
+                FilesEntity file = new FilesEntity
+                {
+                    Id = fileId,
+                    height = modelo.File.height,
+                    timestamp = modelo.File.timestamp,
+                    uri = modelo.File.uri,
+                    fileName = modelo.File.fileName,
+                    data = modelo.File.data
+                };
+
+                _dbContext.Files.Add(file);
+            }
 
             PqrEntity pqr = new PqrEntity
                 {
@@ -156,16 +172,18 @@ namespace ApiProcolombiaPQR.API.Controllers
                     Name = modelo.Name,
                     Email = modelo.Email,
                     PhoneNumber = modelo.PhoneNumber,
-                    //File = modelo.File,
-                    //File = ms.ToArray(),
                     Comentario = modelo.Comentario,
                     AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
                     CaseNumber = random.Next(10000, 99999),
                     CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
-                    PQRDate = DateTime.Now
-
-                };
+                    PQRDate = DateTime.Now,
+                    FileId = fileId
+                    
+                     //this.ventas[a].estadoVentaStr !== 'Aprobada' ? this.ventas[a].razonRechazo : '';
+            };
+                
                 _dbContext.PQR.Add(pqr);
+                
 
                 try
                 {
