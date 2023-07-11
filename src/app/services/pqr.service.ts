@@ -23,9 +23,14 @@ export class PqrService {
   }
 
   
-  createPQR(country: string, comentario: string, email:string, name:string,telefono:string,razonSocial:string,caseType:string,userType:string,nit:string,cedula:string,autorizo:boolean,file:File) {
+  createPQR(country: string, comentario: string, email:string, name: string, telefono: string, razonSocial: string, caseType: string, userType: string, nit: string, cedula: string, autorizo: boolean, file: any) {
 
-    const data = {
+console.log('file: ', file);
+
+
+    let requestImage: any = {};
+
+    const data: any = {
       CountryId: country,
       CaseTypeId:caseType,
       UserTypeId:userType,
@@ -37,10 +42,22 @@ export class PqrService {
       PhoneNumber: telefono,
       RazonSocial: razonSocial,
       autorizaTratamientoDatos: autorizo,
-      //Date: fecha,
-      File:file,
       
     };
+
+    if (file !== null) {
+      requestImage = {
+        height: file.height,
+        timestamp: file.timestamp,
+        uri: file.uri,
+        fileName: file.fileName,
+        data: file.data
+      };
+
+      data['File'] = requestImage;
+    }
+
+    console.log('data:', data);
 
     return this.http.post(`${this.url}/Pqr/CreatePQR`, data);
   }

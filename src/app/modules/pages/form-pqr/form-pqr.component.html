@@ -101,14 +101,16 @@
                     </div>
                 </div>
 
-                <div class="attachment">
-                    Adjunto(Máx. 2MB)
-                    <div class="spacing"></div>
-                    <input type="file" title="Adjunto(MÁx. 2MB)" name="adjunto" class="form-file" accept="*" (change)="verificarTamanioArchivo($event)" (change)="onFileSelected($event)" formControlName="file">
-                    <br>
-                    <br>
-                    <!--<input type="file" formControlName="file" (change)="handleFileInput($event.target)"> -->
-                    <small id="error-archivo" class="text-danger" *ngIf="archivoInvalido">El archivo es demasiado grande. El tamaño máximo permitido es de 2MB.</small>
+                <div class="form-group">
+                    <div class="file">
+                        <img id="pdfSelectFile" src="" alt="imagen">
+                        <h2 id="txtpdfSelectFile">Seleccionar archivo</h2>
+                        <p>Suelta el archivo aquí.<br>
+                          Tamaño recomendado de archivo:<br>
+                          3MB</p>
+                        <input id="image" type="file" name="image" accept="*"
+                        formControlName="file" (change)="onFilesAdded($event)">
+                      </div>
                 </div>
 
                 <div class="form-group">

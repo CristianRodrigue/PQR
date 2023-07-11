@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class FormPqrComponent implements OnInit {
 
   formPQR: FormGroup;
-  fileToUpload: File | null = null;
+  // fileToUpload: File | null = null;
   MAX_CARACTERES_COMENTARIO = 1000;
   caracteresRestantes: number = this.MAX_CARACTERES_COMENTARIO;
 
@@ -25,7 +25,9 @@ export class FormPqrComponent implements OnInit {
   listaTipoCaso: any[] = [];
   listaTipoUsuario: any[] = [];
 
-  public archivos: any = []
+  public archivos: any = [];
+  public selectedFile: any;
+  public invalidSize: boolean = false;
 
   userTypeSelected: number = -1;
   archivoInvalido: boolean | undefined;
@@ -191,15 +193,6 @@ export class FormPqrComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: any) {
-/*
-    handleFileInput(files: any) {
-      console.log('evento 2', files);
-      ///this.fileToUpload = files.item(0);
-  }*/
-
-  }
-
   cargarData() {
     this.formPQR.setValue({
       tipoCaso: '',
@@ -246,7 +239,7 @@ export class FormPqrComponent implements OnInit {
     });
     Swal.showLoading();
 
-    this.pqrService.createPQR(this.formPQR.value.pais, this.formPQR.value.comentario, this.formPQR.value.email, this.formPQR.value.nombre, this.formPQR.value.telefono, this.formPQR.value.razonSocial, this.formPQR.value.tipoCaso, this.formPQR.value.tipoUsuario, this.formPQR.value.nit, this.formPQR.value.cedula, this.formPQR.value.autorizo, this.fileToUpload!)
+    this.pqrService.createPQR(this.formPQR.value.pais, this.formPQR.value.comentario, this.formPQR.value.email, this.formPQR.value.nombre, this.formPQR.value.telefono, this.formPQR.value.razonSocial, this.formPQR.value.tipoCaso, this.formPQR.value.tipoUsuario, this.formPQR.value.nit, this.formPQR.value.cedula, this.formPQR.value.autorizo, this.formPQR.value.file)
       .subscribe(result => {
 
         Swal.fire({
@@ -262,6 +255,45 @@ export class FormPqrComponent implements OnInit {
       });
 
 
+  }
+
+  public onFilesAdded = (event: any) => {
+      this.selectFile(event.target.files);
+  }
+
+  public selectFile = ($event: any) => {
+        this.formPQR.controls['file'].setValue(this.getImageBase64($event));  
+  }
+
+  private getImageBase64 = (image: any, nameInput: string = '') => {
+    const imageBase64: any = {
+      height: 0,
+      timestamp: new Date(),
+      uri: '',
+      fileName: '',
+      data: ''
+    };
+    const file: File = image[0];
+    if (file.size > 30000000 && nameInput === 'video') {
+      return '';
+    } else if (file.size > 3000000 && nameInput === 'consent') {
+      return '';
+    } else {
+      if (nameInput === 'video') this.invalidSize = false;
+      //if (nameInput === 'consent') this.invalidPDFSize = false;
+      const myDate = new Date();
+      const myReader: FileReader = new FileReader();
+      myReader.onloadend = (e) => {
+        imageBase64.height = file.size;
+        imageBase64.timestamp = new Date('2019-01-06T17:16:40');
+        imageBase64.uri = file.name;
+        imageBase64.fileName = file.name;
+        const result = myReader.result ?? '';
+        imageBase64.data = result.toString().split(',')[1] ?? '';
+      };
+      myReader.readAsDataURL(file);
+      return imageBase64;
+    }
   }
 
 }
