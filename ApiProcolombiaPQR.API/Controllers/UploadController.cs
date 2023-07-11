@@ -6,7 +6,7 @@ using System;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
-    [Route("api/[controller]")]
+    /*[Route("api/[controller]")]
     [ApiController]
     public class UploadController : Controller
     {
@@ -22,7 +22,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             /*using (MemoryStream ms = new MemoryStream()) {
                 file.CopyTo(ms);
                 _dbContext.Files.Add(ms.ToArray());
-            }*/
+            }
             
 
             try
@@ -35,5 +35,5 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    }
+    }*/
 }

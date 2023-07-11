@@ -47,7 +47,7 @@ namespace ProcolombiaPQRTest.Controllers
             _dbContext.SaveChanges();
 
             // Crear la instancia del controlador a probar
-            _controller = new AuthController(_dbContext);
+            //_controller = new AuthController(_dbContext);
         }
 
         [Test]

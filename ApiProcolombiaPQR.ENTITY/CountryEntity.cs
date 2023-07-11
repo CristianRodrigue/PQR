@@ -11,5 +11,7 @@ namespace ApiProcolombiaPQR.ENTITY
         public Guid Id { get; set; }
 
         public string CountryName { get; set; }
+
+        public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

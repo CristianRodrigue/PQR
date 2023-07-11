@@ -41,13 +41,79 @@ namespace ApiProcolombiaPQR.DATA
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<CountryEntity>()
-                .HasMany(e => e.Id)
-                    .WithOne(e => e.Id)
-                .HasForeignKey<PqrEntity>(e => e.Id)
-                .IsRequired();
-            */
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.Country)
+                .WithMany()
+                .HasForeignKey(p => p.CountryId);
 
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.CaseType)
+                .WithMany()
+                .HasForeignKey(p => p.CaseTypeId);
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.UserType)
+                .WithMany()
+                .HasForeignKey(p => p.UserTypeId);
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.Status)
+                .WithMany()
+                .HasForeignKey(p => p.CaseStatus);
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.File)
+                .WithMany()
+                .HasForeignKey(p => p.FileId);
+
+            /////////////////////////////////////////////
+            modelBuilder.Entity<CaseTypeEntity>()
+        .HasMany(ct => ct.Pqrs)
+        .WithOne(p => p.CaseType)
+        .HasForeignKey(p => p.CaseTypeId);
+
+            modelBuilder.Entity<CountryEntity>()
+        .HasMany(c => c.Pqrs)
+        .WithOne(p => p.Country)
+        .HasForeignKey(p => p.CountryId);
+
+            modelBuilder.Entity<PqrEntity>()
+        .HasOne(p => p.Role)
+        .WithMany(r => r.Pqrs)
+        .HasForeignKey(p => p.Id);
+
+            modelBuilder.Entity<PqrEntity>()
+        .HasOne(p => p.Consecutive)
+        .WithMany()
+        .HasForeignKey(p => p.Id);
+
+            
+    
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.MailTemplate)
+                .WithMany()
+                .HasForeignKey(p => p.Id);
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.Employee)
+                .WithMany()
+                .HasForeignKey(p => p.Id);
+
+            modelBuilder.Entity<PqrEntity>()
+                .HasOne(p => p.Assign)
+                .WithMany()
+                .HasForeignKey(p => p.Id);
+
+
+
+
+
+
+
+
+
+            // Resto de relaciones de entidad...
 
             base.OnModelCreating(modelBuilder);
         }
