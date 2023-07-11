@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiProcolombiaPQR.API.Services
 {
-    public class NeoService
+    public class NeoService: ControllerBase
     {
+        private DataContextDBNEO _dbContext;
+
         public class RespuestaNeo
         {
             public int TotalSize { get; set; }
@@ -22,10 +24,31 @@ namespace ApiProcolombiaPQR.API.Services
             public string Name { get; set; }
             public string WebSite { get; set; }
         }
+
+        public class EmpresaNeo
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Website { get; set; }
+        }
+
+        public string ConsultarConfiguracion(string nombreParametro)
+        {
+            var configuracion = _dbContext.Configuracion.FirstOrDefault(c => c.Nombre == nombreParametro);
+
+            if (configuracion != null)
+            {
+                return configuracion.Valor;
+            }
+
+            return string.Empty;
+        }
         private NeoConnectController NeoConnect { get; set; }
 
-        public NeoService()
+        public NeoService(DataContextDBNEO contextNEO)
         {
+            _dbContext = contextNEO;
+
             var neoApiData = ConsultarConfiguracion("NEO_API_DATA");
             var neoApi = ConsultarConfiguracion("NEO_API");
             var neoContrasenia = ConsultarConfiguracion("NEO_CONTRASENIA");
@@ -38,18 +61,25 @@ namespace ApiProcolombiaPQR.API.Services
             NeoConnect = new NeoConnectController(neoApi, neoContrasenia, neoToken, neoUsuario, neoClientId, neoClientSecret, neoApiToken, neoApiData);
         }
 
-        public string ConsultarNitEmpresa(string nit)
+        public EmpresaNeo ConsultarEmpresa(string nit)
         {
-            string queryEmpresaNit = "Select Id FROM Account where Numero_de_Identificacion__c ='" + nit + "'";
+            EmpresaNeo empresa = null;
+            string queryEmpresaNit = "Select Id, Name, Sector_Principal__c, Ciudad__c,Website FROM Account where Numero_de_Identificacion__c ='" + nit + "'";
             RespuestaNeo respuestaNeo = NeoConnect.EjecutarConsulta<RespuestaNeo>(queryEmpresaNit);
             if (respuestaNeo != null && respuestaNeo.TotalSize > 0)
             {
-                return respuestaNeo.Records.ElementAt(0).Id.ToString();
+                empresa = new EmpresaNeo()
+                {
+                    Id = respuestaNeo.Records.ElementAt(0).Id.ToString(),
+                    Name = respuestaNeo.Records.ElementAt(0).Name.ToString(),
+                    Website = respuestaNeo.Records.ElementAt(0).WebSite.ToString()
+                };
+
             }
-            return null;
+            return empresa;
         }
 
-        private string ConsultarConfiguracion(string nombre)
+        /*private string ConsultarConfiguracion(string nombre)
         {
             var db = new EjecutorDAO("DfiCtx");
             string valor = null;
@@ -64,7 +94,12 @@ namespace ApiProcolombiaPQR.API.Services
                 {
                     valor = reader[0].ToString().Trim();
                 }
-                //Insert Area__c, Cuenta__c, Fecha_Realizada__c, Name, Tipo__c FROM Quejas_y_Reclamos__c values ();
+                /*Insert Area__c, 
+                 * Cuenta__c,  
+                 * Fecha_Realizada__c, 
+                 * Name, 
+                 * Tipo__c 
+                 * FROM Quejas_y_Reclamos__c values ();
             }
             catch (Exception)
             {
@@ -77,6 +112,6 @@ namespace ApiProcolombiaPQR.API.Services
             }
 
             return valor;
-        }
+        }*/
     }
 }

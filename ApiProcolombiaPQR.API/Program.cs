@@ -1,3 +1,4 @@
+using ApiProcolombiaPQR.API.Controllers;
 using ApiProcolombiaPQR.DATA;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContextDB>(x => x.UseSqlServer("name=Conexion"));
 builder.Services.AddTransient<SeedDB>();
-
+//////NEO/////
+builder.Services.AddScoped<NeoConnectController>();
+builder.Services.AddSingleton<string>("neoApiValue");
+builder.Services.AddSingleton<string>("neoContraseniaValue");
+builder.Services.AddDbContext<DataContextDBNEO>(x => x.UseSqlServer("name=ConexionNEO"));
+////////////////////
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyPolicy,
@@ -22,6 +28,7 @@ builder.Services.AddCors(options =>
                       {
                           policy.WithOrigins("*").WithHeaders("*").WithMethods("*");
                       });
+
 });
 
 var app = builder.Build();
@@ -37,8 +44,6 @@ void SeedDBInit(WebApplication app)
         service!.SeedAsync().Wait();
     }
 }
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -17,5 +17,7 @@ namespace ApiProcolombiaPQR.ENTITY
         public string Division { get; set; }
 
         public string Cargo { get; set; }
+
+        public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

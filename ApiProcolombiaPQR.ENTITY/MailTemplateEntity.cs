@@ -17,5 +17,7 @@ namespace ApiProcolombiaPQR.ENTITY
         public string Html { get; set; }
 
         public bool Enabled { get; set; }
+
+        public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

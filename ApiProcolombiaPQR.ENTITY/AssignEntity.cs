@@ -14,6 +14,8 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public Guid IdMailTemplate { get; set; }
 
-        public Guid IdEmployee { get; set; }   
+        public Guid IdEmployee { get; set; }
+
+        public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

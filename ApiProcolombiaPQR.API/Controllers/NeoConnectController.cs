@@ -1,15 +1,22 @@
 ﻿using ApiProcolombiaPQR.DATA;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
+using System;
+using System.Net.Http;
+
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
-   
-    public class AutenticacionNeo
+    [Route("api/[controller]")]
+    [ApiController]
+
+    public class AutenticacionNeo : ControllerBase
     {
         public string Id { get; set; }
         // ReSharper disable once InconsistentNaming
@@ -55,6 +62,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 throw new Exception("No se ha logrado establecer conexión a NEO");
             }
+
             T respuesta = default(T);
 
             using (var clienteConsulta = new HttpClient())
@@ -72,41 +80,67 @@ namespace ApiProcolombiaPQR.API.Controllers
             return respuesta;
         }
 
-        private void EstablecerConexionNeo()
+        private async Task<bool> EstablecerConexionNeo()
         {
-            using (var client = new HttpClient())
+            try
             {
-                //construirUrl
-                var queryString = new StringBuilder();
-                queryString.Append("?grant_type=password");
-
-                queryString.Append("&username=");
-
-                queryString.Append(HttpUtility.UrlEncode(NeoUsuario));
-
-                queryString.Append("&password=");
-                queryString.Append(HttpUtility.UrlEncode(NeoContrasenia));
-                queryString.Append(HttpUtility.UrlEncode(NeoToken));
-
-                queryString.Append("&client_id=");
-                queryString.Append(NeoClientId);
-
-                queryString.Append("&client_secret=");
-                queryString.Append(NeoClientSecret);
-
-                //1. solicitud de token
-                client.BaseAddress = new Uri(NeoApi);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = client.PostAsync(NeoApiToken + queryString.ToString(), null).Result;
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    AutenticacionNeo = response.Content.ReadAsAsync<AutenticacionNeo>().Result;
+                    var requestBody = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("username", NeoUsuario),
+                new KeyValuePair<string, string>("password", NeoContrasenia),
+                new KeyValuePair<string, string>("client_id", NeoClientId),
+                new KeyValuePair<string, string>("client_secret", NeoClientSecret)
+            };
+
+                    client.BaseAddress = new Uri(NeoApi);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var tokenResponse = await client.PostAsync(NeoApiToken, new FormUrlEncodedContent(requestBody));
+
+                    if (tokenResponse.IsSuccessStatusCode)
+                    {
+                        var tokenResult = await tokenResponse.Content.ReadAsAsync<AutenticacionNeo>();
+                        AutenticacionNeo = tokenResult;
+                        if (AutenticacionNeo != null)
+                        {
+                            return true; // La conexión se estableció correctamente
+                        }
+
+                    }
+                    else
+                    {
+                        
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al establecer la conexión con NEO: " + ex.Message);
+            }
+            return false;
+        }
+        [HttpGet("[action]")]
+        public async Task<ActionResult<string>> EstadoConexionNeo()
+        {
+            bool conexionEstablecida = await EstablecerConexionNeo();
+
+            if (conexionEstablecida)
+            {
+                return new OkObjectResult("La conexión con NEO se estableció correctamente.");
+            }
+            else
+            {
+                return new BadRequestObjectResult("No se pudo establecer la conexión con NEO.");
             }
         }
 
-       
+
+
+
     }
+
 }

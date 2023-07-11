@@ -20,17 +20,17 @@ namespace ApiProcolombiaPQR.API.Controllers
         private DataContextDB dbContext;
         private readonly IConfiguration _config;
 
-        /*public AuthController(DataContextDB dbContext, IConfiguration config)
+        public AuthController(DataContextDB dbContext, IConfiguration config)
         {
             _dbContext = dbContext;
             _config = config;
-        }*/
+        }
 
-        public AuthController(DataContextDB dbContext)
+        /*public AuthController(DataContextDB dbContext)
         {
             _dbContext = dbContext;
             
-        }
+        }*/
 
         // POST: api/Auth/LoginPQR
         [HttpPost("[action]")]
