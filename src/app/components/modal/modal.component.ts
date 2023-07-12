@@ -69,24 +69,3 @@ export class ModalComponent implements OnInit {
   }
 
 }
-
-
-/*
- this.pqr.getAll()
-      .subscribe((response: any) => {
-        console.log('lista PQRS response: ', response);
-        this.listPQR = response.data.map((item: any) => {
-          // Formatear la fecha usando DatePipe
-          const formattedDate = this.datePipe.transform(item.fechaPQR, 'dd/MM/yyyy');
-
-          // Crear un nuevo objeto con la fecha formateada
-          return {
-            ...item,
-            fechaPQR: formattedDate
-          };
-        });
-
-        console.log('lista PQRS: ', this.listPQR);
-      });
-
-*/
