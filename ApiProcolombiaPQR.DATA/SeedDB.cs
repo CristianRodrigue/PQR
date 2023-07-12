@@ -159,5 +159,31 @@ namespace ApiProcolombiaPQR.DATA
             }
         }
 
+        private async Task CheckConfiguracionNEOAsync()
+        {
+            if (!_context.Configuracion.Any())
+            {
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API_DATA", Valor = "/services/data/v42.0/", Descripcion = "Recurso para acceso a la data" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API", Valor = "https://procolombia.my.salesforce.com", Descripcion = "URL conexión API de NEO" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CONTRASENIA", Valor = "colombia2018", Descripcion = "Contraseña" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_TOKEN", Valor = "PUaA4DRbMe1aO5ZiYEii9SGIZ", Descripcion = "Token de seguridad para acceso a aplicaciones externas" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_USUARIO", Valor = "wservice@proexport.com.co", Descripcion = "Usuario" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CLIENT_ID", Valor = "3MVG9CVKiXR7Ri5rvhUqm5w9wx1ZUHxSvHBIbAq4G9TDtqy77l4T0xee1XKs3bIe32BoHgPSf0zCUYJZdsywr", Descripcion = "Client ID autenticación OAuth" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CLIENT_SECRET", Valor = "1080113624615878709", Descripcion = "Client secret autenticación OAuth" });
+
+                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API_TOKEN", Valor = "/services/oauth2/token", Descripcion = "Recurso para obtener token de autenticación" });
+
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        
     }
 }

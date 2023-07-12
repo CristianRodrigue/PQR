@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApiProcolombiaPQR.COMMON.Models;
 
+
 namespace ApiProcolombiaPQR.COMMON.Utilities
 {
     public class SendEmail : ISendEmail<EmailViewModel>

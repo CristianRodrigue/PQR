@@ -16,6 +16,8 @@ namespace ApiProcolombiaPQR.DATA
 
         public DbSet<UserEntity> Users { get; set; }
 
+        public DbSet<ConfiguracionNeoEntity> Configuracion { get; set; }
+
         public DbSet<UserTypeEntity> UserType { get; set; }
 
         public DbSet<CaseTypeEntity> CaseType { get; set; }

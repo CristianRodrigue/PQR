@@ -30,10 +30,7 @@ namespace ProcolombiaPQRTest.Controllers
             // Arrange
             using (var dbContext = new DataContextDB(_dbContextOptions))
             {
-                // Agregar datos de prueba a la base de datos en memoria
-                // Aquí debes agregar datos que coincidan con la consulta en el método GetAll
-
-                // Agregar datos a las tablas relacionadas (Country, CaseType, UserType, StatusPQR, Files) según la consulta en el método GetAll
+             
                 var country = new CountryEntity { Id = Guid.Parse("c4b129e3-2fcb-460d-96ad-71b375cff943"), CountryName = "Country 1" };
                 var caseType = new CaseTypeEntity { Id = Guid.Parse("622f776d-3cf8-4981-95ad-8cd33415793d"), Name = "CaseType 1" };
                 var userType = new UserTypeEntity { Id = Guid.Parse("01dee0f4-2a72-4525-87e6-765b6d00c8f0"), Name = "UserType 1" };

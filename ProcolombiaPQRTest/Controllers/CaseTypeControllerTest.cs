@@ -26,6 +26,7 @@ namespace ProcolombiaPQRTest.Controllers
             var options = new DbContextOptionsBuilder<DataContextDB>()
                 .UseInMemoryDatabase(databaseName: "TestDatabase")
                 .Options;
+
             _dbContext = new DataContextDB(options);
 
             // Agregar datos de prueba al DbContext
@@ -43,7 +44,7 @@ namespace ProcolombiaPQRTest.Controllers
         [Test]
         public async Task GetAll_ReturnsOkResultWithCorrectData()
         {
-            // Act
+            
             var result = await _controller.GetAll();
 
             // Assert
@@ -63,7 +64,6 @@ namespace ProcolombiaPQRTest.Controllers
             Assert.AreEqual(Guid.Parse("636a919e-627a-4fb4-990d-7f942914b555"), firstItem.Id);
             Assert.AreEqual("Type 1", firstItem.Name);
 
-            
         }
 
 

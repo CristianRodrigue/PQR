@@ -15,14 +15,14 @@ namespace ApiProcolombiaPQR.API.Controllers
     public class NeoController : ControllerBase
     {
         private DataContextDB _dbContext;
-        private DataContextDBNeo _contextNeo;
+        //private DataContextDBNeo _contextNeo;
         private AutenticacionNeo autenticacionNeo = new AutenticacionNeo();
         private NeoConnect credencialesNeo = new NeoConnect();
 
         public NeoController(DataContextDB dbContext, DataContextDBNeo contextNeo)
         {
             _dbContext = dbContext;
-            _contextNeo = contextNeo;
+            //_contextNeo = contextNeo;
         }
 
         // POST: api/Neo/GenerarCasoSaleforce
@@ -44,13 +44,18 @@ namespace ApiProcolombiaPQR.API.Controllers
 
         private async void AutenticacionNeo()
         {
-            var configuracionNeo = await _contextNeo.Configuracion.Select(x => new ConfiguracionNeoEntity 
-            { 
-                Nombre = x.Nombre,
-                Valor = x.Valor,
-                Descripcion = x.Descripcion
-            }).ToListAsync();
-
+            try
+            {
+                var configuracionNeo = await _dbContext.Configuracion.Select(x => new ConfiguracionNeoEntity
+                {
+                    Nombre = x.Nombre,
+                    Valor = x.Valor,
+                    Descripcion = x.Descripcion
+                }).ToListAsync();
+            }
+            catch (Exception ex) {
+                
+            }
 
             //autenticacionNeo.
         }
@@ -58,9 +63,6 @@ namespace ApiProcolombiaPQR.API.Controllers
         private void EstablecerConexionNeo()
         {
             AutenticacionNeo();
-
-
-
 
             using (var client = new HttpClient())
             {
