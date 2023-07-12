@@ -39,7 +39,8 @@ namespace ApiProcolombiaPQR.ENTITY
         public Guid? CaseStatus { get; set; }
 
         public Guid? FileId { get; set; }
-
+        
+        /*
         public virtual CountryEntity Country { get; set; }
         public virtual CaseTypeEntity CaseType { get; set; }
         public virtual UserTypeEntity UserType { get; set; }
@@ -47,8 +48,8 @@ namespace ApiProcolombiaPQR.ENTITY
         public virtual FilesEntity File { get; set; }
         public virtual RoleEntity Role { get; set; }
         public virtual ConsecutiveEntity Consecutive { get; set; }
-        public virtual MailTemplateEntity MailTemplate { get; set; }
-        public virtual EmployeeEntity Employee { get; set; }
-        public virtual AssignEntity Assign { get; set; }
+        public virtual MailTemplateEntity MailTemplate { get; set; }*/
+        // public virtual EmployeeEntity Employee { get; set; }
+        // public virtual AssignEntity Assign { get; set; }
     }
 }

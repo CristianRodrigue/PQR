@@ -142,9 +142,9 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            Random random = new Random();
 
-            Guid fileId = Guid.NewGuid(); ; 
+            Random random = new Random();
+            Guid fileId = Guid.NewGuid();
 
             if(modelo.File.data != null)
             {
@@ -184,13 +184,14 @@ namespace ApiProcolombiaPQR.API.Controllers
                 
                 _dbContext.PQR.Add(pqr);
                 
-
                 try
                 {
                     await _dbContext.SaveChangesAsync();
 
                     // Enviamos mensaje de correo al usuario para notificar que recibimos su pqr
-                    Guid IdPlantilla = Guid.Parse("11555004-3d87-4a4a-a08a-08db732dfe3a");
+                    var plantillaUsuario = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("3C08F18B-99BF-4413-85E5-F155B26D8603"));
+
+                    Guid IdPlantilla =  plantillaUsuario.IdMailTemplate;
                     var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
 
 
@@ -212,13 +213,37 @@ namespace ApiProcolombiaPQR.API.Controllers
                     SendCorreo.SendAsync(correo);
                    
                 }
-                
-
-                    // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
 
 
+                // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
+                var asignacion = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("B246118D-823C-41E3-AA03-6E09D99229B1"));
+                var admin = await _dbContext.Users.FirstOrDefaultAsync(a => a.Role == Guid.Parse("B08FCC3A-EA4B-4D30-AC60-0445EEA65F9C"));
 
-                    return StatusCode(StatusCodes.Status201Created);
+                Guid IdPlantillaAdmin = asignacion.IdMailTemplate;
+                var plantillaAdmin = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantillaAdmin && e.Enabled == true);
+
+
+                if (plantillaAdmin != null)
+                {
+                    string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", admin.Name);
+
+
+                    EmailViewModel correo = new EmailViewModel
+                    {
+                        Destination = modelo.Email,
+                        Suject = "Recibimos tu PQR",
+                        Message = htmlPlantilla,
+                        IsHtml = true
+                    };
+
+                    SendEmail SendCorreo = new SendEmail();
+                    SendCorreo.SendAsync(correo);
+
+                }
+
+
+                return StatusCode(StatusCodes.Status201Created);
                 }
                 catch (Exception ex)
                 {

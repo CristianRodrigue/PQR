@@ -18,6 +18,6 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public string Cargo { get; set; }
 
-        public virtual ICollection<PqrEntity> Pqrs { get; set; }
+        // public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

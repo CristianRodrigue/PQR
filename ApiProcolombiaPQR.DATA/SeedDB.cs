@@ -24,6 +24,9 @@ namespace ApiProcolombiaPQR.DATA
             await CheckUsersAsync();
             await CheckConsecutive();
             await CheckStatus();
+            await CheckMailTemplate();
+            await CheckEmployee();
+            await CheckAssign();
         }
 
         private async Task CheckCountriesAsync()
@@ -107,6 +110,41 @@ namespace ApiProcolombiaPQR.DATA
                 var pSalt = passwordSalt;
 
                 _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckMailTemplate()
+        {
+            if (!_context.MailTemplate.Any())
+            {
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("AD1C2E42-22C9-4608-AED3-0D29A427850E"), Name = "Registro PQR", Description = "Correo para usuario al registrar PQR", Html = "GRACIAS POR REGISTRAR SU PQR", Enabled = true });
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D"), Name = "PQR Admin", Description = "Correo PQR para admin", Html = "Se genero un nuevo PQR", Enabled = true });
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("081C08F2-1E22-405B-B7B7-4FE992BE27C2"), Name = "Asignacion PQR", Description = "Correo PQR para asignar", Html = "Se le asigno un PQR", Enabled = true });
+    
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckEmployee()
+        {
+            if (!_context.Employee.Any())
+            {
+                _context.Employee.Add(new EmployeeEntity { Id = Guid.Parse("3A21A637-05D5-43F4-B0C4-5E4583582D07"), Name = "Cristian Rodriguez", Email = "ptecnologia1@procolombia.co", Division = "Tecnologia", Cargo = "Desarrollador practicante" });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckAssign()
+        {
+            if (!_context.Assign.Any())
+            {
+                _context.Assign.Add(new AssignEntity { Id = Guid.Parse("3C08F18B-99BF-4413-85E5-F155B26D8603"), Name = "Usuario PQRS", IdMailTemplate = Guid.Parse("AD1C2E42-22C9-4608-AED3-0D29A427850E") });
+                _context.Assign.Add(new AssignEntity { Id = Guid.Parse("B246118D-823C-41E3-AA03-6E09D99229B1"), Name = "Administrador PQRS", IdMailTemplate = Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D") });
+                _context.Assign.Add(new AssignEntity { Id = Guid.Parse("FF68BEFF-A89D-416E-B560-959677D48BDE"), Name = "Asignacion PQRS", IdMailTemplate = Guid.Parse("081C08F2-1E22-405B-B7B7-4FE992BE27C2") });
+
 
                 await _context.SaveChangesAsync();
             }

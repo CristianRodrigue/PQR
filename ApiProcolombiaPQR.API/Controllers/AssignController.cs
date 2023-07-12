@@ -1,4 +1,6 @@
 ﻿using ApiProcolombiaPQR.API.Models;
+using ApiProcolombiaPQR.COMMON.Models;
+using ApiProcolombiaPQR.COMMON.Utilities;
 using ApiProcolombiaPQR.DATA;
 using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Http;
@@ -26,13 +28,13 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 var query = from AS in _dbContext.Assign
                             join MT in _dbContext.MailTemplate on AS.IdMailTemplate equals MT.Id
-                            join EM in _dbContext.Employee on AS.IdEmployee equals EM.Id
+                            //join EM in _dbContext.Employee on AS.IdEmployee equals EM.Id
                             select new
                             {
                                 Id = AS.Id,
                                 Nombre = AS.Name,
                                 MailTemplate = MT.Name,
-                                Empleado = EM.Name
+                                //Empleado = EM.Name
                             };
 
                 var queryLinq = await query.ToListAsync();
@@ -64,14 +66,14 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 var query = from AS in _dbContext.Assign
                             join MT in _dbContext.MailTemplate on AS.IdMailTemplate equals MT.Id
-                            join EM in _dbContext.Employee on AS.IdEmployee equals EM.Id
+                            //join EM in _dbContext.Employee on AS.IdEmployee equals EM.Id
                             where AS.Id == Id
                             select new
                             {
                                 Id = AS.Id,
                                 Nombre = AS.Name,
                                 MailTemplate = MT.Name,
-                                Empleado = EM.Name
+                                //Empleado = EM.Name
                             };
 
                 var queryLinq = await query.ToListAsync();
@@ -108,7 +110,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             {
                 Name = modelo.Name,
                 IdMailTemplate = modelo.IdMailTemplate,
-                IdEmployee = modelo.IdEmployee
+                //IdEmployee = modelo.IdEmployee
             };
 
             _dbContext.Assign.Add(assign);
@@ -143,7 +145,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
             query.Name = modelo.Name;
             query.IdMailTemplate = modelo.IdMailTemplate;
-            query.IdEmployee = modelo.IdEmployee;
+            //query.IdEmployee = modelo.IdEmployee;
 
             try
             {
@@ -206,6 +208,52 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return new BadRequestObjectResult(response);
             }
         }
+
+        // POST: api/Assign/AsignarCaso
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AsignarCaso([FromBody] AssignCaseViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var asignacion = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("FF68BEFF-A89D-416E-B560-959677D48BDE"));
+                var employee = await _dbContext.Employee.FirstOrDefaultAsync(a => a.Id == modelo.Id);
+
+                Guid IdPlantilla = asignacion.IdMailTemplate;
+                var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
+
+
+                if (plantilla != null)
+                {
+                    string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", employee.Name);
+
+
+                    EmailViewModel correo = new EmailViewModel
+                    {
+                        Destination = modelo.Email,
+                        Suject = "Asignacion PQR",
+                        Message = htmlPlantilla,
+                        IsHtml = true
+                    };
+
+                    SendEmail SendCorreo = new SendEmail();
+                    SendCorreo.SendAsync(correo);
+
+                }
+
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
     }
 }
