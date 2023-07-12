@@ -5,7 +5,6 @@
                 <th>#</th>
                 <th class="px-4 py-3">Asignacion</th>
                 <th class="px-4 py-3">Template</th>
-                <th class="px-4 py-3">Empleado</th>
                 <th class="px-4 py-3 text-right">
                     <button type="button"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
@@ -15,9 +14,8 @@
             </tr>
             <tr class="bg-gray-700 border-b border-gray-600" *ngFor="let item of list; let i=index">
                 <td scope="row ">{{ i + 1 }}</td>
-                <td class="px-4 py-3">{{ item.name }}</td>
-                <td class="px-4 py-3">{{ item.email }}</td>
-                <td class="px-4 py-3">{{ item.role }}</td>
+                <td class="px-4 py-3">{{ item.nombre }}</td>
+                <td class="px-4 py-3">{{ item.mailTemplate }}</td>
                 <td class="px-4 py-3 flex space-x-4">
                     <!--<button class="btn btn-warning btn-sm mr-sm-2" [routerLink]="[ '/mensajes/edit', item.id ]">
                 <i class="fi fi-rr-edit"></i>

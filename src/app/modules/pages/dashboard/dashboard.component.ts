@@ -29,17 +29,17 @@ export class DashboardComponent implements OnInit {
   filteredResults: any[] = [];
   listaPais: any[] = [];
 
-  constructor(private dialog: MatDialog,private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe,private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute, private country: CountryService,  ) { 
+  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe, private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute, private country: CountryService,) {
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
 
     this.formulario = this.formBuilder.group({
       numeroCaso: [''],
       tipoCaso: [''],
       tipoUsuario: [''],
-    estado: [''],
-    pais: [''],
-    fecha: [''],
-    autorizaTratamientoDatos: [''],
+      estado: [''],
+      pais: [''],
+      fecha: [''],
+      autorizaTratamientoDatos: [''],
 
     });
   }
@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
     this.listarPQR();
     this.consultarPaises();
   }
+  
   openDialog() {
     const mensaje = this.dialog.open(ModalComponent);
   }
@@ -68,7 +69,7 @@ export class DashboardComponent implements OnInit {
         this.listPQR = response.data.map((item: any) => {
           // Formatear la fecha usando DatePipe
           const formattedDate = this.datePipe.transform(item.fechaPQR, 'dd/MM/yyyy');
-  
+
           // Crear un nuevo objeto con la fecha formateada
           return {
             ...item,
@@ -79,19 +80,20 @@ export class DashboardComponent implements OnInit {
         console.log('lista PQRS: ', this.listPQR);
       });
   }
+
   limpiarBusqueda(): void {
-    this.formulario.get('tipoCaso')?.setValue(null); 
+    this.formulario.get('tipoCaso')?.setValue(null);
     this.formulario.get('numeroCaso')?.setValue(null);
     this.formulario.get('tipoUsuario')?.setValue(null);
     this.formulario.get('estado')?.setValue(null);
-    this.formulario.get('pais')?.setValue(null); 
+    this.formulario.get('pais')?.setValue(null);
     this.formulario.get('fecha')?.setValue(null);
-    this.formulario.get('autorizaTratamientoDatos')?.setValue(null);     
+    this.formulario.get('autorizaTratamientoDatos')?.setValue(null);
   }
 
- cerrarCaso(item: any){
-  console.log("cerrar caso")
- }
+  cerrarCaso(item: any) {
+    console.log("cerrar caso")
+  }
 
   exportToExcel(event?: Event): void {
     this.filtrarResultados(event);
@@ -109,16 +111,16 @@ export class DashboardComponent implements OnInit {
     link.download = fileName + '.xlsx';
     link.click();
   }
-  
+
 
   filtrarResultados(event?: Event) {
     if (event) {
       event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
     }
-  
+
     // Obtener los valores de los filtros de búsqueda
     const searchValues = this.formulario.value;
-  
+
     const lowerCaseSearchValues = {
       numeroCaso: searchValues.numeroCaso?.toLowerCase(),
       tipoCaso: searchValues.tipoCaso?.toLowerCase(),
@@ -128,53 +130,53 @@ export class DashboardComponent implements OnInit {
       autorizaTratamientoDatos: searchValues.autorizaTratamientoDatos?.toLowerCase(),
       fecha: searchValues.fecha
     };
-  
+
     // Realizar el filtrado de resultados
     this.filteredResults = this.listPQR.filter(item => {
       // Aplica las condiciones de filtro
       let match = true;
-  
+
       if (lowerCaseSearchValues.numeroCaso && item.numeroCaso.toString().toLowerCase() !== lowerCaseSearchValues.numeroCaso) {
         match = false;
       }
-  
+
       if (lowerCaseSearchValues.tipoCaso && item.caseType.toLowerCase() !== lowerCaseSearchValues.tipoCaso) {
         match = false;
       }
-  
+
       if (lowerCaseSearchValues.tipoUsuario && item.userType.toLowerCase() !== lowerCaseSearchValues.tipoUsuario) {
         match = false;
       }
-  
+
       if (lowerCaseSearchValues.estado && item.estatus.toLowerCase() !== lowerCaseSearchValues.estado) {
         match = false;
       }
-  
+
       if (lowerCaseSearchValues.pais && item.country.toLowerCase() !== lowerCaseSearchValues.pais) {
         match = false;
 
         console.log(lowerCaseSearchValues.pais + "   " + item.country.toLowerCase())
       }
-  
+
       if (lowerCaseSearchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== lowerCaseSearchValues.autorizaTratamientoDatos) {
         match = false;
       }
-  
+
       if (lowerCaseSearchValues.fecha && this.datePipe.transform(lowerCaseSearchValues.fecha, 'dd/MM/yyyy') !== item.fechaPQR) {
         match = false;
       }
-  
+
       return match;
     });
 
-   
+
 
     this.filteredResults = this.filteredResults.reverse();
-    
-  }
-  
 
-  asignar(item: any) {
+  }
+
+
+  /*asignar(item: any) {
     // Lógica para asignar un PQR
     console.log('asignarPqr', item);
 
@@ -186,12 +188,9 @@ export class DashboardComponent implements OnInit {
         'and other HTML tags' +
         '<button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Enviar</strong></button>',
       showCloseButton: true,
-      
-      
+
     })
-
-
-  }
+  } */
 
   enviarAsigncion() {
     console.log('funciono');
@@ -202,6 +201,6 @@ export class DashboardComponent implements OnInit {
     console.log('generarCasoSalesforce', item);
   }
 
-  
+
 
 }

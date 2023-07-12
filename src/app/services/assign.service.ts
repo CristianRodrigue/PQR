@@ -21,7 +21,18 @@ export class AssignService {
     return this.http.get<AssignModel[]>(this.url + '/Assign/GetById/' + id);
   }
 
-  create(name:string, mailTemplate:string, employee:string) {
+  create(id:string, name:string, email:string) {
+
+    const data = {    
+      Id: id,
+      Name: name,
+      Email: email
+    };
+
+    return this.http.post(`${this.url}/Assign/AsignarCaso`, data);
+  }
+
+  asignarPQR(id:string, mailTemplate:string, employee:string) {
 
     const data = {    
       Name: name,

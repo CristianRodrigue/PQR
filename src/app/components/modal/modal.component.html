@@ -1,24 +1,23 @@
 <h1>SE ASIGNA CASO</h1>
 <form action="">
   <div class="asignar">
-      <div class="row">
-          <div class="col-12 my-8">
-              <select class="form-select" aria-label="Default select example">
-                  <option selected>Seleccione un usuario</option>
-                  <option value="1">Pepito Perez</option>
-                  <option value="2">Juanito Arjona</option>
-                  <option value="3">Lupita Suarez</option>
-              </select>
-          </div>
-          <div class="col-12 my-8">
-              <input type="text" class="form-control" placeholder="pepito@procolombia.co" disabled>
-          </div>
-      </div>
-      <div class="text-right">
-          <button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Asignar</strong></button>
-      </div>
+    <form autocomplete="off" [formGroup]="formAsignar" (ngSubmit)="enviar()">
+        <div class="row">
+            <div class="form-group">
+                <label>Seleccione un empleado *</label>
+                <select class="input-wrapper" formControlName="employee" [class.is-invalid]="employeeNoValido">
+                    <option [value]="item.id" *ngFor="let item of listEmployee">{{ item.name }}</option>
+                </select>
+                <div class="text-error">
+                    <small *ngIf="employeNoValido" class="text-danger">Seleccione un tipo de caso</small>
+                </div>
+            </div>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-info" ><strong>Asignar</strong></button>
+        </div>
+    </form>
+      
   </div>
 </form>
-<!--<div class="modal-body">
-    <div [innerHTML]="modalContent"></div>
-  </div> -->
+

@@ -100,75 +100,78 @@
 
         </form>
     </div>
-    <div class="text-right">
-        <button type="submit" (click)="exportToExcel()"
-            class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            Descargar
-        </button>
+    <div *ngIf="filteredResults.length > 0">
+        <div class="text-right">
+            <button type="submit" (click)="exportToExcel()"
+                class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Descargar
+            </button>
+        </div>
+        <div class="table-data">
+            <h2><strong>Resultados de la búsqueda</strong></h2>
+            <table class="rounded-lg  mx-auto bg-gray-800 text-gray-200">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3">#</th>
+                        <th class="px-4 py-3">Número de caso</th>
+                        <th class="px-4 py-3">Fecha</th>
+                        <th class="px-4 py-3">Tipo de usuario</th>
+                        <th class="px-4 py-3">Tipo de caso</th>
+                        <th class="px-4 py-3">País</th>
+                        <th class="px-4 py-3">Tratamiento de datos</th>
+                        <th class="px-4 py-3">Estado</th>
+                        <th class="px-4 py-3">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-gray-700 border-b border-gray-600"
+                        *ngFor="let item of filteredResults | paginate: { itemsPerPage: 10, currentPage: page }; let i=index">
+
+                        <td scope="row ">{{ i + 1 }}</td>
+                        <td class="px-4 py-3">{{item.numeroCaso}}</td>
+                        <td class="px-4 py-3">{{item.fechaPQR}}</td>
+                        <td class="px-4 py-3">{{item.userType}}</td>
+                        <td class="px-4 py-3">{{item.caseType}}</td>
+                        <td class="px-4 py-3">{{item.country}}</td>
+                        <td class="px-4 py-3">{{item.autorizaTratamientoDatos}}</td>
+                        <td class="px-4 py-3" [ngClass]="{
+                            'estado-verde': item.estatus === 'Acuso de recibido',
+                            'estado-amarillo': item.estatus === 'Revisado',
+                            'estado-rojo': item.estatus === 'Cerrado'
+                          }">{{item.estatus}}</td>
+                        <td class="px-4 py-3">
+                            <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
+                                <i class="fi fi-rr-eye"></i>
+                            </button>
+                            <!--<button class="btn btn-sm btn-margin btn-success" (click)="asignar(item.id)"></button> -->
+
+                            <button class="btn btn-sm btn-margin btn-success" (click)="openDialog()">
+
+                                <i class="fi fi-rr-users"></i>
+                            </button>
+                            <button class="btn btn-sm btn-info" (click)="generarCasoSalesforce(item.id)">
+                                Salesforce >>
+                            </button>
+                            <button class="btn btn-sm btn-margin btn-danger" (click)="cerrarCaso(item.id)">
+                                <i class="fi fi-rr-lock"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
     </div>
-    <div class="table-data">
-        <h2><strong>Resultados de la búsqueda</strong></h2>
-        <table class="rounded-lg  mx-auto bg-gray-800 text-gray-200">
-            <thead>
-                <tr>
-                    <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">Número de caso</th>
-                    <th class="px-4 py-3">Fecha</th>
-                    <th class="px-4 py-3">Tipo de usuario</th>
-                    <th class="px-4 py-3">Tipo de caso</th>
-                    <th class="px-4 py-3">País</th>
-                    <th class="px-4 py-3">Tratamiento de datos</th>
-                    <th class="px-4 py-3">Estado</th>
-                    <th class="px-4 py-3">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-gray-700 border-b border-gray-600"
-                    *ngFor="let item of filteredResults | paginate: { itemsPerPage: 10, currentPage: page }; let i=index">
 
-                    <td scope="row ">{{ i + 1 }}</td>
-                    <td class="px-4 py-3">{{item.numeroCaso}}</td>
-                    <td class="px-4 py-3">{{item.fechaPQR}}</td>
-                    <td class="px-4 py-3">{{item.userType}}</td>
-                    <td class="px-4 py-3">{{item.caseType}}</td>
-                    <td class="px-4 py-3">{{item.country}}</td>
-                    <td class="px-4 py-3">{{item.autorizaTratamientoDatos}}</td>
-                    <td class="px-4 py-3" [ngClass]="{
-                        'estado-verde': item.estatus === 'Acuso de recibido',
-                        'estado-amarillo': item.estatus === 'Revisado',
-                        'estado-rojo': item.estatus === 'Cerrado'
-                      }">{{item.estatus}}</td>
-                    <td class="px-4 py-3">
-                        <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
-                            <i class="fi fi-rr-eye"></i>
-                        </button>
-                        <button class="btn btn-sm btn-margin btn-success" (click)="asignar(item.id)"></button>
-
-                        <button class="btn btn-sm btn-margin btn-success" (click)="openDialog()">
-
-                            <i class="fi fi-rr-users"></i>
-                        </button>
-                        <button class="btn btn-sm btn-info" (click)="generarCasoSalesforce(item.id)">
-                            Salesforce >>
-                        </button>
-                        <button class="btn btn-sm btn-margin btn-danger" (click)="cerrarCaso(item.id)">
-                            <i class="fi fi-rr-lock"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
-        </pagination-controls>
-
-    </div>
 </div>
 
+<!--
 <hr>
 
 <form action="">
@@ -190,4 +193,4 @@
             <button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Asignar</strong></button>
         </div>
     </div>
-</form>
+</form> -->
