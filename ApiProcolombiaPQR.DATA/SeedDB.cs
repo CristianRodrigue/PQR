@@ -1,6 +1,7 @@
 ﻿using ApiProcolombiaPQR.ENTITY;
 using System.Text;
 using ISO3166;
+using ApiProcolombiaPQR.COMMON.Utilities;
 
 namespace ApiProcolombiaPQR.DATA
 {
@@ -67,6 +68,7 @@ namespace ApiProcolombiaPQR.DATA
             }
         }
 
+        
         private async Task CheckConsecutive()
         {
             if (!_context.Consecutive.Any())
@@ -81,9 +83,9 @@ namespace ApiProcolombiaPQR.DATA
         {
             if (!_context.StatusPQR.Any())
             {
-                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"), Name = "Acuso de recibido" });
-                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("5832b8ac-a7d3-448d-8dde-eb8fea6f4ace"), Name = "Revisado" });
-                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("3ee6cd97-e6c3-4873-a44c-e9ee91b45661"), Name = "Cierre" });
+                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"), Name = "Abierto" });
+                ;
+                _context.StatusPQR.Add(new StatusEntity { Id = Guid.Parse("3ee6cd97-e6c3-4873-a44c-e9ee91b45661"), Name = "Cerrado" });
 
                 await _context.SaveChangesAsync();
             }
@@ -109,7 +111,8 @@ namespace ApiProcolombiaPQR.DATA
                 var pHash = passwordHash;
                 var pSalt = passwordSalt;
 
-                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
+                //_context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
+                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash, Password_salt = pSalt,  });
 
                 await _context.SaveChangesAsync();
             }
@@ -117,11 +120,14 @@ namespace ApiProcolombiaPQR.DATA
 
         private async Task CheckMailTemplate()
         {
+            var html = new PlantillasHTML();
             if (!_context.MailTemplate.Any())
             {
-                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("AD1C2E42-22C9-4608-AED3-0D29A427850E"), Name = "Registro PQR", Description = "Correo para usuario al registrar PQR", Html = "GRACIAS POR REGISTRAR SU PQR", Enabled = true });
-                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D"), Name = "PQR Admin", Description = "Correo PQR para admin", Html = "Se genero un nuevo PQR", Enabled = true });
-                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("081C08F2-1E22-405B-B7B7-4FE992BE27C2"), Name = "Asignacion PQR", Description = "Correo PQR para asignar", Html = "Se le asigno un PQR", Enabled = true });
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("AD1C2E42-22C9-4608-AED3-0D29A427850E"), Name = "Registro PQR", Description = "Correo para usuario al registrar PQR", Html = html.registroCasoUser, Enabled = true, Message= "Confirmamos que hemos recibido su queja/reclamo registrado en nuestra página web, le informamos que escalaremos el caso al equipo de ProColombia correspondiente para que lo revise y de esta forma poderle dar respuesta lo antes posible.\r\n\r\nSaludos cordiales,\r\n\r\nProColombia." });
+
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D"), Name = "PQR Admin", Description = "Correo PQR para admin", Html = html.registroCasoAdmin, Enabled = true, Message = "Se registró nueva PQR, por favor dirigirse a la plataforma de administracion para gestionarla." });
+
+                _context.MailTemplate.Add(new MailTemplateEntity { Id = Guid.Parse("081C08F2-1E22-405B-B7B7-4FE992BE27C2"), Name = "Asignacion PQR", Description = "Correo PQR para asignar", Html = html.asignacionCaso, Enabled = true, Message = "Se le asignó nueva PQR, por favor dirigirse a la plataforma para gestionarla" });
     
                 await _context.SaveChangesAsync();
             }
@@ -159,30 +165,7 @@ namespace ApiProcolombiaPQR.DATA
             }
         }
 
-        private async Task CheckConfiguracionNEOAsync()
-        {
-            if (!_context.Configuracion.Any())
-            {
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API_DATA", Valor = "/services/data/v42.0/", Descripcion = "Recurso para acceso a la data" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API", Valor = "https://procolombia.my.salesforce.com", Descripcion = "URL conexión API de NEO" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CONTRASENIA", Valor = "colombia2018", Descripcion = "Contraseña" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_TOKEN", Valor = "PUaA4DRbMe1aO5ZiYEii9SGIZ", Descripcion = "Token de seguridad para acceso a aplicaciones externas" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_USUARIO", Valor = "wservice@proexport.com.co", Descripcion = "Usuario" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CLIENT_ID", Valor = "3MVG9CVKiXR7Ri5rvhUqm5w9wx1ZUHxSvHBIbAq4G9TDtqy77l4T0xee1XKs3bIe32BoHgPSf0zCUYJZdsywr", Descripcion = "Client ID autenticación OAuth" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_CLIENT_SECRET", Valor = "1080113624615878709", Descripcion = "Client secret autenticación OAuth" });
-
-                _context.Configuracion.Add(new ConfiguracionNeoEntity { Nombre = "NEO_API_TOKEN", Valor = "/services/oauth2/token", Descripcion = "Recurso para obtener token de autenticación" });
-
-
-                await _context.SaveChangesAsync();
-            }
-        }
+        
 
         
     }

@@ -38,7 +38,7 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public Guid? CaseStatus { get; set; }
 
-        public Guid? FileId { get; set; }
+        public Guid FileId { get; set; }
         
         /*
         public virtual CountryEntity Country { get; set; }

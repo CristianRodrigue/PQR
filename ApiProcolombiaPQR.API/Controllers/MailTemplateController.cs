@@ -30,7 +30,9 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Id = x.Id,
                         Name = x.Name,
                         Description = x.Description,
-                        Enabled = x.Enabled
+                        Enabled = x.Enabled,
+                        Message = x.Message
+
                     }).ToListAsync();
 
                 var response = new MailResponse
@@ -61,7 +63,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Name = x.Name,
                         Description = x.Description,
                         Html = x.Html,
-                        Enabled = x.Enabled
+                        Enabled = x.Enabled,
+                        Message = x.Message
                     }).ToListAsync();
 
                 var response = new MailResponse
@@ -130,6 +133,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             query.Description = modelo.Description;
             query.Html = modelo.Html;
             query.Enabled = modelo.Enabled;
+            query.Message = modelo.Message;
 
             try
             {

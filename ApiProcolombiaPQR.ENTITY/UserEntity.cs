@@ -18,6 +18,6 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public byte[] Password_salt { get; set; }
 
-        public Guid Role { get; set; }
+        //public Guid Role { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 {
     public class FileViewModel
     {
+        public Guid Id { get; set; }
         public int height { get; set; }
 
         public DateTime timestamp { get; set; }

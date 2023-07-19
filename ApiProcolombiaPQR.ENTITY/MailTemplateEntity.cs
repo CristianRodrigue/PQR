@@ -18,6 +18,8 @@ namespace ApiProcolombiaPQR.ENTITY
 
         public bool Enabled { get; set; }
 
+        public string? Message { get; set; }
+
         public virtual ICollection<PqrEntity> Pqrs { get; set; }
     }
 }

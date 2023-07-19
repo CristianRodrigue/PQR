@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
 
-        public int CaseNumber { get; set; }
+        /*public int CaseNumber { get; set; }
 
         public Guid CountryId { get; set; }
 
@@ -24,13 +24,18 @@
 
         public string PhoneNumber { get; set; }
 
-        public byte[]? File { get; set; }
+        //[JsonConverter(typeof(JsonToByteArrayConverter))]
+        //public byte[]? File { get; set; }
+
+
+        //[ModelBinder(BinderType = typeof(JsonModelBinder))]
+        public Guid File { get; set; }
 
         public string Comentario { get; set; }
 
         public bool AutorizaTratamientoDatos { get; set; }
 
-        public DateTime PQRDate { get; set; }
+        public DateTime PQRDate { get; set; }*/
 
         public Guid CaseStatus { get; set; }
     }

@@ -11,6 +11,8 @@
         public string Html { get; set; }
 
         public bool Enabled { get; set; }
+
+        public string? Message { get; set; }
     }
 }
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
@@ -105,7 +106,9 @@ namespace ApiProcolombiaPQR.API.Controllers
                                 Nombre = PQRS.Name,
                                 Email = PQRS.Email,
                                 Telefono = PQRS.PhoneNumber,
+
                                 File = PQRS.FileId,
+
                                 Comentario = PQRS.Comentario,
                                 AutorizaTratamientoDatos = PQRS.AutorizaTratamientoDatos,
                                 NumeroCaso = PQRS.CaseNumber,
@@ -144,10 +147,13 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
             Random random = new Random();
-            Guid fileId = Guid.NewGuid();
 
-            if(modelo.File.data != null)
+
+            Guid fileId = Guid.Parse("48cc9863-a763-4d68-8883-59d39ccec665");
+
+            if (modelo.File.data != null)
             {
+                fileId = Guid.NewGuid();
                 FilesEntity file = new FilesEntity
                 {
                     Id = fileId,
@@ -162,43 +168,55 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
             PqrEntity pqr = new PqrEntity
-                {
-                    CountryId = modelo.CountryId,
-                    CaseTypeId = modelo.CaseTypeId,
-                    UserTypeId = modelo.UserTypeId,
-                    RazonSocial = modelo.RazonSocial,
-                    Nit = modelo.Nit,
-                    Cedula = modelo.Cedula,
-                    Name = modelo.Name,
-                    Email = modelo.Email,
-                    PhoneNumber = modelo.PhoneNumber,
-                    Comentario = modelo.Comentario,
-                    AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
-                    CaseNumber = random.Next(10000, 99999),
-                    CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
-                    PQRDate = DateTime.Now,
-                    FileId = fileId
-                    
-                     //this.ventas[a].estadoVentaStr !== 'Aprobada' ? this.ventas[a].razonRechazo : '';
+            {
+                CountryId = modelo.CountryId,
+                CaseTypeId = modelo.CaseTypeId,
+                UserTypeId = modelo.UserTypeId,
+                RazonSocial = modelo.RazonSocial,
+                Nit = modelo.Nit,
+                Cedula = modelo.Cedula,
+                Name = modelo.Name,
+                Email = modelo.Email,
+                PhoneNumber = modelo.PhoneNumber,
+                Comentario = modelo.Comentario,
+                AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos,
+                CaseNumber = random.Next(10000, 99999),
+                CaseStatus = Guid.Parse("7b1bf27e-c376-4723-aebf-d596edf7ee26"),
+                PQRDate = DateTime.Now,
+                FileId = fileId,
+
             };
                 
                 _dbContext.PQR.Add(pqr);
-                
-                try
+          
+
+            try
                 {
                     await _dbContext.SaveChangesAsync();
 
                     // Enviamos mensaje de correo al usuario para notificar que recibimos su pqr
-                    var plantillaUsuario = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("3C08F18B-99BF-4413-85E5-F155B26D8603"));
+                    var plantillaUsuario = await _dbContext.MailTemplate.FirstOrDefaultAsync(a => a.Id == Guid.Parse("AD1C2E42-22C9-4608-AED3-0D29A427850E"));
 
-                    Guid IdPlantilla =  plantillaUsuario.IdMailTemplate;
+                    Guid IdPlantilla =  plantillaUsuario.Id;
                     var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
-
+                    var images = new PlantillasHTML();
 
                 if (plantilla != null)
                 {
+                    
                     string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
+
+                   
+
                     htmlPlantilla = htmlPlantilla.Replace("{nombre}", pqr.Name);
+                    htmlPlantilla = htmlPlantilla.Replace("{texto}", plantillaUsuario.Message);
+                    htmlPlantilla = htmlPlantilla.Replace("{Numero}", pqr.CaseNumber.ToString());
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-1.png", images.image1);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-2.png", images.image2);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-3.png", images.image3);
 
 
                     EmailViewModel correo = new EmailViewModel
@@ -210,29 +228,37 @@ namespace ApiProcolombiaPQR.API.Controllers
                     };
 
                     SendEmail SendCorreo = new SendEmail();
-                    SendCorreo.SendAsync(correo);
+           
+                SendCorreo.SendAsync(correo);
                    
                 }
 
+         // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
+                var asignacion = await _dbContext.MailTemplate.FirstOrDefaultAsync(a => a.Id == Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D"));
+                //var admin = await _dbContext.Users.FirstOrDefaultAsync(a => a.Role == Guid.Parse("B08FCC3A-EA4B-4D30-AC60-0445EEA65F9C"));
 
-                // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
-                var asignacion = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("B246118D-823C-41E3-AA03-6E09D99229B1"));
-                var admin = await _dbContext.Users.FirstOrDefaultAsync(a => a.Role == Guid.Parse("B08FCC3A-EA4B-4D30-AC60-0445EEA65F9C"));
-
-                Guid IdPlantillaAdmin = asignacion.IdMailTemplate;
+                Guid IdPlantillaAdmin = asignacion.Id;
                 var plantillaAdmin = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantillaAdmin && e.Enabled == true);
 
 
                 if (plantillaAdmin != null)
                 {
-                    string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
-                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", admin.Name);
+                    
+                    string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantillaAdmin.Html);
+                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", "Administrador");
+                    htmlPlantilla = htmlPlantilla.Replace("{texto}", plantillaAdmin.Message);
+                    htmlPlantilla = htmlPlantilla.Replace("{Numero}", pqr.CaseNumber.ToString());
 
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-1.png", images.image1);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-2.png", images.image2);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-3.png", images.image3);
 
                     EmailViewModel correo = new EmailViewModel
                     {
                         Destination = modelo.Email,
-                        Suject = "Recibimos tu PQR",
+                        Suject = "Se registró nueva PQR",
                         Message = htmlPlantilla,
                         IsHtml = true
                     };
@@ -262,14 +288,15 @@ namespace ApiProcolombiaPQR.API.Controllers
             }
 
             var query = await _dbContext.PQR.FirstOrDefaultAsync(e => e.Id == Id);
+            
 
             if (query == null)
             {
                 return NotFound();
             }
 
-            query.CountryId = modelo.CountryId;
-            query.CaseTypeId = modelo.CaseTypeId;
+            //query.CountryId = modelo.CountryId;
+            /*query.CaseTypeId = modelo.CaseTypeId;
             query.UserTypeId = modelo.UserTypeId;
             query.RazonSocial = modelo.RazonSocial;
             query.Nit = modelo.Nit;
@@ -277,12 +304,15 @@ namespace ApiProcolombiaPQR.API.Controllers
             query.Name = modelo.Name;
             query.Email = modelo.Email;
             query.PhoneNumber = modelo.PhoneNumber;
-            //query.File = modelo.File;
-            query.Comentario = modelo.Comentario;
+            
             query.AutorizaTratamientoDatos = modelo.AutorizaTratamientoDatos;
-            query.CaseNumber = modelo.CaseNumber;
+            query.CaseNumber = modelo.CaseNumber;*/
             query.CaseStatus = modelo.CaseStatus;
-            query.PQRDate = modelo.PQRDate;
+            /*query.PQRDate = modelo.PQRDate;
+
+            query.FileId = modelo.File;
+            */
+            
 
             try
             {

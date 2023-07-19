@@ -6,6 +6,7 @@ using ApiProcolombiaPQR.ENTITY;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ApiProcolombiaPQR.API.Controllers
 {
@@ -208,7 +209,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return new BadRequestObjectResult(response);
             }
         }
-
+         
         // POST: api/Assign/AsignarCaso
         [HttpPost("[action]")]
         public async Task<IActionResult> AsignarCaso([FromBody] AssignCaseViewModel modelo)
@@ -218,25 +219,42 @@ namespace ApiProcolombiaPQR.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            AssignEntity assign = new AssignEntity
+            {
+                Name = modelo.Name,
+                Email = modelo.Email,
+                IdEmployee = modelo.IdEmployee
+            };
+
             try
             {
-                var asignacion = await _dbContext.Assign.FirstOrDefaultAsync(a => a.Id == Guid.Parse("FF68BEFF-A89D-416E-B560-959677D48BDE"));
-                var employee = await _dbContext.Employee.FirstOrDefaultAsync(a => a.Id == modelo.Id);
+                var pqr = await _dbContext.PQR.FirstOrDefaultAsync(p => p.Id == modelo.IdEmployee);
 
-                Guid IdPlantilla = asignacion.IdMailTemplate;
+                var images = new PlantillasHTML();
+
+                var plantillaUsuario = await _dbContext.MailTemplate.FirstOrDefaultAsync(a => a.Id == Guid.Parse("081C08F2-1E22-405B-B7B7-4FE992BE27C2"));
+
+                Guid IdPlantilla = plantillaUsuario.Id;
                 var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
 
 
                 if (plantilla != null)
                 {
                     string htmlPlantilla = System.Web.HttpUtility.HtmlDecode(plantilla.Html);
-                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", employee.Name);
+                    htmlPlantilla = htmlPlantilla.Replace("{nombre}", assign.Name);
+                    htmlPlantilla = htmlPlantilla.Replace("{texto}", plantilla.Message);
+                    htmlPlantilla = htmlPlantilla.Replace("{Numero}", pqr.CaseNumber.ToString());
 
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-1.png", images.image1);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-2.png", images.image2);
+
+                    htmlPlantilla = htmlPlantilla.Replace("images/image-3.png", images.image3);
 
                     EmailViewModel correo = new EmailViewModel
                     {
                         Destination = modelo.Email,
-                        Suject = "Asignacion PQR",
+                        Suject = "Se le asignó nueva PQR",
                         Message = htmlPlantilla,
                         IsHtml = true
                     };

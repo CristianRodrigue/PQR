@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ApiProcolombiaPQR.ENTITY
+﻿namespace ApiProcolombiaPQR.API.Models
 {
-    public class FilesEntity
+    public class UpdateFileViewModel
     {
         public Guid Id { get; set; }
         public int height { get; set; }
