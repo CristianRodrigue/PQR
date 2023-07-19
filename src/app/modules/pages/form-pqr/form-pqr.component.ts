@@ -6,7 +6,7 @@ import { CaseTypeService } from 'src/app/services/case-type.service';
 import { CountryService } from 'src/app/services/country.service';
 import { PqrService } from 'src/app/services/pqr.service';
 import { UserTypeService } from 'src/app/services/user-type.service';
-import { EventEmitter } from 'stream';
+import { v4 as uuidv4 } from 'uuid';
 import Swal from 'sweetalert2';
 //se agrego tipo de caso y cedula con metodo de solo digito numerico, no se eliminan los caracteres de cedula
 @Component({
@@ -26,8 +26,10 @@ export class FormPqrComponent implements OnInit {
   listaTipoUsuario: any[] = [];
 
   public archivos: any = [];
-  public selectedFile: any;
+  
+  
   public invalidSize: boolean = false;
+  fileSizeError: boolean = false;
 
   userTypeSelected: number = -1;
   archivoInvalido: boolean | undefined;
@@ -38,7 +40,8 @@ export class FormPqrComponent implements OnInit {
     private country: CountryService,
     private caseType: CaseTypeService,
     private userType: UserTypeService,
-    private pqrService: PqrService
+    private pqrService: PqrService,
+    
   ) {
     this.formPQR = this.fb.group({
       tipoCaso: ['', [Validators.required]],
@@ -169,7 +172,7 @@ export class FormPqrComponent implements OnInit {
       this.userTypeSelected = 1;
       // Configurar las validaciones para empresa
       this.formPQR.get('nit')?.setValidators([Validators.pattern(/^[0-9]+$/), Validators.minLength(7), Validators.required]);
-      this.formPQR.get('razonSocial')?.setValidators([Validators.required, Validators.maxLength(20)]);
+      this.formPQR.get('razonSocial')?.setValidators([Validators.required,]);
       this.formPQR.get('nit')?.updateValueAndValidity();
       this.formPQR.get('razonSocial')?.updateValueAndValidity();
     }
@@ -256,10 +259,23 @@ export class FormPqrComponent implements OnInit {
 
 
   }
-
   public onFilesAdded = (event: any) => {
-      this.selectFile(event.target.files);
+    const files = event.target.files;
+    if (files.length > 0) {
+      const fileSize = files[0].size / (1024 * 1024); // Tamaño en MB
+      const maxSize = 3; // Tamaño máximo permitido en MB
+      if (fileSize > maxSize) {
+        this.fileSizeError = true;
+        
+      } else {
+        this.fileSizeError = false;
+        this.selectFile(files);
+        
+      }
+    }
   }
+
+  
 
   public selectFile = ($event: any) => {
         this.formPQR.controls['file'].setValue(this.getImageBase64($event));  

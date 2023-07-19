@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { CountryService } from 'src/app/services/country.service';
+import { PQRModel } from 'src/app/models/pqr.model';
+import { Byte } from '@angular/compiler/src/util';
+import { SaleforceService } from 'src/app/services/saleforce.service';
 
 
 @Component({
@@ -24,12 +27,14 @@ export class DashboardComponent implements OnInit {
   public numeroCasoBusqueda: string | undefined;
   public tipoCasoBusqueda: string | undefined;
   private id: any | null;
+ 
+  
 
   listPQR: any[] = [];
   filteredResults: any[] = [];
   listaPais: any[] = [];
 
-  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe, private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute, private country: CountryService,) {
+  constructor(private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private pqr: PqrService, private datePipe: DatePipe, private formBuilder: FormBuilder, private _Activatedroute: ActivatedRoute, private country: CountryService, private neo:SaleforceService) {
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
 
     this.formulario = this.formBuilder.group({
@@ -48,9 +53,15 @@ export class DashboardComponent implements OnInit {
     this.listarPQR();
     this.consultarPaises();
   }
-  
-  openDialog() {
-    const mensaje = this.dialog.open(ModalComponent);
+
+  openDialog(id: any) {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      data: {
+        id: id
+
+      }
+    });
+
   }
 
   consultarPaises() {
@@ -91,8 +102,122 @@ export class DashboardComponent implements OnInit {
     this.formulario.get('autorizaTratamientoDatos')?.setValue(null);
   }
 
-  cerrarCaso(item: any) {
-    console.log("cerrar caso")
+  generarCasoSalesforce(id: any) {
+    // Lógica para generar un caso en Salesforce con PQR
+    if (!id) {
+      return;
+    }
+  
+    this.pqr.getById(id).subscribe((response: any) => {
+      console.log(response.data[0])
+  
+      
+  
+      // Mostrar mensaje de confirmación
+      Swal.fire({
+        title: 'Confirmación',
+        text: '¿Está seguro de generar el caso en Salesforce?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, generar caso',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          Swal.fire({
+            title: 'Espere un momento',
+            text: 'Actualizando informacion',
+            icon: 'info',
+            allowOutsideClick: false
+          });
+
+          Swal.showLoading();
+          if (!response.data[0].nit) {
+            Swal.fire('Error', 'No se encontró nit de la PQR para generar caso a Salesforce', 'error');
+            return;
+          }
+          // Usuario confirmó generar caso
+          this.neo.query(id).subscribe((queryResponse: boolean) => {
+            if (queryResponse) {
+              // Aquí puedes realizar las acciones correspondientes si el caso se generó correctamente en Salesforce
+              // ...
+              Swal.fire('Éxito', 'El caso se generó correctamente en Salesforce', 'success');
+              
+            } else {
+              // Aquí puedes realizar las acciones correspondientes si ocurrió un error al generar el caso en Salesforce
+              // ...
+              Swal.fire('Error', 'Ocurrió un error al generar el caso en Salesforce', 'error');
+            }
+          });
+        } else {
+          // Usuario canceló generar caso
+          Swal.fire('Cancelado', 'Se canceló la generación del caso en Salesforce', 'info');
+        }
+      });
+    });
+  }
+  
+
+  async cerrarCaso(id: any) {
+    console.log(id)
+
+    if (!id) {
+      return;
+    }
+    
+
+    this.pqr.getById(id).subscribe((response: any) => {
+      console.log(response.data[0])
+      
+      
+
+      Swal.fire({
+        title: 'Espere un momento',
+        text: 'Actualizando informacion',
+        icon: 'info',
+        allowOutsideClick: false
+      });
+      Swal.showLoading();
+            const updatedStatus: PQRModel = {
+              id: response.data[0].id,
+              countryId: response.data[0].countryId
+              ,
+              caseTypeId: response.data[0].caseType              ,
+              userTypeId: response.data[0].userType
+              ,
+              razonSocial: response.data[0].razonSocial
+              ,
+              nit: response.data[0].nit,
+              cedula: response.data[0].cedula,
+              name: response.data[0].nombre
+              ,
+              email: response.data[0].email,
+              phoneNumber: response.data[0].telefono
+              ,
+              file: response.data[0].file,
+              comentario: response.data[0].comentario,
+              autorizaTratamientoDatos: response.data[0].autorizaTratamientoDatos,
+              caseNumber: response.data[0].numeroCaso
+              ,
+              caseStatus: "3ee6cd97-e6c3-4873-a44c-e9ee91b45661",
+              date: response.data[0].fechaPQR
+              ,
+            };
+            
+            console.log("id: " + id + " updateStatus: " + JSON.stringify(updatedStatus));
+
+            this.pqr.update(id, updatedStatus).subscribe(
+              () => {
+                Swal.fire('Estado actualizado', 'El estado ha sido actualizado correctamente', 'success');
+              },
+              (error) => {
+                Swal.fire('Error', 'Ocurrió un error al actualizar el estado', 'error');
+              }
+            );
+          
+    });
   }
 
   exportToExcel(event?: Event): void {
@@ -150,12 +275,14 @@ export class DashboardComponent implements OnInit {
 
       if (lowerCaseSearchValues.estado && item.estatus.toLowerCase() !== lowerCaseSearchValues.estado) {
         match = false;
+
+        console.log(lowerCaseSearchValues.estado + "   " + item.estatus)
       }
 
       if (lowerCaseSearchValues.pais && item.country.toLowerCase() !== lowerCaseSearchValues.pais) {
         match = false;
 
-        console.log(lowerCaseSearchValues.pais + "   " + item.country.toLowerCase())
+        
       }
 
       if (lowerCaseSearchValues.autorizaTratamientoDatos && item.autorizaTratamientoDatos.toString().toLowerCase() !== lowerCaseSearchValues.autorizaTratamientoDatos) {
@@ -168,39 +295,7 @@ export class DashboardComponent implements OnInit {
 
       return match;
     });
-
-
-
     this.filteredResults = this.filteredResults.reverse();
 
   }
-
-
-  /*asignar(item: any) {
-    // Lógica para asignar un PQR
-    console.log('asignarPqr', item);
-
-    Swal.fire({
-      title: '<div class="text-left" style="margin-top: 40px;"><strong>Asignar PQR</strong></div>',
-      html:
-        'You can use <b>bold text</b>, ' +
-        '<a href="//sweetalert2.github.io">links</a> ' +
-        'and other HTML tags' +
-        '<button type="button" class="btn btn-info" (click)="enviarAsigncion()"><strong>Enviar</strong></button>',
-      showCloseButton: true,
-
-    })
-  } */
-
-  enviarAsigncion() {
-    console.log('funciono');
-  }
-
-  generarCasoSalesforce(item: any) {
-    // Lógica para generar un caso en Salesforce con PQR
-    console.log('generarCasoSalesforce', item);
-  }
-
-
-
 }

@@ -1,1 +1,48 @@
-<p>form-create-assign works!</p>
+
+<div class="container">
+    <form autocomplete="off" [formGroup]="formUser" (ngSubmit)="guardar()">
+        <div>
+            <div class="row">
+
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" class="form-control" formControlName="nombre"
+                        >
+                    
+                </div>
+
+                <div class="form-group">
+                    <label>Correo electrónico *</label>
+                    <input type="text" class="form-control" formControlName="email" >
+                    <div class="text-error">
+                        <!--<small *ngIf="emailNoValido" class="text-danger">* Ingrese un correo valido</small>-->
+                    </div>
+                    <!--<div *ngIf="!emailMach">
+                        <small class="text-danger">* el correo ya existe</small>
+                    </div>-->
+                </div>
+
+               
+
+                <!-- <div class="form-group">
+                    <label>Role *</label>
+                    <select class="input-wrapper" formControlName="role" [class.is-invalid]="roleNoValido">
+                        <option [value]="item.id" *ngFor="let item of listaRole">{{ item.name }}</option>
+                    </select>
+                    <div class="text-error">
+                        <small *ngIf="roleNoValido" class="text-danger">Seleccione un rol</small>
+                    </div>
+                </div>-->
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12 text-right ">
+                    <button type="submit" mat-flat-button color="accent" [disabled]="formUser.invalid">Enviar</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <hr>
+    
+</div>

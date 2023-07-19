@@ -1,9 +1,8 @@
-<!--Se agrego campos faltantes, tipo de caso, cedula, -->
+<!--Se agrego campos faltantes, tipo de caso, cedula, 
 
 <div class="container">
-    <h1>
-        Comentarios
-    </h1>
+    <h1 class="text-3xl font-bold mb-6">Comentarios</h1>
+
     <form autocomplete="off" [formGroup]="formPQR" (ngSubmit)="guardar()">
 
         <div>
@@ -38,23 +37,19 @@
                     <div *ngIf="razonSocialNoValida">
                         <small class="text-danger">* ingrese una razon social</small>
                     </div>
-                    <!--<div *ngIf="formWasher.get('nombre')?.errors?.['minlength']">
-                        <small class="text-danger">* minimo 3 caracteres</small>
-                    </div> -->
+                    
                 </div>
                 <div class="form-group" *ngIf="userTypeSelected === 1">
                     <label>NIT *</label>
                     <input type="text" class="form-control" placeholder="Escriba un nit sin dígito de verificación"
                         (keypress)="validateFormat($event)" formControlName="nit" [class.is-invalid]="nitNoValido">
-                        <div *ngIf="nitNoValido">
-                            <small class="text-danger">* ingrese un NIT</small>
-                        </div>
+                    <div *ngIf="nitNoValido">
+                        <small class="text-danger">* ingrese un NIT</small>
+                    </div>
                     <div class="text-error">
                         <small *ngIf="nitNoValido" class="text-danger">* Minimo 7 caracteres</small>
                     </div>
-                    <!-- <div *ngIf="formWasher.get('fechaNacimiento')?.errors?.['minlength']">
-                        <small class="text-danger">* minimo 3 caracteres</small>
-                    </div> -->
+                    
                 </div>
                 <div class="form-group" *ngIf="userTypeSelected === 0">
                     <label>Cedula</label>
@@ -103,41 +98,50 @@
 
                 <div class="form-group">
                     <div class="file">
-                        <img id="pdfSelectFile" src="" alt="imagen">
-                        <h2 id="txtpdfSelectFile">Seleccionar archivo</h2>
-                        <p>Suelta el archivo aquí.<br>
-                          Tamaño recomendado de archivo:<br>
-                          3MB</p>
-                        <input id="image" type="file" name="image" accept="*"
-                        formControlName="file" (change)="onFilesAdded($event)">
-                      </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Comentario *</label>
-                    <textarea type="text" class="form-control" formControlName="comentario" rows="5"
-                        [class.is-invalid]="comentarioNoValido" (input)="actualizarCaracteresRestantes()"></textarea>
-                    <div>{{ caracteresRestantes }}</div>
-                    <div class="text-error">
-                        <small *ngIf="comentarioNoValido" class="text-danger">* Ingrese su comentario</small>
+                        <label for="archivo" class="file">
+                            <input type="file" id="archivo" name="archivo" (change)="onFilesAdded($event)">
+                        </label>
+                        <div class="file-description">
+                            <p>Tamaño recomendado de archivo: 3MB</p>
+                            <small *ngIf="fileSizeError" class="text-danger">El tamaño del archivo excede el límite
+                                permitido. Por favor, carga otro archivo.</small>
+                        </div>
                     </div>
                 </div>
 
-                <label class="checkbox-label">
-                    <input type="checkbox" name="autorizo" formControlName="autorizo">
-                    Autorizo el uso y tratamiento de mis datos personales<br>
-                    <span class="small-text">
-                        Entiendo que ProColombia es el responsable del tratamiento de los datos registrados en este
-                        formulario y he leído la Política de Datos Personales disponible en
-                        <a href="https://www.procolombia.co" target="_blank">www.procolombia.co</a>
+                <br>
+                <br>
+                <br>
+
+                <div class="form-group">
+                    <label class="text-gray-700">Comentario *</label>
+                    <textarea class="form-control w-full p-2 border border-gray-300 rounded" formControlName="comentario" rows="5" [class.is-invalid]="comentarioNoValido" (input)="actualizarCaracteresRestantes()" style="resize: none;"></textarea>
+                    <div>{{ caracteresRestantes }}</div>
+                    <div class="text-error">
+                      <small *ngIf="comentarioNoValido" class="text-danger">* Ingrese su comentario</small>
+                    </div>
+                  </div>
+                  
+                  
+                  
+
+                  <label class="checkbox-label font-bold">
+                    <input type="checkbox" name="autorizo" formControlName="autorizo" class="mr-2">
+                    <span class="text-gray-700">Autorizo el uso y tratamiento de mis datos personales</span><br>
+                    <span class="text-sm text-gray-600">
+                      Entiendo que ProColombia es el responsable del tratamiento de los datos registrados en este formulario y he leído la Política de Datos Personales disponible en
+                      <a href="https://www.procolombia.co" target="_blank" class="text-blue-500">www.procolombia.co</a>
                     </span>
-                </label>
+                  </label>
+                  
+                  
             </div>
 
 
             <div class="row">
                 <div class="form-group col-md-12 text-right ">
-                    <button type="submit" mat-flat-button color="accent" [disabled]="formPQR.invalid">Enviar</button>
+                    <button type="submit" mat-flat-button color="accent"
+                        [disabled]="formPQR.invalid|| fileSizeError">Enviar</button>
                 </div>
             </div>
 
@@ -145,11 +149,145 @@
 
     </form>
     <hr>
-<pre>
+    <pre>
         Estado del formulario: {{ formPQR.valid }}
         <br>
         Status: {{ formPQR.status }}
         <br>
         {{ formPQR.value | json }}
 </pre>
+</div>-->
+<div class="flex min-h-screen items-center justify-center bg-gray-900" style="background-image:url('https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80'); background-size: cover; background-position: center;">
+    <div class="container flex flex-col items-center rounded-xl bg-gray-800 bg-opacity-30 px-8 py-6 shadow-lg backdrop-blur-md max-sm:px-4">
+    <h1 class="text-white">Comentarios</h1>
+    <form autocomplete="off" [formGroup]="formPQR" (ngSubmit)="guardar()">
+      <div class="row">
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">Tipo de caso *</label>
+          <select class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="tipoCaso" [class.is-invalid]="tipoCasoNoValido">
+            <option [value]="item.id" *ngFor="let item of listaTipoCaso">{{ item.name }}</option>
+          </select>
+          <div class="text-error">
+            <small *ngIf="tipoCasoNoValido" class="text-danger">Seleccione un tipo de caso</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">Tipo de usuario *</label>
+          <select class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="tipoUsuario" [class.is-invalid]="tipoUsuarioNoValido" (change)="tipoUsuario($event)">
+            <option [value]="item.id" *ngFor="let item of listaTipoUsuario; let i = index">{{ item.name }}</option>
+          </select>
+          <div class="text-error">
+            <small *ngIf="tipoUsuarioNoValido" class="text-danger">Seleccione el tipo de usuario</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4" *ngIf="userTypeSelected === 1">
+          <label class="text-white">Razon social *</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" placeholder="Escriba una razon social" formControlName="razonSocial" [class.is-invalid]="razonSocialNoValida">
+          <div *ngIf="razonSocialNoValida">
+            <small class="text-danger">* ingrese una razon social</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4" *ngIf="userTypeSelected === 1">
+          <label class="text-white">NIT *</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" placeholder="Escriba un nit sin dígito de verificación" (keypress)="validateFormat($event)" formControlName="nit" [class.is-invalid]="nitNoValido">
+          <div *ngIf="nitNoValido">
+            <small class="text-danger">* ingrese un NIT</small>
+          </div>
+          <div class="text-error">
+            <small *ngIf="nitNoValido" class="text-danger">* Minimo 7 caracteres</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4" *ngIf="userTypeSelected === 0">
+          <label class="text-white">Cedula</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="cedula" (keypress)="validateFormat($event)" [class.is-invalid]="cedulaNoValido">
+          <div class="text-error">
+            <small *ngIf="cedulaNoValido" class="text-danger">* Minimo 7 caracteres</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">País *</label>
+          <select class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="pais" [class.is-invalid]="paisNoValido">
+            <option [value]="item.id" *ngFor="let item of listaPais">{{ item.countryName }}</option>
+          </select>
+          <div class="text-error">
+            <small *ngIf="paisNoValido" class="text-danger">* Seleccione su pais</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">Nombre *</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+          <div class="text-error">
+            <small *ngIf="nombreNoValido" class="text-danger">* Ingrese su nombre</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">Correo electrónico *</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="email" [class.is-invalid]="emailNoValido">
+          <div class="text-error">
+            <small *ngIf="emailNoValido" class="text-danger">* Ingrese un correo valido</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full sm:w-1/2 mb-4">
+          <label class="text-white">Teléfono</label>
+          <input type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="telefono" (keypress)="validateFormat($event)" [class.is-invalid]="telefonoNoValido">
+          <div class="text-error">
+            <small *ngIf="telefonoNoValido" class="text-danger">* Minimo 7 caracteres</small>
+          </div>
+        </div>
+  
+        <div class="form-group w-full">
+          <div class="file">
+            <label for="archivo" class="file">
+              <input class="text-white" type="file" id="archivo" name="archivo" (change)="onFilesAdded($event)">
+            </label>
+            <div class="file-description">
+              <p class="text-white">Tamaño recomendado de archivo: 3MB</p>
+              <small *ngIf="fileSizeError" class="text-danger">El tamaño del archivo excede el límite permitido. Por favor, carga otro archivo.</small>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group w-full">
+          <label class="text-white">Comentario *</label>
+          <textarea type="text" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="comentario" rows="5" [class.is-invalid]="comentarioNoValido" (input)="actualizarCaracteresRestantes()" style="resize: none;"></textarea>
+          <div class="text-white">{{ caracteresRestantes }}</div>
+          <div class="text-error">
+            <small *ngIf="comentarioNoValido" class="text-danger">* Ingrese su comentario</small>
+          </div>
+        </div>
+  
+        <label class="checkbox-label block mt-2">
+          <input type="checkbox" name="autorizo" formControlName="autorizo">
+          <span class="font-bold text-white"> Autorizo el uso y tratamiento de mis datos personales</span><br>
+          <span class="text-sm text-white">
+            Entiendo que ProColombia es el responsable del tratamiento de los datos registrados en este formulario y he leído la Política de Datos Personales disponible en
+            <a href="https://www.procolombia.co" target="_blank" class="text-blue-500">www.procolombia.co</a>
+          </span>
+        </label>
+  
+        <div class="form-group w-full text-right mt-4">
+            <button type="submit" mat-flat-button color="accent" [disabled]="formPQR.invalid || fileSizeError" class="px-4 py-2 rounded font-bold transition-colors duration-300 ease-in-out" [ngClass]="{'bg-gray-500 cursor-not-allowed': formPQR.invalid || fileSizeError, 'bg-green-500 hover:bg-green-600 cursor-pointer': !formPQR.invalid && !fileSizeError}">Enviar</button>
+          </div>
+          
+      </div>
+    </form>
+  
+    
+    <!--<pre>
+      Estado del formulario: {{ formPQR.valid }}
+      <br>
+      Status: {{ formPQR.status }}
+      <br>
+      {{ formPQR.value | json }}
+    </pre>-->
+  </div>
 </div>
+  

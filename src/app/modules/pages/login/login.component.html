@@ -1,4 +1,4 @@
-<img src="{{ images.logoMini }}" class="imagen-izquierda">
+<!--<img src="{{ images.logoMini }}" class="imagen-izquierda">
 <img src="imagen2.jpg" class="imagen-derecha">
 <h1>Iniciar sesión</h1>
 
@@ -168,4 +168,34 @@
             </div>
         </div>
     </div>
-</footer>
+</footer>-->
+
+<div class="flex h-screen items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style="background-image:url('https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80')">
+    <div class="flex flex-col items-center rounded-xl bg-gray-800 bg-opacity-50 px-8 py-6 shadow-lg backdrop-blur-md max-sm:px-4">
+        <div class="text-white text-center">
+            <img src="../../../../assets/images/image-2.png" width="300" alt="" srcset="" class="mx-auto mb-4" />
+            <h1 class="text-2xl mb-2">PQR Administrador</h1>
+            <span class="text-gray-300">Ingrese sus credenciales</span>
+        </div>
+        <form autocomplete="off" [formGroup]="formLogin" (ngSubmit)="OnLogin()">
+            <div class="mb-4">
+                <input class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" type="email" name="name" placeholder="id@email.com" formControlName="email" [class.is-invalid]="correoNoValido" />
+                <span *ngIf="correoNoValido" class="text-danger animated fadeIn">El correo es obligatorio</span>
+            </div>
+
+            <div class="mb-4">
+                <input class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" type="password" name="name" placeholder="*********" formControlName="password" [class.is-invalid]="passwordNoValido"/>
+                <span *ngIf="passwordNoValido" class="text-danger animated fadeIn">El password debe ser de al menos 6 caracteres</span>
+            
+            </div>
+            <div class="mt-8 text-center">
+                <button type="submit" class="rounded-full bg-yellow-400 bg-opacity-50 px-6 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+

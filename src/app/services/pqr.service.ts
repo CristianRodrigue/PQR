@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PQRModel } from '../models/pqr.model';
 import { Byte } from "@angular/compiler/src/util";
@@ -19,7 +19,11 @@ export class PqrService {
   }
 
   getById(id: string): Observable<PQRModel[]> {
-    return this.http.get<PQRModel[]>(this.url + '/Pqr/GetById/' + id);
+    return this.http.get<PQRModel[]> (this.url + '/Pqr/GetById/' + id)
+  }
+
+  update(id: string, caseStatus: PQRModel): Observable<any> {
+    return this.http.put<any>(`${this.url}/Pqr/Update/${id}`, caseStatus);
   }
 
   
@@ -47,6 +51,7 @@ console.log('file: ', file);
 
     if (file !== null) {
       requestImage = {
+        //id: file,
         height: file.height,
         timestamp: file.timestamp,
         uri: file.uri,

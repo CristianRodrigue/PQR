@@ -6,8 +6,8 @@
         <th class="px-4 py-3">Nombre</th>
         <th class="px-4 py-3">Descripcion</th>
         <th class="px-4 py-3 text-right">
-          <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            [routerLink]="[ '/mensajes/create']">Crear</button>
+          <!--<button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            [routerLink]="[ '/mensajes/create']">Crear</button>-->
         </th>
 
       </tr>
@@ -16,15 +16,20 @@
         <td class="px-4 py-3">{{ item.name }}</td>
         <td class="px-4 py-3">{{ item.description }}</td>
         <td class="px-4 py-3 flex space-x-4">
-          <button class="btn btn-info btn-sm mr-sm-2" (click)="enabledMailTemplate(item.id, i)">
+          <!--<button class="btn btn-info btn-sm mr-sm-2" (click)="enabledMailTemplate(item.id, i)">
             <i class="fi fi-rr-check"></i>
-          </button>
-          <button class="btn btn-warning btn-sm mr-sm-2" [routerLink]="[ '/usuarios/create', item.id ]">
+          </button>-->
+
+          <button class="btn btn-warning btn-sm mr-sm-2" (click)="editar(item.id)">
             <i class="fi fi-rr-edit"></i>
-          </button>
-          <button class="btn btn-danger btn-sm mr-sm-2" (click)="deleteMailTemplate(item.id, i)">
+          </button> 
+          <!--<button class="btn btn-warning btn-sm mr-sm-2" [routerLink]="[ '/mensajes/edit', item.id ]">
+            EDITAR
+            <i class="fi fi-rr-edit"></i>
+          </button>-->
+          <!--<button class="btn btn-danger btn-sm mr-sm-2" (click)="deleteMailTemplate(item.id, i)">
             <i class="fi fi-rr-trash"></i>
-          </button>
+          </button>-->
         </td>
       </tr>
     </table>

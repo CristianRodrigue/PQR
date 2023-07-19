@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MailModel } from '../models/mail.model';
 
@@ -18,7 +18,9 @@ export class CreateMessageService {
   }
 
   getById(id: string): Observable<MailModel[]> {
-    return this.http.get<MailModel[]>(this.url + '/MailTemplate/GetById/' + id);
+    return this.http.get<any>(this.url + '/MailTemplate/GetById/' + id).pipe(
+      map((response: { data: MailModel[]; }) => response.data as MailModel[])
+    );
   }
 
   createMail(name:string,description:string,html:string){
@@ -26,9 +28,15 @@ export class CreateMessageService {
       Name:name,
       Description:description,
       Html:html,
+      
     };
 
     return this.http.post(`${this.url}/MailTemplate/Create`, data);
   }
+
+  updateMessage(id: string, message: MailModel): Observable<any> {
+    return this.http.put<any>(`${this.url}/MailTemplate/Update/${id}`, message);
+  }
+  
 
 }

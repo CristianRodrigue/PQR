@@ -11,7 +11,7 @@ export interface PQRModel {
     name: string;
     email: string;
     phoneNumber: string;
-    file: Byte[];
+    file: Byte;
     comentario: string;
     autorizaTratamientoDatos: boolean;
     caseNumber: number;

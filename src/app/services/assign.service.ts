@@ -20,27 +20,30 @@ export class AssignService {
   getById(id: string): Observable<AssignModel[]> {
     return this.http.get<AssignModel[]>(this.url + '/Assign/GetById/' + id);
   }
-
-  create(id:string, name:string, email:string) {
+//todo:_ se quito ID string
+  create( name:string, email:string) {
 
     const data = {    
-      Id: id,
+      
       Name: name,
       Email: email
     };
 
-    return this.http.post(`${this.url}/Assign/AsignarCaso`, data);
+    return this.http.post(`${this.url}/Assign/Create`, data);
   }
 
-  asignarPQR(id:string, mailTemplate:string, employee:string) {
+  asignarPQR(email:string,employee:string,nombre:string) {
 
     const data = {    
-      Name: name,
-      IdMailTemplate: mailTemplate,
+      Name: nombre,
+      Email: email,
+      //IdMailTemplate: mailTemplate,
       IdEmployee: employee
+      
     };
 
-    return this.http.post(`${this.url}/Assign/Create`, data);
+    
+    return this.http.post(`${this.url}/Assign/AsignarCaso`, data);
   }
 
   update(name:string, mailTemplate:string, employee:string) {

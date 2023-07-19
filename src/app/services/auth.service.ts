@@ -62,13 +62,13 @@ export class AuthService {
   }
 
 
-  create(nombre: string, email: string, password: string, role: string) {
+  create(nombre: string, email: string, password: string, ) {
     
     const data = {
       Name: nombre,
       Email: email,
       Password: password,
-      Role: role,
+      //Role: null,
     };
 
     return this.http.post(`${this.url}/Auth/Create`, data);

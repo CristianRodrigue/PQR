@@ -17,6 +17,9 @@ import { FormCreateUserAdminComponent } from './modules/pages/user-admin/form-cr
 import { FormEditUserAdminComponent } from './modules/pages/user-admin/form-edit-user-admin/form-edit-user-admin.component';
 import { AssignComponent } from './modules/pages/assign/assign.component';
 import { EmployeeComponent } from './modules/pages/employee/employee.component';
+import { FormCreateAssignComponent } from './modules/pages/assign/form-create-assign/form-create-assign.component';
+import { FormCreateEmployeeComponent } from './modules/pages/employee/form-create-employee/form-create-employee.component';
+import { ConsultComponent } from './modules/pages/consult/consult.component';
 
 const routes: Routes = [
   { path: '', component: CmsComponent,
@@ -33,6 +36,9 @@ const routes: Routes = [
     //{ path: 'usuarios/create', component: FormCreateUserAdminComponent, canActivate: [ AuthGuard ] },
     { path: 'empleados', component: EmployeeComponent, canActivate: [ AuthGuard ] },
     //  { path: 'usuarios/create', component: FormCreateUserAdminComponent, canActivate: [ AuthGuard ] },
+    { path: 'asignar/create', component: FormCreateAssignComponent, canActivate: [ AuthGuard ] },
+
+    { path: 'empleados/create', component: FormCreateEmployeeComponent, canActivate: [ AuthGuard ] },
     
 
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -42,6 +48,7 @@ const routes: Routes = [
   { path: 'registro', component: SigninComponent },
   { path: 'home', component: HomeComponent },
   { path: 'pqr', component: FormPqrComponent },
+  { path: 'consultar', component: ConsultComponent },
   
   { path: '**', component: PageNotFoundComponent}
   

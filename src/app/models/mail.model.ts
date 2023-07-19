@@ -3,4 +3,6 @@ export interface MailModel{
     name:string,
     description:string,
     html:string,
+    message?:string,
+    enabled:boolean,
 }

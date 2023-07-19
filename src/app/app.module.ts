@@ -32,6 +32,9 @@ import { FormCreateEmployeeComponent } from './modules/pages/employee/form-creat
 import { FormEditEmployeeComponent } from './modules/pages/employee/form-edit-employee/form-edit-employee.component';
 import { FormCreateAssignComponent } from './modules/pages/assign/form-create-assign/form-create-assign.component';
 import { FormEditAssignComponent } from './modules/pages/assign/form-edit-assign/form-edit-assign.component';
+import  {ModalComponent } from './components/modal/modal.component';
+import { ConsultComponent } from './modules/pages/consult/consult.component';
+
 
 
 
@@ -60,7 +63,8 @@ import { FormEditAssignComponent } from './modules/pages/assign/form-edit-assign
     FormEditEmployeeComponent,
     FormCreateAssignComponent,
     FormEditAssignComponent,
-    
+    ModalComponent,
+    ConsultComponent,
     
   ],
   imports: [
@@ -73,6 +77,8 @@ import { FormEditAssignComponent } from './modules/pages/assign/form-edit-assign
     NgxPaginationModule, 
     MatDialogModule,
     BrowserAnimationsModule,
+    
+
   ],
   providers: [
     Images,

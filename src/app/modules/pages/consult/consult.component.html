@@ -1,0 +1,110 @@
+<!--<div class="container">
+    <h2>Consulta de PQR</h2>
+    <form (submit)="filtrarResultados($event)" [formGroup]="formulario">
+        <div class="form-group">
+            <label for="numeroCaso">Número de caso:</label>
+            <input type="number" class="form-control" id="numeroCaso" formControlName="numeroCaso" name="numeroCaso"
+                required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div *ngIf="filteredResults.length > 0">
+
+        <div class="table-data">
+            <h2><strong>Resultados de la búsqueda</strong></h2>
+            <ul >
+                <li  *ngFor="let item of filteredResults; let i=index">
+                    <div class="list-item">
+
+                        <span class="list-item-details">
+                            <strong>Número de caso:</strong> {{ item.numeroCaso }}<br>
+                            <strong>Nombre:</strong> {{ item.nombre }}<br>
+                            <strong>Tipo de caso:</strong> {{ item.caseType }}<br>
+                            <strong>Tipo de usuario:</strong> {{ item.userType }}<br>
+                            <strong>País:</strong> {{ item.country }}<br>
+                            <strong>Razón Social:</strong> {{ item.razonSocial }}<br>
+                            <strong>NIT:</strong> {{ item.nit }}<br>
+                            <strong>Cédula:</strong> {{ item.cedula }}<br>
+                            <strong>Email:</strong> {{ item.email }}<br>
+                            <strong>Teléfono:</strong> {{ item.telefono }}<br>
+                            <strong>País:</strong> {{ item.country }}<br>
+
+                            <div class="form-group">
+                                <label for="archivo">Archivo:</label>
+                                <button (click)="descargarArchivo()">Descargar archivo</button>
+                            </div>
+
+                            <strong>Descripción del caso:</strong> {{ item.comentario }}<br>
+                            
+                            <strong>Fecha:</strong> {{ item.fechaPQR }}<br>
+                            
+                            <strong>Tratamiento de datos:</strong> {{ item.autorizaTratamientoDatos }}<br>
+                            <strong>Estado:</strong> <span [ngClass]="{
+                      'estado-verde': item.estatus === 'Acuso de recibido',
+                      'estado-amarillo': item.estatus === 'Revisado',
+                      'estado-rojo': item.estatus === 'Cerrado'
+                    }">{{ item.estatus }}</span>
+                    
+                   
+                        </span>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+</div>-->
+
+<div class="flex h-screen items-center justify-center bg-gray-900 bg-cover bg-no-repeat" style="background-image:url('https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80')">
+    <div class="flex flex-col items-center rounded-xl bg-gray-800 bg-opacity-50 px-8 py-6 shadow-lg backdrop-blur-md max-sm:px-4">
+        <h2 class="text-white mb-4">Consulta de PQR</h2>
+        <form (submit)="filtrarResultados($event)" [formGroup]="formulario" class="w-full">
+            <div class="mb-4">
+                <label for="numeroCaso" class="text-white">Número de caso:</label>
+                <input type="number" id="numeroCaso" class="rounded-full border-2 border-gray-400 bg-yellow-400 bg-opacity-50 px-4 py-2 text-center text-black placeholder-slate-200 shadow-lg outline-none backdrop-blur-md w-full" formControlName="numeroCaso" required>
+            </div>
+            <button type="submit" class="rounded-full bg-yellow-400 bg-opacity-50 px-6 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Buscar</button>
+        </form>
+
+        <div *ngIf="filteredResults.length > 0" class="mt-8">
+            <div class="table-data">
+                <h2 class="text-white mb-4"><strong>Resultados de la búsqueda</strong></h2>
+                <ul>
+                    <li *ngFor="let item of filteredResults; let i=index" class="list-item">
+                        <span class="list-item-details text-white">
+                            <strong>Número de caso:</strong> {{ item.numeroCaso }}<br>
+                            <strong>Nombre:</strong> {{ item.nombre }}<br>
+                            <strong>Tipo de caso:</strong> {{ item.caseType }}<br>
+                            <strong>Tipo de usuario:</strong> {{ item.userType }}<br>
+                            <strong>País:</strong> {{ item.country }}<br>
+                            <strong>Razón Social:</strong> {{ item.razonSocial }}<br>
+                            <strong>NIT:</strong> {{ item.nit }}<br>
+                            <strong>Cédula:</strong> {{ item.cedula }}<br>
+                            <strong>Email:</strong> {{ item.email }}<br>
+                            <strong>Teléfono:</strong> {{ item.telefono }}<br>
+                            <strong>País:</strong> {{ item.country }}<br>
+
+                            <div class="form-group">
+                                <label for="archivo" class="text-white">Archivo:</label>
+                                <button (click)="descargarArchivo()" class="rounded-full bg-yellow-400 bg-opacity-50 px-6 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Descargar archivo</button>
+                            </div>
+
+                            <strong>Descripción del caso:</strong> {{ item.comentario }}<br>
+                            <strong>Fecha:</strong> {{ item.fechaPQR }}<br>
+                            <strong>Tratamiento de datos:</strong> {{ item.autorizaTratamientoDatos }}<br>
+                            <strong>Estado:</strong> <span [ngClass]="{
+                      'estado-verde': item.estatus === 'Acuso de recibido',
+                      'estado-amarillo': item.estatus === 'Revisado',
+                      'estado-rojo': item.estatus === 'Cerrado'
+                    }">{{ item.estatus }}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

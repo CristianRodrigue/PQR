@@ -21,7 +21,7 @@ export class FormCreateUserAdminComponent implements OnInit {
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', [Validators.required]]
+      //role: ['', [Validators.required]]
     },
       {
         validators: [this.validarEmail('email')]
@@ -31,7 +31,7 @@ export class FormCreateUserAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.consultarRoles();
+    //this.consultarRoles();
   }
 
   get nombreNoValido() {
@@ -43,17 +43,17 @@ export class FormCreateUserAdminComponent implements OnInit {
   get passwordNoValido() {
     return this.formAuth.get('password')!.invalid && this.formAuth.get('password')!.touched;
   }
-  get roleNoValido() {
-    return this.formAuth.get('role')!.invalid && this.formAuth.get('role')!.touched;
-  }
+  //get roleNoValido() {
+  //  return this.formAuth.get('role')!.invalid && this.formAuth.get('role')!.touched;
+  //}
 
-  consultarRoles() {
+  /*consultarRoles() {
     this.roleService.getAll().subscribe((response: any) => {
       console.log('roles: ', response.data);
       this.listaRole = response.data;
       console.log('lista roles', this.listaRole);
     });
-  }
+  }*/
 
   validarEmail(controlName: string) {
 
@@ -109,7 +109,7 @@ export class FormCreateUserAdminComponent implements OnInit {
     });
     Swal.showLoading();
 
-    this.auth.create(this.formAuth.value.nombre, this.formAuth.value.email, this.formAuth.value.password, this.formAuth.value.role)
+    this.auth.create(this.formAuth.value.nombre, this.formAuth.value.email, this.formAuth.value.password,)
       .subscribe(result => {
 
         Swal.fire({

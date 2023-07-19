@@ -1,4 +1,4 @@
-<div class="modal-header">
+<!--<div class="modal-header">
     <h5 class="modal-title" id="modal-detalles-label">Detalles de la PQR</h5>
 </div>
 
@@ -55,7 +55,9 @@
   
     <div class="form-group">
       <label for="archivo">Archivo:</label>
-      <p>{{file}}</p>
+     
+      <p *ngIf="!file">No tiene archivos adjuntos</p>
+      <button (click)="descargarArchivo()" [disabled]="!file">Descargar archivo</button>
     </div>
   
     <div class="form-group">
@@ -80,4 +82,93 @@
   </div>
 <div class="modal-footer">
 
+</div>-->
+
+<div class="modal-header">
+  <h5 class="modal-title" id="modal-detalles-label">Detalles de la PQR</h5>
 </div>
+
+<div class="modal-body grid grid-cols-2 gap-4 lg:grid-cols-3">
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="numero-caso">Número de caso:</label>
+      <p class="overflow-auto">{{numeroCaso}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="nombre-solicitante">Nombre del solicitante:</label>
+      <p class="overflow-auto">{{nombre}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="tipo-caso">Tipo de caso:</label>
+      <p class="overflow-auto">{{tipoCaso}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="tipo-usuario">Tipo de usuario:</label>
+      <p class="overflow-auto">{{tipoUsuario}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="pais">País:</label>
+      <p class="overflow-auto">{{pais}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="razon-social">Razón Social:</label>
+      <p class="overflow-auto">{{razonSocial}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="nit">NIT:</label>
+      <p class="overflow-auto">{{nit}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="cedula">Cédula:</label>
+      <p class="overflow-auto">{{cedula}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="email">Email:</label>
+      <p class="overflow-auto">{{email}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="telefono">Teléfono:</label>
+      <p class="overflow-auto">{{telefono}}</p>
+  </div>
+
+  <div class="form-group col-span-1 bg-gray-100 p-4 rounded">
+    <label for="archivo">Archivo:</label>
+
+    <p *ngIf="!file">No archivos adjuntos</p>
+    <button (click)="descargarArchivo()" [disabled]="!file">Descargar</button>
+</div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="descripcion-caso">Autoriza tratamiento de datos:</label>
+      <p class="overflow-auto">{{autorizaTratamientoDatos}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="estado">Fecha:</label>
+      <p class="overflow-auto">{{fecha}}</p>
+  </div>
+
+  <div class="form-group bg-gray-100 p-4 rounded">
+      <label for="estado">Estado:</label>
+      <p class="overflow-auto">{{estado}}</p>
+  </div>
+
+  <div class="form-group col-span-2 bg-gray-100 p-4 rounded">
+    <label for="descripcion-caso">Descripción del caso:</label>
+    <p class="overflow-auto">{{comentarios}}</p>
+</div>
+</div>
+
+<div class="modal-footer">
+  <!-- Aquí puedes agregar contenido adicional para el pie de página si es necesario -->
+</div>
+
+

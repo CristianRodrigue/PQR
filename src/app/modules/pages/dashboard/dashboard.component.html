@@ -43,7 +43,7 @@
                         <select formControlName="estado" name="estado"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option disabled selected>Seleccione un estado</option>
-                            <option value="acuso de recibido">Acuso de recibido</option>
+                            <option value="abierto">Abierto</option>
                             <option value="cerrado">Cerrado</option>
 
                         </select>
@@ -113,60 +113,60 @@
             </button>
         </div>
         <div class="table-data">
-            <h2><strong>Resultados de la búsqueda</strong></h2>
-            <table class="rounded-lg  mx-auto bg-gray-800 text-gray-200">
+            <h2 class="text-center mb-4 font-bold">Resultados de la búsqueda</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full bg-gray-800 text-gray-200">
                 <thead>
-                    <tr>
-                        <th class="px-4 py-3">#</th>
-                        <th class="px-4 py-3">Número de caso</th>
-                        <th class="px-4 py-3">Fecha</th>
-                        <th class="px-4 py-3">Tipo de usuario</th>
-                        <th class="px-4 py-3">Tipo de caso</th>
-                        <th class="px-4 py-3">País</th>
-                        <th class="px-4 py-3">Tratamiento de datos</th>
-                        <th class="px-4 py-3">Estado</th>
-                        <th class="px-4 py-3">Acciones</th>
-                    </tr>
+                  <tr>
+                    <th class="px-4 py-3">N°</th>
+                    <th class="px-4 py-3">Número de caso</th>
+                    <th class="px-4 py-3">Fecha</th>
+                    <th class="px-4 py-3">Tipo de usuario</th>
+                    <th class="px-4 py-3">Tipo de caso</th>
+                    <th class="px-4 py-3">País</th>
+                    <th class="px-4 py-3">Tratamiento de datos</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3">Acciones</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-gray-700 border-b border-gray-600"
-                        *ngFor="let item of filteredResults | paginate: { itemsPerPage: 10, currentPage: page }; let i=index">
-
-                        <td scope="row ">{{ i + 1 }}</td>
-                        <td class="px-4 py-3">{{item.numeroCaso}}</td>
-                        <td class="px-4 py-3">{{item.fechaPQR}}</td>
-                        <td class="px-4 py-3">{{item.userType}}</td>
-                        <td class="px-4 py-3">{{item.caseType}}</td>
-                        <td class="px-4 py-3">{{item.country}}</td>
-                        <td class="px-4 py-3">{{item.autorizaTratamientoDatos}}</td>
-                        <td class="px-4 py-3" [ngClass]="{
-                            'estado-verde': item.estatus === 'Acuso de recibido',
-                            'estado-amarillo': item.estatus === 'Revisado',
-                            'estado-rojo': item.estatus === 'Cerrado'
-                          }">{{item.estatus}}</td>
-                        <td class="px-4 py-3">
-                            <button class="btn btn-sm btn-margin btn-primary" [routerLink]="[ '/pqrdetails', item.id ]">
-                                <i class="fi fi-rr-eye"></i>
-                            </button>
-                            <!--<button class="btn btn-sm btn-margin btn-success" (click)="asignar(item.id)"></button> -->
-
-                            <button class="btn btn-sm btn-margin btn-success" (click)="openDialog()">
-
-                                <i class="fi fi-rr-users"></i>
-                            </button>
-                            <button class="btn btn-sm btn-info" (click)="generarCasoSalesforce(item.id)">
-                                Salesforce >>
-                            </button>
-                            <button class="btn btn-sm btn-margin btn-danger" (click)="cerrarCaso(item.id)">
-                                <i class="fi fi-rr-lock"></i>
-                            </button>
-                        </td>
-                    </tr>
+                  <tr class="bg-gray-700 border-b border-gray-600" *ngFor="let item of filteredResults | paginate: { itemsPerPage: 10, currentPage: page }; let i=index">
+                    <td class="px-4 py-3">{{ i + 1 }}</td>
+                    <td class="px-4 py-3">{{ item.numeroCaso }}</td>
+                    <td class="px-4 py-3">{{ item.fechaPQR }}</td>
+                    <td class="px-4 py-3">{{ item.userType }}</td>
+                    <td class="px-4 py-3">{{ item.caseType }}</td>
+                    <td class="px-4 py-3">{{ item.country }}</td>
+                    <td class="px-4 py-3">{{ item.autorizaTratamientoDatos }}</td>
+                    <td class="px-4 py-3" [ngClass]="{
+                      'estado-verde': item.estatus === 'Abierto',
+                      'estado-amarillo': item.estatus === 'Revisado',
+                      'estado-rojo': item.estatus === 'Cerrado'
+                    }">{{ item.estatus }}</td>
+                    <td class="px-4 py-3">
+                      <div class="flex justify-center">
+                        <button class="btn btn-sm btn-margin btn-primary" [routerLink]="['/pqrdetails', item.id]">
+                          <i class="fi fi-rr-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-margin btn-success" (click)="openDialog(item.id)">
+                          <i class="fi fi-rr-users"></i>
+                        </button>
+                        <button class="btn btn-sm btn-info" (click)="generarCasoSalesforce(item.id)">
+                          Salesforce >>
+                        </button>
+                        <button class="btn btn-sm btn-margin btn-danger" (click)="cerrarCaso(item.id)">
+                          <i class="fi fi-rr-lock"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
-            </table>
+              </table>
+            </div>
             <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
             </pagination-controls>
-        </div>
+          </div>
+          
     </div>
 
 </div>
