@@ -18,6 +18,7 @@ export class ConsultComponent implements OnInit {
 
   private id: any | null;
   public file!: string;
+  expandedIndex: number | null = null;
   
   listPQR: any[] = [];
   filteredResults: any[] = [];
@@ -37,6 +38,8 @@ export class ConsultComponent implements OnInit {
     this.listarPQR();
   }
 
+  
+
   listarPQR() {
 
     this.pqr.getAll()
@@ -55,12 +58,12 @@ export class ConsultComponent implements OnInit {
           };
         });
 
-        console.log('lista PQRS: ', this.listPQR);
+        
       });
   }
 
   descargarArchivo(): void {
-    console.log("ARCHIVO A DESCARGAR"+this.file)
+    
     if(this.file=="48cc9863-a763-4d68-8883-59d39ccec665"){
       Swal.fire('Error', 'No se encontró archivo adjunto.', 'error');
             return;

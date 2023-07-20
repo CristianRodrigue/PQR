@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
   OnLogin() {
     if (this.formLogin.invalid) {
 
-      console.log('Formulario no valido');
+    
 
       return Object.values(this.formLogin.controls).forEach(control => {
 
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
 
     this.auth.login(this.formLogin.get('email')?.value ?? '', this.formLogin.get('password')?.value ?? '')
     .subscribe(result => {
-      console.log('result login: ', result);
+     
 
       if (result.status === 'Ok') {
         Swal.close();

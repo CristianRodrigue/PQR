@@ -1,106 +1,35 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  
-    h2 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-  
-    form {
-      margin-bottom: 20px;
-  
-      .form-group {
-        margin-bottom: 15px;
-  
-        label {
-          font-weight: bold;
-        }
-  
-        input {
-          width: 100%;
-          padding: 5px 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 16px;
-        }
-      }
-  
-      button {
-        background-color: #007bff;
-        color: #fff;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-    }
-  
-    .table-data {
-      margin-top: 30px;
-  
-      h2 {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 15px;
-      }
-  
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-  
-        li {
-          margin-bottom: 20px;
-          padding: 20px;
-          background-color: #f0f0f0;
-          border-radius: 4px;
-  
-          .list-item-details {
-            font-size: 14px;
-            line-height: 1.5;
-  
-            strong {
-              font-weight: bold;
-            }
-          }
-  
-          .form-group {
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-  
-            label {
-              font-weight: bold;
-              margin-right: 10px;
-            }
-  
-            button {
-              background-color: #007bff;
-              color: #fff;
-              padding: 5px 10px;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-            }
-          }
-  
-          .estado-verde {
-            color: green;
-          }
-  
-          .estado-amarillo {
-            color: yellow;
-          }
-  
-          .estado-rojo {
-            color: red;
-          }
-        }
-      }
-    }
-  }
-  
+// styles.scss
+
+// Resto de estilos...
+
+// Estilos para el contenedor principal
+.main-container {
+  max-width: 500px; // Define el ancho máximo deseado para el contenido
+  width: 100%; // Ocupa el ancho completo del contenedor padre
+  margin: 0 auto; // Centra el contenido horizontalmente
+  padding: 20px; // Agregamos espacio interno para que no quede tan pegado a los bordes
+}
+
+// styles.scss
+
+// Resto de estilos...
+
+// Estilos para la cuadrícula
+
+
+// Estilos para cada elemento de la cuadrícula
+.list-item {
+  //background-color: $secondary-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+// Clase para centrar verticalmente los elementos de la cuadrícula
+.centered-item {
+  display: flex;
+  justify-content: center; // Centrar horizontalmente
+  align-items: center; // Centrar verticalmente
+}
+

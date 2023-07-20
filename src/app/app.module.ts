@@ -34,6 +34,7 @@ import { FormCreateAssignComponent } from './modules/pages/assign/form-create-as
 import { FormEditAssignComponent } from './modules/pages/assign/form-edit-assign/form-edit-assign.component';
 import  {ModalComponent } from './components/modal/modal.component';
 import { ConsultComponent } from './modules/pages/consult/consult.component';
+import { BottombarComponent } from './components/bottombar/bottombar.component';
 
 
 
@@ -65,6 +66,7 @@ import { ConsultComponent } from './modules/pages/consult/consult.component';
     FormEditAssignComponent,
     ModalComponent,
     ConsultComponent,
+    BottombarComponent,
     
   ],
   imports: [

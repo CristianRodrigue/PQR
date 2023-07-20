@@ -21,7 +21,7 @@ export class FormCreateUserAdminComponent implements OnInit {
       nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      //role: ['', [Validators.required]]
+   
     },
       {
         validators: [this.validarEmail('email')]
@@ -31,7 +31,7 @@ export class FormCreateUserAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.consultarRoles();
+    this.consultarRoles();
   }
 
   get nombreNoValido() {
@@ -47,13 +47,13 @@ export class FormCreateUserAdminComponent implements OnInit {
   //  return this.formAuth.get('role')!.invalid && this.formAuth.get('role')!.touched;
   //}
 
-  /*consultarRoles() {
+  consultarRoles() {
     this.roleService.getAll().subscribe((response: any) => {
-      console.log('roles: ', response.data);
+    
       this.listaRole = response.data;
-      console.log('lista roles', this.listaRole);
+      
     });
-  }*/
+  }
 
   validarEmail(controlName: string) {
 
@@ -83,11 +83,11 @@ export class FormCreateUserAdminComponent implements OnInit {
   }
 
   guardar() {
-    console.log('Guardar usuario');
+    
 
     if (this.formAuth.invalid) {
 
-      console.log('Formulario no valido');
+      
 
       return Object.values(this.formAuth.controls).forEach(control => {
 

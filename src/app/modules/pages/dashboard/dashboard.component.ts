@@ -66,9 +66,9 @@ export class DashboardComponent implements OnInit {
 
   consultarPaises() {
     this.country.getAll().subscribe((response: any) => {
-      console.log('paises: ', response.data);
+      
       this.listaPais = response.data;
-      console.log('lista pais', this.listaPais);
+      
     });
   }
 
@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
 
     this.pqr.getAll()
       .subscribe((response: any) => {
-        console.log('lista PQRS response: ', response);
+        
         this.listPQR = response.data.map((item: any) => {
           // Formatear la fecha usando DatePipe
           const formattedDate = this.datePipe.transform(item.fechaPQR, 'dd/MM/yyyy');
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
           };
         });
 
-        console.log('lista PQRS: ', this.listPQR);
+        
       });
   }
 
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
     }
   
     this.pqr.getById(id).subscribe((response: any) => {
-      console.log(response.data[0])
+      
   
       
   
@@ -206,7 +206,7 @@ export class DashboardComponent implements OnInit {
               ,
             };
             
-            console.log("id: " + id + " updateStatus: " + JSON.stringify(updatedStatus));
+            
 
             this.pqr.update(id, updatedStatus).subscribe(
               () => {

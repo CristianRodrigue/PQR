@@ -46,7 +46,7 @@ export class FormCreateEmployeeComponent implements OnInit {
 
     if (this.form.invalid) {
       const formData = this.form.value;
-      console.log('Formulario no valido');
+     
 
       return Object.values(this.form.controls).forEach(control => {
 

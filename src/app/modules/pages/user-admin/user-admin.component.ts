@@ -17,7 +17,7 @@ export class UserAdminComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // this.getUsers();
+    this.getUsers();
   }
 
   getUsers() {
@@ -28,9 +28,7 @@ export class UserAdminComponent implements OnInit {
   }
 
   deleteUser(id: string, index: number) {
-    console.log('Borrar');
-    console.log('Id mensaje', id);
-    console.log('Indice mensaje', index);
+    
 
     Swal.fire({
       title: 'Esta seguro?',
@@ -54,13 +52,13 @@ export class UserAdminComponent implements OnInit {
       if (result.value) {
         this.userService.delete(id).subscribe(res => {
 
-          // console.log('delete result', res)
+         
 
           let resultado: any;
           resultado = res;
 
           if (resultado.status === 'NoPermitido') {
-            console.log('No se puede eliminar el usuario');
+            
 
             Swal.fire({
               allowOutsideClick: true,
@@ -69,6 +67,8 @@ export class UserAdminComponent implements OnInit {
               html: 'Es el unico usuario existente, no se permite borrar este usuario'
             });
           }
+            
+          
         });
       }
     });

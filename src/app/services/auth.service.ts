@@ -68,7 +68,7 @@ export class AuthService {
       Name: nombre,
       Email: email,
       Password: password,
-      //Role: null,
+      Role: "b08fcc3a-ea4b-4d30-ac60-0445eea65f9c",
     };
 
     return this.http.post(`${this.url}/Auth/Create`, data);
@@ -84,7 +84,7 @@ export class AuthService {
 
   getEmailValidator(Email: string) {
      
-    //let data = this.http.get(this.url + '/Auth/EmailValidator/' + Email);
+    let data = this.http.get(this.url + '/Auth/EmailValidator/' + Email);
     //console.log('data email', data);
 
     return this.http.get(this.url + '/Auth/EmailValidator/' + Email);

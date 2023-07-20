@@ -21,7 +21,7 @@ export class AssignComponent implements OnInit {
     this.assignService.getAll()
       .subscribe((response: any) => {
         this.list = response.data;
-        console.log('lista', this.list);
+        
       });
   }
 

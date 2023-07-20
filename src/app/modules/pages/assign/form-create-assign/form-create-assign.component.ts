@@ -31,11 +31,11 @@ export class FormCreateAssignComponent implements OnInit {
   }
 
   guardar() {
-    console.log('Guardar usuario');
+    
 
     if (this.formUser.invalid) {
 
-      console.log('Formulario no valido');
+      
 
       return Object.values(this.formUser.controls).forEach(control => {
 

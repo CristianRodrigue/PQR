@@ -246,8 +246,8 @@ export class FormPqrComponent implements OnInit {
       .subscribe(result => {
 
         Swal.fire({
-          title: 'Registro Exitoso',
-          text: 'su PQR se ha registrado exitosamente',
+          title: '¡Registro exitoso!',
+          text: 'Hemos recibido su PQR (Petición, Queja o Reclamo) y se le enviará una notificación por correo electrónico con su número de caso. Nuestro equipo atenderá su solicitud a la brevedad posible.',
           icon: 'success'
         });
 

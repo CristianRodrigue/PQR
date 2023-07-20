@@ -68,7 +68,7 @@ export class DetailsPqrComponent implements OnInit {
         const formattedDate = this.datePipe.transform(response.data[0].fechaPQR, 'dd-MM-yyyy HH:mm:ss');
       this.fecha = formattedDate !== null ? formattedDate : '';
 
-        console.log('PQR: ', response.data[0]);
+        
       });
 
   }
