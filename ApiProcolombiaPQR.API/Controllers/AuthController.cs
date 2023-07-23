@@ -26,11 +26,7 @@ namespace ApiProcolombiaPQR.API.Controllers
             _config = config;
         }
 
-        /*public AuthController(DataContextDB dbContext)
-        {
-            _dbContext = dbContext;
-            
-        }*/
+       
 
         // POST: api/Auth/LoginPQR
         [HttpPost("[action]")]
@@ -53,7 +49,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                     return NotFound();
                 }
 
-                //var rolUsuario = await _dbContext.Role.FirstOrDefaultAsync(x => x.Id == usuario.Role);
+                var rolUsuario = await _dbContext.Role.FirstOrDefaultAsync(x => x.Id == usuario.Role);
 
                 if (usuario != null)
                 {
@@ -62,8 +58,8 @@ namespace ApiProcolombiaPQR.API.Controllers
                     new Claim(ClaimTypes.NameIdentifier, usuario.Name.Trim()),
                     new Claim(ClaimTypes.Email, email),
                     new Claim("UserId", usuario.Id.ToString()),
-                    /*new Claim("RoleId", rolUsuario.Id.ToString()),
-                    new Claim("Role", rolUsuario.Name)*/
+                    new Claim("RoleId", rolUsuario.Id.ToString()),
+                    new Claim("Role", rolUsuario.Name)
                     };
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -126,7 +122,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                 Email = modelo.Email,
                 Password_hash = passwordHash,
                 Password_salt = passwordSalt,
-                //Role = Guid.Parse(modelo.Role) // Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c")
+                Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") // Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c")
             };
 
             try
@@ -172,7 +168,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Id = x.Id,
                         Name = x.Name,
                         Email = x.Email,
-                        //Role = x.Role
+                        Role = x.Role
                     }).ToListAsync();
 
                 var response = new AuthResponse
@@ -202,7 +198,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Id = x.Id,
                         Name = x.Name,
                         Email = x.Email,
-                        //Role = x.Role
+                            Role = x.Role
                     }).ToListAsync();
 
                 var response = new AuthResponse
@@ -235,7 +231,7 @@ namespace ApiProcolombiaPQR.API.Controllers
                         Id = x.Id,
                         Name = x.Name,
                         Email = x.Email,
-                        //Role = x.Role
+                        Role = x.Role
                     }).ToListAsync();
 
                 if (query.Count == 0)

@@ -79,7 +79,7 @@ namespace ApiProcolombiaPQR.API.NEO
         public TopLayer Query(string nit)
         {
             var result = default(TopLayer);
-            string soqlQuery = "Select Id FROM Account where Numero_de_Identificacion__c ='" + nit + "'";
+            string soqlQuery = "Select Id FROM Account where Numero_de_Identificacion__c ='" + nit + "'%";
             using (var client = new HttpClient())
             {
                 string restRequest = $"{InstanceUrl}{apiEndPoint}query?q={soqlQuery}";

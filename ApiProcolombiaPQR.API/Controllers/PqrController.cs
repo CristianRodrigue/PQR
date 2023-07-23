@@ -199,6 +199,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                     Guid IdPlantilla =  plantillaUsuario.Id;
                     var plantilla = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantilla && e.Enabled == true);
+
                     var images = new PlantillasHTML();
 
                 if (plantilla != null)
@@ -235,7 +236,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
          // Enviamos mensaje de correo al administrador para notificarle que hay un nuevo pqr
                 var asignacion = await _dbContext.MailTemplate.FirstOrDefaultAsync(a => a.Id == Guid.Parse("87824642-B0D4-41FD-AC78-4C35DC46EF0D"));
-                //var admin = await _dbContext.Users.FirstOrDefaultAsync(a => a.Role == Guid.Parse("B08FCC3A-EA4B-4D30-AC60-0445EEA65F9C"));
+                var admin = await _dbContext.Users.FirstOrDefaultAsync(a => a.Role == Guid.Parse("B08FCC3A-EA4B-4D30-AC60-0445EEA65F9C"));
 
                 Guid IdPlantillaAdmin = asignacion.Id;
                 var plantillaAdmin = await _dbContext.MailTemplate.FirstOrDefaultAsync(e => e.Id == IdPlantillaAdmin && e.Enabled == true);
@@ -257,7 +258,7 @@ namespace ApiProcolombiaPQR.API.Controllers
 
                     EmailViewModel correo = new EmailViewModel
                     {
-                        Destination = modelo.Email,
+                        Destination = admin.Email,
                         Suject = "Se registró nueva PQR",
                         Message = htmlPlantilla,
                         IsHtml = true

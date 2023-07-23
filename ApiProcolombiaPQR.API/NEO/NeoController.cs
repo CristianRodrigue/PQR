@@ -101,8 +101,7 @@ namespace ApiProcolombiaPQR.API.NEO
                             // Verificar si la solicitud fue exitosa
                             if (response.IsSuccessStatusCode)
                             {
-                                // Procesar la respuesta según tus necesidades
-                                // ...
+                              
 
                                 return Ok(true); // Devolver true si el caso se generó correctamente
                             }
@@ -132,15 +131,6 @@ namespace ApiProcolombiaPQR.API.NEO
             {
                 return BadRequest($"Error al consultar Salesforce: {ex.Message}");
             }
-        }
-
-
-        private object ProcessQueryResult(TopLayer result)
-        {
-            // Aquí puedes realizar el procesamiento del resultado de la consulta según tus necesidades
-            // Puedes mapear los datos a un modelo específico, filtrar campos, transformar los datos, etc.
-            // En este ejemplo, simplemente se devuelve el resultado sin procesar
-            return result;
         }
     }
 }

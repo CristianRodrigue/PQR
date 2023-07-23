@@ -96,7 +96,7 @@ namespace ApiProcolombiaPQR.DATA
             if (!_context.Role.Any())
             {
                 _context.Role.Add(new RoleEntity { Id = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c"), Name = "Admin" });
-                _context.Role.Add(new RoleEntity { Id = Guid.Parse("035f2b37-100c-4312-a458-6c4bfc0ee34a"), Name = "User" });
+                
 
                 await _context.SaveChangesAsync();
             }
@@ -111,8 +111,8 @@ namespace ApiProcolombiaPQR.DATA
                 var pHash = passwordHash;
                 var pSalt = passwordSalt;
 
-                //_context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
-                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash, Password_salt = pSalt,  });
+                _context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash,  Password_salt = pSalt, Role = Guid.Parse("b08fcc3a-ea4b-4d30-ac60-0445eea65f9c") });
+                //_context.Users.Add(new UserEntity { Name = "Administrador", Email = "ptecnologia1@procolombia.co", Password_hash = pHash, Password_salt = pSalt,  });
 
                 await _context.SaveChangesAsync();
             }
